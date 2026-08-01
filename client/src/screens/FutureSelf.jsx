@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Target, CircleDot } from 'lucide-react';
 import { fetchFutureSelf } from '../lib/api';
+import FutureSelfChat from '../components/FutureSelfChat';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -103,6 +104,8 @@ function FutureSelf({ day }) {
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }} style={{ marginTop: '8px', color: 'var(--text-tertiary)', fontSize: '0.875rem' }}>
           Distance from here: {reachedCount} of {totalCount} markers.
         </motion.div>
+
+        <FutureSelfChat />
       </div>
     </div>
   );

@@ -128,3 +128,11 @@ export async function fetchPassport() {
   a.click();
   window.URL.revokeObjectURL(url);
 }
+
+export async function chatWithFutureSelf(message, history) {
+  return api('/api/future-self/chat', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message, history })
+  });
+}

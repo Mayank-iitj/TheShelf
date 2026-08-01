@@ -16,6 +16,7 @@ const { runDailyAgent } = require('./agents/daily');
 const { runOnboardingAgent } = require('./agents/onboarding');
 const { runReviewAgent } = require('./agents/review');
 const { runMasterAgent } = require('./agents/master');
+const { runFutureSelfChat } = require('./agents/futureSelfChat');
 const { seedContent } = require('./seed/seedContent');
 const { seedHistory, simulateHistoryForUser } = require('./seed/seedHistory');
 
@@ -228,6 +229,25 @@ app.get('/api/future-self', (req, res) => {
     fs.markers = JSON.parse(fs.markers_json);
   }
   res.json(fs);
+});
+
+app.post('/api/future-self/chat', async (req, res, next) => {
+  try {
+    const { message, history } = req.body;
+    if (!message || typeof message !== 'string' || !message.trim()) {
+      return res.status(400).json({ error: 'message is required' });
+    }
+
+    const fs = db.prepare(`SELECT * FROM future_self WHERE user_id = 1`).get();
+    const portrait = fs ? fs.portrait : null;
+    const markers = fs ? JSON.parse(fs.markers_json) : [];
+    const ledgerRows = db.prepare(`SELECT id, kind, claim, strength FROM ledger_rows WHERE user_id = 1 AND status IN ('active', 'dormant')`).all();
+
+    const result = await runFutureSelfChat({ message, history, portrait, markers, ledgerRows });
+    res.json(result);
+  } catch (err) {
+    next(err);
+  }
 });
 
 app.get('/api/potential', (req, res) => {
