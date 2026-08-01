@@ -87,7 +87,15 @@ async function runMasterAgent(userId = 1, day = 21) {
   const fallback = buildMasterFallback(userId, day, potential, stage, habits);
   const response = await callLLM(MASTER_SYSTEM_PROMPT, userPrompt, fallback);
 
-  return response;
+  // Guarantee schema stability by merging with fallback
+  return {
+    ...fallback,
+    ...response,
+    sub_agent_reports: {
+      ...fallback.sub_agent_reports,
+      ...(response?.sub_agent_reports || {})
+    }
+  };
 }
 
 module.exports = { runMasterAgent };
