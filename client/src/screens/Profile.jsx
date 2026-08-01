@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useUser, useClerk, UserProfile } from '@clerk/clerk-react';
 import { motion } from 'framer-motion';
 import { Download, ShieldCheck, Zap, BookOpen, Clock, Sparkles, Settings, RotateCcw, LogOut, Calendar } from 'lucide-react';
-import { fetchPassport, fetchPotential, fetchLedger, fetchTwin, resetSimulation } from '../lib/api';
+import { fetchPassport, fetchPotential, fetchLedger, fetchTwin, resetSimulation, resetOnboarding } from '../lib/api';
 
 export default function Profile({ day, potential, stage, setOnboarded }) {
   const { user } = useUser();
@@ -172,7 +172,7 @@ export default function Profile({ day, potential, stage, setOnboarded }) {
             if (!confirm('Re-onboard? This will clear all current settings and start the interview questionnaire again.')) return;
             try {
               // Call API to wipe DB tables
-              await fetch('/api/onboarding/reset', { method: 'POST' });
+              await resetOnboarding();
               // Direct state change to force onboarding screen
               setOnboarded(false);
               window.location.href = '/app';
