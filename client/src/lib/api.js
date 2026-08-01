@@ -80,6 +80,10 @@ export async function resetSimulation() {
   return api('/api/reset', { method: 'POST' });
 }
 
+export async function resetOnboarding() {
+  return api('/api/onboarding/reset', { method: 'POST' });
+}
+
 export async function fetchReview(day) {
   return api(`/api/review?day=${day}`);
 }

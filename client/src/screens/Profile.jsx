@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import { useUser, useClerk, UserProfile } from '@clerk/clerk-react';
 import { motion } from 'framer-motion';
 import { Download, ShieldCheck, Zap, BookOpen, Clock, Sparkles, Settings, RotateCcw, LogOut, Calendar } from 'lucide-react';
-import { fetchPassport, fetchPotential, fetchLedger, fetchTwin, resetSimulation } from '../lib/api';
+import { fetchPassport, fetchPotential, fetchLedger, fetchTwin, resetSimulation, resetOnboarding } from '../lib/api';
 
-export default function Profile({ day, potential, stage }) {
+export default function Profile({ day, potential, stage, setOnboarded }) {
   const { user } = useUser();
   const { signOut, openUserProfile } = useClerk();
   const [downloading, setDownloading] = useState(false);
@@ -164,6 +164,24 @@ export default function Profile({ day, potential, stage }) {
           disabled={resetting}
         >
           <RotateCcw size={17} /> {resetting ? 'Resetting…' : 'Reset simulation to Day 1'}
+        </button>
+        <button
+          className="btn"
+          style={{ width: '100%', justifyContent: 'flex-start', display: 'flex', alignItems: 'center', gap: '12px', padding: '14px 16px', border: 'none', marginTop: '4px', color: 'var(--accent-cyan)' }}
+          onClick={async () => {
+            if (!confirm('Re-onboard? This will clear all current settings and start the interview questionnaire again.')) return;
+            try {
+              // Call API to wipe DB tables
+              await resetOnboarding();
+              // Direct state change to force onboarding screen
+              setOnboarded(false);
+              window.location.href = '/app';
+            } catch (err) {
+              console.error(err);
+            }
+          }}
+        >
+          <Sparkles size={17} /> Re-Onboard & Restart Interview
         </button>
         <div style={{ height: '1px', background: 'var(--border-rule)', margin: '4px 0' }} />
         <button

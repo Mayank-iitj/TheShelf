@@ -17,7 +17,7 @@ const { runOnboardingAgent } = require('./agents/onboarding');
 const { runReviewAgent } = require('./agents/review');
 const { runMasterAgent } = require('./agents/master');
 const { seedContent } = require('./seed/seedContent');
-const { seedHistory } = require('./seed/seedHistory');
+const { seedHistory, simulateHistoryForUser } = require('./seed/seedHistory');
 
 const app = express();
 
@@ -241,33 +241,28 @@ app.post('/api/reset', (req, res) => {
   res.json({ success: true });
 });
 
+app.post('/api/onboarding/reset', (req, res) => {
+  db.prepare(`DELETE FROM ledger_rows`).run();
+  db.prepare(`DELETE FROM ledger_events`).run();
+  db.prepare(`DELETE FROM future_self`).run();
+  db.prepare(`DELETE FROM habits`).run();
+  db.prepare(`DELETE FROM deliveries`).run();
+  db.prepare(`DELETE FROM artifacts`).run();
+  db.prepare(`DELETE FROM agent_actions`).run();
+  db.prepare(`DELETE FROM reviews`).run();
+  db.prepare(`DELETE FROM regret_responses`).run();
+  db.prepare(`DELETE FROM proofs`).run();
+  db.prepare(`UPDATE app_state SET value = '1' WHERE key = 'current_day'`).run();
+  res.json({ success: true });
+});
+
 app.post('/api/onboarding', async (req, res, next) => {
   try {
     const { answers } = req.body;
     const result = await runOnboardingAgent(answers);
 
-    // Full reset: wipe every trace of the previous user's (or the demo seed's)
-    // simulated history, not just the ledger, so the dashboard reflects THIS
-    // onboarding's answers instead of stale canned data left over from before.
-    db.prepare(`DELETE FROM ledger_rows`).run();
-    db.prepare(`DELETE FROM ledger_events`).run();
-    db.prepare(`DELETE FROM future_self`).run();
-    db.prepare(`DELETE FROM habits`).run();
-    db.prepare(`DELETE FROM deliveries`).run();
-    db.prepare(`DELETE FROM artifacts`).run();
-    db.prepare(`DELETE FROM agent_actions`).run();
-    db.prepare(`DELETE FROM reviews`).run();
-    db.prepare(`DELETE FROM regret_responses`).run();
-    db.prepare(`UPDATE app_state SET value = '1' WHERE key = 'current_day'`).run();
-
-    const markersJson = JSON.stringify(result.future_self.markers || []);
-    db.prepare(`INSERT INTO future_self (user_id, portrait, markers_json) VALUES (1, ?, ?)`).run(result.future_self.portrait, markersJson);
-    
-    const insertRow = db.prepare(`INSERT INTO ledger_rows (id, user_id, kind, claim, domain_tags, confidence, provenance, source, status, strength, created_day, updated_day) VALUES (?, 1, ?, ?, ?, 0.9, 'Onboarding interview', 'interview', 'active', ?, 1, 1)`);
-    
-    result.ledger_rows.forEach((row, i) => {
-      insertRow.run(`L0${i+1}`, row.kind, row.claim, JSON.stringify(row.domain_tags || []), row.strength || 0.8);
-    });
+    // Dynamic 21-day timeline simulation using the new onboarding answers
+    simulateHistoryForUser(1, result);
     
     res.json({ success: true, result });
   } catch (err) {
