@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { LayoutDashboard, Activity, BookOpen, UserCircle, CalendarClock } from 'lucide-react';
 import './styles.css';
 import { fetchClock, setClock, fetchPotential, fetchStage } from './lib/api';
+import Landing from './screens/Landing';
 import Shelf from './screens/Shelf';
 import Twin from './screens/Twin';
 import Ledger from './screens/Ledger';
@@ -15,6 +16,7 @@ function App() {
   const [potential, setPotential] = useState(0);
   const [stage, setStage] = useState({ stage: 'orienting', explanation: '' });
   const [currentScreen, setCurrentScreen] = useState('shelf');
+  const [landed, setLanded] = useState(false);   // has user left the landing page?
   const [onboarded, setOnboarded] = useState(false);
 
   useEffect(() => {
@@ -36,8 +38,26 @@ function App() {
     setClock(newDay);
   }
 
+  // Step 1: Show landing page
+  if (!landed) {
+    return (
+      <AnimatePresence mode="wait">
+        <motion.div key="landing" initial={{ opacity: 1 }} exit={{ opacity: 0, scale: 0.98 }} transition={{ duration: 0.4 }}>
+          <Landing onEnterApp={() => setLanded(true)} />
+        </motion.div>
+      </AnimatePresence>
+    );
+  }
+
+  // Step 2: Show onboarding
   if (!onboarded) {
-    return <Onboarding onComplete={() => setOnboarded(true)} />;
+    return (
+      <AnimatePresence mode="wait">
+        <motion.div key="onboarding" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
+          <Onboarding onComplete={() => setOnboarded(true)} />
+        </motion.div>
+      </AnimatePresence>
+    );
   }
 
   return (
