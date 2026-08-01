@@ -37,6 +37,7 @@
   width: 100%;
   align-items: center;
   padding: 2rem;
+  box-sizing: border-box;
 }
 
 .step-content-default {

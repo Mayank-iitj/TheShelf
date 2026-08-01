@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, ChevronDown, Zap, BookOpen, Activity, UserCircle, Brain, Shield } from 'lucide-react';
 import FlowingMenu from '../components/FlowingMenu';
+import FallingText from '../components/FallingText';
 import BorderGlow from '../components/BorderGlow';
 import CircularGallery from '../components/CircularGallery';
 import RotatingText from '../components/RotatingText';
@@ -24,10 +25,10 @@ async function fetchStats() {
 }
 
 const demoItems = [
-  { link: '#', text: 'Mojave', image: 'https://picsum.photos/600/400?random=1' },
-  { link: '#', text: 'Sonoma', image: 'https://picsum.photos/600/400?random=2' },
-  { link: '#', text: 'Monterey', image: 'https://picsum.photos/600/400?random=3' },
-  { link: '#', text: 'Sequoia', image: 'https://picsum.photos/600/400?random=4' }
+  { link: '#', text: 'Identity Ledger', image: 'https://picsum.photos/600/400?random=1' },
+  { link: '#', text: 'Attention Twin', image: 'https://picsum.photos/600/400?random=2' },
+  { link: '#', text: 'Future Self', image: 'https://picsum.photos/600/400?random=3' },
+  { link: '#', text: 'Agentic Curation', image: 'https://picsum.photos/600/400?random=4' }
 ];
 
 const galleryItems = [
@@ -371,9 +372,19 @@ export default function Landing({ onEnterApp }) {
                 pauseBetweenAnimations={0.2}
               />
             </div>
-            <p style={{ color: 'rgba(255,255,255,0.55)', lineHeight: 1.8, fontSize: '1.05rem', marginBottom: '32px' }}>
-              The Shelf is a radical departure from the dopamine-driven engagement loops of modern algorithms. Instead of a passive feed designed to hijack attention, it is an <strong style={{ color: '#fff' }}>agentic curator</strong> built to actively forge your potential.
-            </p>
+            <div style={{ color: 'rgba(255,255,255,0.55)', lineHeight: 1.8, fontSize: '1.05rem', marginBottom: '32px', minHeight: '120px' }}>
+              <FallingText
+                text="The Shelf is a radical departure from the dopamine-driven engagement loops of modern algorithms. Instead of a passive feed designed to hijack attention, it is an agentic curator built to actively forge your potential."
+                highlightWords={["radical", "departure", "agentic", "curator", "potential"]}
+                highlightClass="highlighted"
+                trigger="hover"
+                backgroundColor="transparent"
+                wireframes={false}
+                gravity={0.56}
+                fontSize="1.05rem"
+                mouseConstraintStiffness={0.9}
+              />
+            </div>
             <p style={{ color: 'rgba(255,255,255,0.55)', lineHeight: 1.8, fontSize: '1.05rem', marginBottom: '40px' }}>
               It wraps a transparent, human-readable <strong style={{ color: '#fff' }}>Identity Ledger</strong> around your aspirations and habits. Every day, AI agents analyze this ledger to serve you what you actually need — or withhold everything if that is the correct call.
             </p>
@@ -568,7 +579,7 @@ export default function Landing({ onEnterApp }) {
             whiteSpace: 'nowrap',
             transform: 'translateY(8%)'
           }}>
-            THE SHELF
+            SHELF
           </h1>
         </div>
       </footer>
