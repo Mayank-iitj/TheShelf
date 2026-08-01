@@ -65,6 +65,11 @@ const FallingText = ({
       return;
     }
 
+    // Lock the container's height before words go absolute — otherwise the
+    // container (whose height comes from the normal-flow text) collapses to
+    // 0 once every word span is repositioned, and overflow:hidden clips them.
+    containerRef.current.style.height = `${height}px`;
+
     const engine = Engine.create();
     engine.world.gravity.y = gravity;
 
