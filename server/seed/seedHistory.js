@@ -215,8 +215,207 @@ function seedHistory() {
   console.log('Seeded history successfully.');
 }
 
+function simulateHistoryForUser(userId, result) {
+  console.log(`Simulating dynamic 21-day history based on onboarding answers for user ${userId}...`);
+  
+  db.transaction(() => {
+    // 1. App State
+    db.prepare(`UPDATE app_state SET value = '21' WHERE key = 'current_day'`).run();
+
+    // 2. Future Self
+    db.prepare(`DELETE FROM future_self WHERE user_id = ?`).run(userId);
+    db.prepare(`
+      INSERT INTO future_self (user_id, portrait, markers_json)
+      VALUES (?, ?, ?)
+    `).run(userId, result.future_self.portrait, JSON.stringify(result.future_self.markers));
+
+    // 3. Ledger Rows
+    db.prepare(`DELETE FROM ledger_rows WHERE user_id = ?`).run(userId);
+    const insertRow = db.prepare(`
+      INSERT INTO ledger_rows (id, user_id, kind, claim, domain_tags, confidence, provenance, source, status, strength, created_day, updated_day)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `);
+
+    result.ledger_rows.forEach((row, i) => {
+      const id = `L${(i + 1).toString().padStart(2, '0')}`;
+      insertRow.run(
+        id,
+        userId,
+        row.kind || 'aspiration',
+        row.claim,
+        JSON.stringify(row.domain_tags || []),
+        row.confidence || 0.85,
+        'Onboarding Interview',
+        'interview',
+        'active',
+        row.strength || 0.8,
+        1,
+        21
+      );
+    });
+
+    // 4. Ledger Events
+    db.prepare(`DELETE FROM ledger_events WHERE user_id = ?`).run(userId);
+    const activeRows = db.prepare(`SELECT * FROM ledger_rows WHERE user_id = ?`).all(userId);
+    const insertEvent = db.prepare(`
+      INSERT INTO ledger_events (user_id, day, row_id, event, before_json, after_json, rationale)
+      VALUES (?, ?, ?, 'created', null, ?, 'Established during onboarding interview')
+    `);
+    activeRows.forEach(r => {
+      insertEvent.run(userId, 1, r.id, JSON.stringify(r));
+    });
+
+    // Get tags from active rows
+    let userTags = [];
+    activeRows.forEach(r => {
+      try {
+        const tags = JSON.parse(r.domain_tags);
+        userTags.push(...tags);
+      } catch(e){}
+    });
+    if (userTags.length === 0) userTags = ['career', 'learning-how-to-learn'];
+
+    // 5. Habits (dynamically generated matching user tags)
+    db.prepare(`DELETE FROM habits WHERE user_id = ?`).run(userId);
+    const habits = [
+      { id: 'H01', pattern: `You study ${userTags[0]} concepts late at night`, metric: 'time_of_day', value_json: JSON.stringify({ median_start: '23:15' }), evidence_days: 14, confidence: 0.82, contradicts_row: null, first_day: 5, updated_day: 21 },
+      { id: 'H02', pattern: `Highest dropoff occurs on tasks containing heavy text resources`, metric: 'dropoff', value_json: JSON.stringify({ max_completed: 15 }), evidence_days: 21, confidence: 0.9, contradicts_row: null, first_day: 7, updated_day: 21 },
+      { id: 'H03', pattern: `You finish 80% of hands-on coding challenges but only 10% of slides`, metric: 'modality', value_json: JSON.stringify({ code: 0.8, slides: 0.1 }), evidence_days: 21, confidence: 0.88, contradicts_row: null, first_day: 14, updated_day: 21 },
+      { id: 'H04', pattern: `Active learning streak on ${userTags[1] || 'engineering'} topics is 6 days`, metric: 'streak', value_json: JSON.stringify({ current_streak: 6 }), evidence_days: 6, confidence: 0.85, contradicts_row: null, first_day: 12, updated_day: 21 }
+    ];
+    const insertHabit = db.prepare(`
+      INSERT INTO habits (id, user_id, pattern, metric, value_json, evidence_days, confidence, contradicts_row, first_day, updated_day)
+      VALUES (@id, ?, @pattern, @metric, @value_json, @evidence_days, @confidence, @contradicts_row, @first_day, @updated_day)
+    `);
+    habits.forEach(h => insertHabit.run({ ...h, user_id: userId }));
+
+    // 6. Deliveries & Agent Actions
+    db.prepare(`DELETE FROM deliveries WHERE user_id = ?`).run(userId);
+    db.prepare(`DELETE FROM agent_actions WHERE user_id = ?`).run(userId);
+    
+    // Find content matching user tags
+    const allItems = db.prepare(`SELECT * FROM content_items`).all();
+    const matchingItems = allItems.filter(item => {
+      try {
+        const itemTags = JSON.parse(item.tags);
+        return itemTags.some(t => userTags.includes(t));
+      } catch(e) { return false; }
+    });
+    const contentPool = matchingItems.length > 0 ? matchingItems : allItems;
+
+    const insertDelivery = db.prepare(`
+      INSERT INTO deliveries (user_id, day, item_id, ranker, slot, why_now, cited_rows, score, score_breakdown, opened, completed, dwell_minutes)
+      VALUES (?, @day, @item_id, @ranker, @slot, @why_now, @cited_rows, @score, @score_breakdown, @opened, @completed, @dwell_minutes)
+    `);
+    const insertAction = db.prepare(`
+      INSERT INTO agent_actions (user_id, day, intervention, rationale, considered_json)
+      VALUES (?, @day, @intervention, @rationale, @considered_json)
+    `);
+
+    for (let d = 1; d <= 21; d++) {
+      // Create a curator action for the day
+      const intervention = d === 7 ? 'challenge' : d === 14 ? 'rest' : 'deliver';
+      insertAction.run(userId, {
+        day: d,
+        intervention,
+        rationale: `Curating daily focus for Day ${d} targeting ${userTags[0]}.`,
+        considered_json: JSON.stringify(['deliver', 'challenge', 'withhold'])
+      });
+
+      // Growth deliveries (3 items)
+      for (let slot = 0; slot < 3; slot++) {
+        const item = contentPool[Math.floor(Math.random() * contentPool.length)];
+        const completed = Math.random() > 0.4 ? 1 : 0;
+        insertDelivery.run(userId, {
+          day: d,
+          item_id: item.id,
+          ranker: 'growth',
+          slot,
+          why_now: `Aligned with your goal to master ${userTags[0]}.`,
+          cited_rows: JSON.stringify([activeRows[0]?.id || 'L01']),
+          score: 0.85,
+          score_breakdown: '{}',
+          opened: completed ? 1 : (Math.random() > 0.5 ? 1 : 0),
+          completed,
+          dwell_minutes: completed ? 20 : 0
+        });
+      }
+
+      // Attention deliveries (3 items)
+      for (let slot = 0; slot < 3; slot++) {
+        const item = allItems[Math.floor(Math.random() * allItems.length)];
+        insertDelivery.run(userId, {
+          day: d,
+          item_id: item.id,
+          ranker: 'attention',
+          slot,
+          why_now: 'Trending now.',
+          cited_rows: '[]',
+          score: 0.9,
+          score_breakdown: '{}',
+          opened: 1,
+          completed: 1,
+          dwell_minutes: 5
+        });
+      }
+    }
+
+    // 7. Artifacts & Proofs (10 total verified proofs matching user's new goals)
+    db.prepare(`DELETE FROM artifacts WHERE user_id = ?`).run(userId);
+    db.prepare(`DELETE FROM proofs WHERE user_id = ?`).run(userId);
+    
+    const insertArtifact = db.prepare(`
+      INSERT INTO artifacts (user_id, day, body, linked_item_id, kind)
+      VALUES (?, @day, @body, @linked_item_id, @kind)
+    `);
+    const insertProof = db.prepare(`
+      INSERT INTO proofs (user_id, delivery_id, day, proof_type, proof_content, verified, created_at)
+      VALUES (?, @delivery_id, @day, @proof_type, @proof_content, @verified, @created_at)
+    `);
+
+    for (let i = 1; i <= 10; i++) {
+      const day = 2 + i * 1.8;
+      const artifactBody = `Completed practice task on ${userTags[0] || 'engineering'} focus: Verified API schema and handled error states.`;
+      insertArtifact.run(userId, {
+        day: Math.floor(day),
+        body: artifactBody,
+        linked_item_id: `C0${i.toString().padStart(2, '0')}`,
+        kind: 'practice'
+      });
+
+      insertProof.run(userId, {
+        delivery_id: i.toString(),
+        day: Math.floor(day),
+        proof_type: 'text',
+        proof_content: `Successfully ran integration tests and shipped code module for user targets.`,
+        verified: 1,
+        created_at: new Date().toISOString()
+      });
+    }
+
+    // 8. Reviews
+    db.prepare(`DELETE FROM reviews WHERE user_id = ?`).run(userId);
+    db.prepare(`
+      INSERT INTO reviews (user_id, day, proposed_json, accepted_json)
+      VALUES (?, 14, ?, ?)
+    `).run(
+      userId,
+      JSON.stringify([{
+        op: 'ADD',
+        claim: `I want to spend more dedicated time practicing hands-on coding challenges for ${userTags[0]}.`,
+        evidence: 'Completed 5 challenges, zero slide reviews this week.',
+        kind: 'preference',
+        domain_tags: [userTags[0]]
+      }]),
+      JSON.stringify(['L09'])
+    );
+
+  });
+  console.log('Dynamic history simulation successfully complete.');
+}
+
 if (require.main === module) {
   seedHistory();
 }
 
-module.exports = { seedHistory };
+module.exports = { seedHistory, simulateHistoryForUser };

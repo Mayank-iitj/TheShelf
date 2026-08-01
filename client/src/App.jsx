@@ -135,7 +135,7 @@ function DashboardFlow({ day, handleScrubberChange, potential, stage, currentScr
                   {currentScreen === 'ledger' && <Ledger day={day} />}
                   {currentScreen === 'futureself' && <FutureSelf day={day} />}
                   {currentScreen === 'review' && <Review day={day} />}
-                  {currentScreen === 'profile' && <Profile day={day} potential={potential} stage={stage} />}
+                  {currentScreen === 'profile' && <Profile day={day} potential={potential} stage={stage} setOnboarded={setOnboarded} />}
                 </motion.div>
               </AnimatePresence>
             </main>
