@@ -45,44 +45,53 @@ export default function FutureSelfChat() {
       </h2>
 
       <div
-        ref={scrollRef}
         style={{
-          maxHeight: messages.length ? '320px' : 0,
-          overflowY: 'auto',
-          marginBottom: messages.length ? '16px' : 0,
-          transition: 'max-height 0.3s ease, margin-bottom 0.3s ease',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '10px'
+          display: 'grid',
+          gridTemplateRows: messages.length ? '1fr' : '0fr',
+          transition: 'grid-template-rows 0.3s ease',
+          marginBottom: '16px'
         }}
       >
-        <AnimatePresence initial={false}>
-          {messages.map((m, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              style={{
-                alignSelf: m.role === 'user' ? 'flex-end' : 'flex-start',
-                maxWidth: '85%',
-                padding: '10px 14px',
-                borderRadius: 'var(--radius-md)',
-                fontSize: '0.9375rem',
-                lineHeight: 1.5,
-                background: m.role === 'user' ? 'var(--growth-dim)' : 'var(--bg-surface-sunken)',
-                border: `1px solid ${m.role === 'user' ? 'var(--growth-line)' : 'var(--border-hairline)'}`,
-                color: 'var(--text-primary)'
-              }}
-            >
-              {m.content}
-            </motion.div>
-          ))}
-        </AnimatePresence>
-        {sending && (
-          <div style={{ alignSelf: 'flex-start', color: 'var(--text-tertiary)', fontSize: '0.875rem', fontStyle: 'italic' }}>
-            thinking…
-          </div>
-        )}
+        <div
+          ref={scrollRef}
+          style={{
+            overflow: 'hidden',
+            overflowY: 'auto',
+            minHeight: 0,
+            maxHeight: '320px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '10px'
+          }}
+        >
+          <AnimatePresence initial={false}>
+            {messages.map((m, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                style={{
+                  alignSelf: m.role === 'user' ? 'flex-end' : 'flex-start',
+                  maxWidth: '85%',
+                  padding: '10px 14px',
+                  borderRadius: 'var(--radius-md)',
+                  fontSize: '0.9375rem',
+                  lineHeight: 1.5,
+                  background: m.role === 'user' ? 'var(--growth-dim)' : 'var(--bg-surface-sunken)',
+                  border: `1px solid ${m.role === 'user' ? 'var(--growth-line)' : 'var(--border-hairline)'}`,
+                  color: 'var(--text-primary)'
+                }}
+              >
+                {m.content}
+              </motion.div>
+            ))}
+          </AnimatePresence>
+          {sending && (
+            <div style={{ alignSelf: 'flex-start', color: 'var(--text-tertiary)', fontSize: '0.875rem', fontStyle: 'italic' }}>
+              thinking…
+            </div>
+          )}
+        </div>
       </div>
 
       {messages.length === 0 && (
