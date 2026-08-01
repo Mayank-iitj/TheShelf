@@ -112,3 +112,14 @@ CREATE TABLE reviews (
 CREATE TABLE app_state (             -- the simulation clock
   key TEXT PRIMARY KEY, value TEXT   -- 'current_day' -> '21'
 );
+
+CREATE TABLE proofs (               -- Proof of Action submissions
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER,
+  delivery_id TEXT,
+  day INTEGER,
+  proof_type TEXT,                  -- url | text | code
+  proof_content TEXT,               -- URL or text content
+  verified INTEGER DEFAULT 1,       -- auto-verified for now
+  created_at TEXT
+);

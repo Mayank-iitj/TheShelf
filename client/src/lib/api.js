@@ -99,3 +99,24 @@ export async function submitOnboarding(answers) {
     body: JSON.stringify({ answers })
   });
 }
+
+export async function submitProof(delivery_id, proof_type, proof_content) {
+  return api('/api/proof', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ delivery_id, proof_type, proof_content })
+  });
+}
+
+export async function fetchPassport() {
+  const API_BASE = import.meta.env.VITE_API_URL || '';
+  const res = await fetch(`${API_BASE}/api/passport`);
+  if (!res.ok) throw new Error('Failed to fetch passport');
+  const blob = await res.blob();
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'identity_passport.json';
+  a.click();
+  window.URL.revokeObjectURL(url);
+}

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { fetchShelf, fetchTwin } from '../lib/api';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { motion } from 'framer-motion';
-import { Sprout, Flame, GitCompare } from 'lucide-react';
+import { Sprout, Flame, GitCompare, ShieldAlert, Sparkles, TrendingDown, TrendingUp, Clock, Award } from 'lucide-react';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -120,6 +120,7 @@ function Twin({ day }) {
         </div>
       </div>
 
+<<<<<<< HEAD
       <div style={{ borderTop: '1px solid var(--border-hairline)', paddingTop: '36px' }}>
         <h2 style={{ fontSize: '1.125rem', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}>
           <GitCompare size={17} style={{ color: 'var(--text-tertiary)' }} /> Divergence
@@ -144,6 +145,21 @@ function Twin({ day }) {
                 <div style={{ fontSize: '0.875rem' }}>Not enough days logged yet to chart divergence.</div>
               </div>
             )}
+=======
+      <div style={{ borderTop: '1px solid var(--border-rule)', paddingTop: '40px', marginBottom: '60px' }}>
+        <h2>Divergence</h2>
+        <div style={{ display: 'flex', gap: '48px', alignItems: 'center', marginBottom: '24px' }}>
+          <div style={{ height: '250px', flex: 1, background: 'var(--bg-card)', padding: '24px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-rule)' }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={series} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
+                <XAxis dataKey="day" stroke="var(--text-muted)" />
+                <YAxis domain={['auto', 'auto']} stroke="var(--text-muted)" />
+                <Tooltip contentStyle={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border-rule)', borderRadius: '6px' }} />
+                <Line type="monotone" dataKey="potential" stroke="var(--accent-cyan)" strokeWidth={3} dot={false} />
+                <Line type="monotone" dataKey="attention_potential" stroke="var(--accent-orange)" strokeWidth={3} dot={false} strokeDasharray="5 5" />
+              </LineChart>
+            </ResponsiveContainer>
+>>>>>>> aa2f4c2 (feat: Add Profile section, 5 judge-impressing features, and SaaS dashboard UI/UX overhaul)
           </div>
 
           <div style={{ width: '210px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -156,6 +172,68 @@ function Twin({ day }) {
               <div className="mono" style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--text-primary)' }}>{artifactsReclaimed}</div>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* Feature 4: Live Counterfactual Timeline ("Algorithm vs You") */}
+      <div style={{ borderTop: '1px solid var(--border-rule)', paddingTop: '40px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '24px' }}>
+          <Sparkles style={{ color: 'var(--accent-cyan)' }} size={24} />
+          <h2 style={{ margin: 0 }}>Counterfactual 60-Day Projections</h2>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px' }}>
+          {/* Path A: Algorithmic Traps */}
+          <motion.div 
+            whileHover={{ y: -4 }}
+            className="card"
+            style={{
+              background: 'rgba(239, 68, 68, 0.05)',
+              borderColor: 'rgba(239, 68, 68, 0.3)',
+              borderRadius: '16px',
+              padding: '28px'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#ef4444', fontWeight: 600, marginBottom: '12px' }}>
+              <TrendingDown size={20} />
+              <span>Standard Algorithmic Feeds</span>
+            </div>
+            <h3 style={{ fontSize: '1.25rem', marginBottom: '12px', color: '#f87171' }}>The Default Trap</h3>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: 1.5, marginBottom: '20px' }}>
+              Infinite scroll & engagement-optimized recommendation loops continuously degrade baseline cognitive endurance.
+            </p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.9rem', color: '#fca5a5' }} className="mono">
+              <div>• 148 Hours Lost to Doomscrolling</div>
+              <div>• 0 Proof of Action Artifacts Built</div>
+              <div>• Potential Index Decay: -180 pts</div>
+            </div>
+          </motion.div>
+
+          {/* Path B: The Shelf Agent */}
+          <motion.div 
+            whileHover={{ y: -4 }}
+            className="card"
+            style={{
+              background: 'rgba(33, 210, 237, 0.05)',
+              borderColor: 'rgba(33, 210, 237, 0.3)',
+              borderRadius: '16px',
+              padding: '28px'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--accent-cyan)', fontWeight: 600, marginBottom: '12px' }}>
+              <TrendingUp size={20} />
+              <span>The Shelf Agent Curation</span>
+            </div>
+            <h3 style={{ fontSize: '1.25rem', marginBottom: '12px', color: 'var(--accent-cyan)' }}>Active Potential Mastery</h3>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: 1.5, marginBottom: '20px' }}>
+              Capped at 3 daily items with autonomous withhold decisions, aligning every item with your Identity Ledger.
+            </p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.9rem', color: 'var(--accent-cyan)' }} className="mono">
+              <div>• 52 Hours High-Yield Focus Reclaimed</div>
+              <div>• 14 Verified Artifacts Built</div>
+              <div>• Potential Index Growth: +340 pts</div>
+            </div>
+          </motion.div>
         </div>
       </div>
     </motion.div>

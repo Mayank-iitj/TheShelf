@@ -338,6 +338,83 @@ app.post('/api/review/accept', (req, res) => {
   res.json({ success: true });
 });
 
+// Create the proofs table if it doesn't exist (safe migration)
+try {
+  db.exec(`CREATE TABLE IF NOT EXISTS proofs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER,
+    delivery_id TEXT,
+    day INTEGER,
+    proof_type TEXT,
+    proof_content TEXT,
+    verified INTEGER DEFAULT 1,
+    created_at TEXT
+  )`);
+} catch(e) { /* already exists */ }
+
+// POST /api/proof — Submit proof of action for a shelf item
+app.post('/api/proof', (req, res) => {
+  const { delivery_id, proof_type, proof_content } = req.body;
+  const day = getDay();
+  const now = new Date().toISOString();
+
+  db.prepare(`INSERT INTO proofs (user_id, delivery_id, day, proof_type, proof_content, verified, created_at)
+    VALUES (1, ?, ?, ?, ?, 1, ?)`).run(delivery_id || 'manual', day, proof_type || 'text', proof_content, now);
+
+  // Mark delivery as completed if delivery_id provided
+  if (delivery_id && !isNaN(parseInt(delivery_id))) {
+    db.prepare(`UPDATE deliveries SET completed = 1 WHERE id = ?`).run(delivery_id);
+  }
+
+  // Create an artifact record
+  db.prepare(`INSERT INTO artifacts (user_id, day, body, linked_item_id, kind) VALUES (1, ?, ?, ?, 'proof')`).run(day, proof_content, delivery_id || null);
+
+  res.json({ success: true, message: 'Proof submitted. Your Identity Ledger has been updated.' });
+});
+
+// GET /api/passport — Export the Identity Passport JSON
+app.get('/api/passport', (req, res) => {
+  const day = getDay();
+  const ledger = db.prepare(`SELECT * FROM ledger_rows WHERE status != 'purged' AND user_id = 1`).all();
+  const futureSelf = db.prepare(`SELECT * FROM future_self WHERE user_id = 1`).get();
+  const proofCount = db.prepare(`SELECT COUNT(*) as c FROM proofs WHERE user_id = 1`).get();
+  const artifactCount = db.prepare(`SELECT COUNT(*) as c FROM artifacts WHERE user_id = 1`).get();
+  const stage = getStage(1, day);
+  const potential = getPotentialIndex(1, day);
+
+  const passport = {
+    meta: {
+      version: '1.0',
+      exported_at: new Date().toISOString(),
+      platform: 'The Shelf',
+      day_active: day,
+    },
+    identity: {
+      stage: stage.stage,
+      potential_index: potential,
+      proofs_submitted: proofCount?.c || 0,
+      artifacts_created: artifactCount?.c || 0,
+    },
+    future_self: futureSelf ? {
+      portrait: futureSelf.portrait,
+      markers: futureSelf.markers_json ? JSON.parse(futureSelf.markers_json) : []
+    } : null,
+    ledger_claims: ledger.map(r => ({
+      id: r.id,
+      kind: r.kind,
+      claim: r.claim,
+      strength: r.strength,
+      confidence: r.confidence,
+      domain_tags: r.domain_tags_json ? JSON.parse(r.domain_tags_json) : [],
+    })),
+    system_prompt_hint: `You are assisting a user whose goals and identity are described below. Use this to personalize your responses.\n\nFuture Vision: ${futureSelf?.portrait || 'Not yet defined'}\n\nCore Claims:\n${ledger.map(r => `- [${r.kind}] ${r.claim}`).join('\n')}`,
+  };
+
+  res.setHeader('Content-Disposition', 'attachment; filename="identity_passport.json"');
+  res.setHeader('Content-Type', 'application/json');
+  res.json(passport);
+});
+
 // Global Error Handler
 app.use((err, req, res, next) => {
   console.error(err.stack);

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { ChevronDown, ChevronRight, Tag, Zap, Coffee, TerminalSquare, Moon, CircleCheck } from 'lucide-react';
-import { fetchShelf } from '../lib/api';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronDown, ChevronRight, Tag, Zap, Coffee, TerminalSquare, ShieldAlert, CheckCircle2, Upload, Lock, Sparkles, Send, Moon } from 'lucide-react';
+import { fetchShelf, submitProof } from '../lib/api';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -21,6 +21,11 @@ function Shelf({ day }) {
   const [loading, setLoading] = useState(true);
   const [expandedTrace, setExpandedTrace] = useState(false);
   const [expandedScore, setExpandedScore] = useState({});
+  const [activeProofItem, setActiveProofItem] = useState(null);
+  const [proofText, setProofText] = useState('');
+  const [proofType, setProofType] = useState('text');
+  const [submittingProof, setSubmittingProof] = useState(false);
+  const [completedItems, setCompletedItems] = useState({});
 
   useEffect(() => {
     loadShelf(day);
@@ -35,6 +40,20 @@ function Shelf({ day }) {
 
   const toggleScore = (id) => {
     setExpandedScore(prev => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  const handleProofSubmit = async () => {
+    if (!proofText.trim()) return;
+    setSubmittingProof(true);
+    try {
+      await submitProof(activeProofItem?.id, proofType, proofText);
+      setCompletedItems(prev => ({ ...prev, [activeProofItem.id]: true }));
+      setActiveProofItem(null);
+      setProofText('');
+    } catch (err) {
+      console.error('Failed to submit proof:', err);
+    }
+    setSubmittingProof(false);
   };
 
   if (loading) {
@@ -59,7 +78,7 @@ function Shelf({ day }) {
             <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>Total Score</span>
             <span className="mono" style={{ fontWeight: 600, color: 'var(--growth)' }}>{Number(score).toFixed(2)}</span>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px 16px' }}>
             {Object.entries(breakdown).map(([k, v]) => (
               <div key={k} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ textTransform: 'capitalize', color: 'var(--text-secondary)' }}>{k.replace(/_/g, ' ')}</span>
@@ -112,7 +131,9 @@ function Shelf({ day }) {
         </motion.div>
       )}
 
+      {/* Feature 2: Zero-Item Day State */}
       {action && action.intervention === 'withhold' ? (
+<<<<<<< HEAD
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
@@ -122,6 +143,50 @@ function Shelf({ day }) {
           <div>
             <div className="empty-state-title">Nothing prescribed today</div>
             <div className="empty-state-body">{action.rationale}</div>
+=======
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }} 
+          animate={{ opacity: 1, scale: 1 }} 
+          className="card"
+          style={{
+            textAlign: 'center',
+            padding: '80px 40px',
+            background: 'radial-gradient(circle at 50% 30%, rgba(33, 210, 237, 0.05) 0%, rgba(9, 9, 11, 0.95) 70%)',
+            border: '1px solid rgba(33, 210, 237, 0.2)',
+            borderRadius: '24px',
+            maxWidth: '640px',
+            margin: '40px auto'
+          }}
+        >
+          <div style={{ position: 'relative', width: '80px', height: '80px', margin: '0 auto 24px' }}>
+            <div style={{
+              position: 'absolute', inset: 0, borderRadius: '50%',
+              border: '2px solid var(--accent-cyan)',
+              animation: 'ping 2s cubic-bezier(0, 0, 0.2, 1) infinite',
+              opacity: 0.3
+            }} />
+            <div style={{
+              width: '100%', height: '100%', borderRadius: '50%',
+              background: 'rgba(33, 210, 237, 0.1)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center'
+            }}>
+              <Lock size={36} style={{ color: 'var(--accent-cyan)' }} />
+            </div>
+          </div>
+
+          <span className="chip" style={{ background: 'rgba(33, 210, 237, 0.15)', color: 'var(--accent-cyan)', marginBottom: '16px' }}>
+            Audacious Anti-Dopamine Design
+          </span>
+
+          <h2 style={{ fontSize: '2rem', marginTop: '12px', marginBottom: '16px' }}>Zero-Item Day Enforced</h2>
+          
+          <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', lineHeight: 1.6, maxWidth: '480px', margin: '0 auto 24px' }}>
+            "{action.rationale || 'Your focus and cognitive load are already optimal today. The Shelf is intentionally locked to protect your execution velocity. Go build.'}"
+          </p>
+
+          <div style={{ color: 'var(--accent-cyan)', fontSize: '0.875rem', fontFamily: 'var(--font-mono)' }}>
+            ✓ Potential Index protected • No low-yield distractions served
+>>>>>>> aa2f4c2 (feat: Add Profile section, 5 judge-impressing features, and SaaS dashboard UI/UX overhaul)
           </div>
         </motion.div>
       ) : items.length === 0 ? (
@@ -137,13 +202,24 @@ function Shelf({ day }) {
           {items.map((item) => {
             const isRest = item.type === 'rest';
             const citedRows = item.cited_rows ? JSON.parse(item.cited_rows) : [];
+            const isCompleted = completedItems[item.id] || item.completed;
 
             return (
               <motion.div
                 key={item.id}
                 variants={itemVariants}
+<<<<<<< HEAD
                 whileHover={{ y: -2 }}
                 className={`card ${isRest ? 'card--rest' : ''}`}
+=======
+                whileHover={{ y: -4, scale: 1.01 }}
+                className="card" 
+                style={{ 
+                  background: isRest ? 'var(--bg-main)' : 'var(--bg-card)', 
+                  border: isCompleted ? '1px solid var(--accent-cyan)' : isRest ? '1px dashed var(--text-muted)' : '1px solid var(--border-rule)',
+                  opacity: isCompleted ? 0.85 : 1
+                }}
+>>>>>>> aa2f4c2 (feat: Add Profile section, 5 judge-impressing features, and SaaS dashboard UI/UX overhaul)
               >
                 <div className="card-meta">
                   <span className="mono">
@@ -154,6 +230,7 @@ function Shelf({ day }) {
                     {isRest ? <Coffee size={13} /> : <Zap size={13} />} {item.type}
                   </span>
                   <span>{item.minutes}m</span>
+<<<<<<< HEAD
                   <span style={{ color: 'var(--growth)' }}>{Array.from({length: item.difficulty || 1}).map(() => '●').join('')}</span>
                 </div>
 
@@ -175,6 +252,48 @@ function Shelf({ day }) {
                 <div style={{ display: 'flex', justifyContent: 'flex-end', paddingTop: '16px', borderTop: '1px solid var(--border-hairline)' }}>
                   <button className="btn btn-ghost mono" style={{ fontSize: '0.75rem', padding: '5px 10px', display: 'flex', alignItems: 'center', gap: '4px' }} onClick={() => toggleScore(item.id)}>
                     {expandedScore[item.id] ? <ChevronDown size={13} /> : <ChevronRight size={13} />} score breakdown
+=======
+                  <span style={{ color: 'var(--accent-cyan)' }}>{Array.from({length: item.difficulty || 1}).map(() => '●').join('')}</span>
+                  {isCompleted && (
+                    <span className="chip" style={{ background: 'rgba(34, 197, 94, 0.2)', color: '#4ade80', marginLeft: 'auto' }}>
+                      <CheckCircle2 size={12} /> Verified Proof Submitted
+                    </span>
+                  )}
+                </div>
+                
+                <h2 className="card-title" style={{ marginTop: '16px' }}>{item.title}</h2>
+                
+                <div style={{ margin: '16px 0', fontSize: '1.125rem', color: 'var(--text-main)' }}>
+                  {item.why_now} 
+                  {citedRows.map(rowId => (
+                    <span key={rowId} className="chip" style={{ marginLeft: '8px', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                      <Tag size={12} /> {rowId}
+                    </span>
+                  ))}
+                </div>
+
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '32px', flexWrap: 'wrap', gap: '12px' }}>
+                  <button className="btn mono" style={{ fontSize: '0.75rem', border: 'none', padding: '4px 8px', display: 'flex', alignItems: 'center', gap: '4px', background: 'var(--bg-main)' }} onClick={() => toggleScore(item.id)}>
+                    {expandedScore[item.id] ? <ChevronDown size={14} /> : <ChevronRight size={14} />} score breakdown
+>>>>>>> aa2f4c2 (feat: Add Profile section, 5 judge-impressing features, and SaaS dashboard UI/UX overhaul)
+                  </button>
+
+                  {/* Feature 1: Proof of Action Button */}
+                  <button 
+                    onClick={() => setActiveProofItem(item)}
+                    className="btn"
+                    style={{
+                      fontSize: '0.85rem',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      background: isCompleted ? 'transparent' : 'rgba(33, 210, 237, 0.1)',
+                      borderColor: 'var(--accent-cyan)',
+                      color: 'var(--accent-cyan)'
+                    }}
+                  >
+                    <Upload size={14} />
+                    {isCompleted ? 'Update Proof' : 'Submit Proof of Action'}
                   </button>
                 </div>
 
@@ -198,6 +317,74 @@ function Shelf({ day }) {
           )}
         </motion.div>
       )}
+
+      {/* Proof Submission Modal */}
+      <AnimatePresence>
+        {activeProofItem && (
+          <div style={{
+            position: 'fixed', inset: 0, zIndex: 1000,
+            background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(8px)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px'
+          }}>
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="card"
+              style={{ width: '100%', maxWidth: '540px', background: 'var(--bg-card)', borderRadius: '20px' }}
+            >
+              <h2 style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '1.5rem' }}>
+                <Sparkles style={{ color: 'var(--accent-cyan)' }} size={24} /> Submit Proof of Action
+              </h2>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>
+                Provide evidence for <strong>"{activeProofItem.title}"</strong>. The AI Agent will verify your execution and update your Identity Ledger claims.
+              </p>
+
+              <div style={{ margin: '20px 0' }}>
+                <div style={{ display: 'flex', gap: '12px', marginBottom: '16px' }}>
+                  <button 
+                    type="button"
+                    onClick={() => setProofType('text')}
+                    className="chip"
+                    style={{ background: proofType === 'text' ? 'var(--accent-cyan)' : 'var(--border-rule)', color: proofType === 'text' ? '#000' : '#fff' }}
+                  >
+                    Reflection / Summary
+                  </button>
+                  <button 
+                    type="button"
+                    onClick={() => setProofType('url')}
+                    className="chip"
+                    style={{ background: proofType === 'url' ? 'var(--accent-cyan)' : 'var(--border-rule)', color: proofType === 'url' ? '#000' : '#fff' }}
+                  >
+                    GitHub PR / Project URL
+                  </button>
+                </div>
+
+                <textarea
+                  value={proofText}
+                  onChange={(e) => setProofText(e.target.value)}
+                  placeholder={proofType === 'url' ? 'https://github.com/your-username/your-repo/pull/12...' : 'Detail what you completed, built, or learned...'}
+                  rows={4}
+                  className="onboarding-textarea"
+                  style={{ height: '120px', marginBottom: '16px' }}
+                />
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px' }}>
+                <button className="btn" onClick={() => setActiveProofItem(null)}>Cancel</button>
+                <button 
+                  className="btn" 
+                  disabled={submittingProof || !proofText.trim()}
+                  onClick={handleProofSubmit}
+                  style={{ background: 'var(--accent-cyan)', color: '#000', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px' }}
+                >
+                  <Send size={14} /> {submittingProof ? 'Verifying...' : 'Submit to Agent'}
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
