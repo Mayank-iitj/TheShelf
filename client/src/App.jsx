@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { LayoutDashboard, Activity, BookOpen, UserCircle, CalendarClock, User, ShieldCheck, Cpu } from 'lucide-react';
 import './styles.css';
-import { setClock, fetchPotential, fetchStage } from './lib/api';
+import { setClock, fetchPotential, fetchStage, fetchFutureSelf } from './lib/api';
 import Landing from './screens/Landing';
 import Shelf from './screens/Shelf';
 import Twin from './screens/Twin';
@@ -154,16 +154,34 @@ function App() {
   const [onboarded, setOnboarded] = useState(false);
 
   useEffect(() => {
+    async function checkOnboarding() {
+      try {
+        const fs = await fetchFutureSelf();
+        if (fs && fs.portrait) {
+          setOnboarded(true);
+        }
+      } catch (err) {
+        console.error("Checking onboarding failed:", err);
+      }
+    }
+    checkOnboarding();
+  }, []);
+
+  useEffect(() => {
     if (onboarded) {
       loadGlobalState(day);
     }
   }, [day, onboarded]);
 
   async function loadGlobalState(d) {
-    const p = await fetchPotential(d);
-    setPotential(p.index);
-    const s = await fetchStage(d);
-    setStage(s);
+    try {
+      const p = await fetchPotential(d);
+      setPotential(p.index);
+      const s = await fetchStage(d);
+      setStage(s);
+    } catch (err) {
+      console.error("Error loading global state:", err);
+    }
   }
 
   function handleScrubberChange(e) {
