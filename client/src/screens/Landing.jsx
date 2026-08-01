@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, ChevronDown, Zap, BookOpen, Activity, UserCircle, Brain, Shield } from 'lucide-react';
+import { ArrowRight, ChevronDown, Zap, BookOpen, Activity, UserCircle, Brain, Shield, Cpu, Mic, Compass, Lock, FileText } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import FlowingMenu from '../components/FlowingMenu';
 import FallingText from '../components/FallingText';
@@ -9,6 +9,8 @@ import CircularGallery from '../components/CircularGallery';
 import RotatingText from '../components/RotatingText';
 import ScrollVelocity from '../components/ScrollVelocity';
 import TrueFocus from '../components/TrueFocus';
+import ScrollReveal from '../components/ScrollReveal';
+import ScrambledText from '../components/ScrambledText';
 import PlasmaWave from '../components/PlasmaWave';
 import StaggeredMenu from '../components/StaggeredMenu';
 import Aurora from '../components/Aurora';
@@ -110,6 +112,36 @@ export default function Landing() {
       desc: 'Built around long-term fulfillment. No infinite scroll. No engagement traps. An empty day is a valid output.',
       tag: 'Philosophy',
     },
+    {
+      icon: <Cpu size={28} style={{ color: 'var(--accent-cyan)' }} />,
+      label: 'Supreme Master Agent',
+      desc: 'Consolidates all sub-agents into a unified Master Alignment Score, executive status tracking, and strategic directives.',
+      tag: 'AI Orchestrator',
+    },
+    {
+      icon: <Mic size={28} />,
+      label: 'Voice Onboarding',
+      desc: 'Talk to the assistant via Web Speech API; it compiles your spoken career goals into structured ledger claims.',
+      tag: 'Interface',
+    },
+    {
+      icon: <Compass size={28} />,
+      label: '60-Day Projections',
+      desc: 'Side-by-side counterfactual predictions demonstrating your growth potential compared to the default algorithm trap.',
+      tag: 'Projections',
+    },
+    {
+      icon: <Lock size={28} />,
+      label: 'Zero-Item Day Shield',
+      desc: 'Automatically locks the platform when focus is already optimal, saving your mind from dopamine decay.',
+      tag: 'Defense',
+    },
+    {
+      icon: <FileText size={28} />,
+      label: 'Portable Passport',
+      desc: 'One-click export of your verified identity as JSON. Portable parameters to boot-seed external AI agents.',
+      tag: 'Sovereignty',
+    }
   ];
 
   const steps = [
@@ -452,9 +484,15 @@ export default function Landing() {
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '100px', padding: '6px 16px', fontSize: '0.8rem', marginBottom: '24px' }}>
               ✦ How It Works
             </div>
-            <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 700, letterSpacing: '-0.04em', margin: 0 }}>
-              The process of<br />becoming
-            </h2>
+            <ScrollReveal
+              baseOpacity={0}
+              enableBlur={true}
+              baseRotation={5}
+              blurStrength={10}
+              containerClassName="text-gradient"
+            >
+              The process of becoming
+            </ScrollReveal>
           </motion.div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '2px' }}>
@@ -470,6 +508,19 @@ export default function Landing() {
               <p style={{ color: 'rgba(255,255,255,0.4)', lineHeight: 1.7, margin: 0, fontSize: '0.9rem' }}>{s.desc}</p>
             </motion.div>
           ))}
+          </div>
+
+          <div style={{ marginTop: '64px', display: 'flex', justifyContent: 'center' }}>
+            <ScrambledText
+              className="scrambled-text-demo text-gradient"
+              radius={120}
+              duration={1.5}
+              speed={0.4}
+              scrambleChars=".:!?*#%&"
+              style={{ fontSize: '1.25rem', fontFamily: 'var(--font-mono)', textAlign: 'center', maxWidth: '720px', lineHeight: 1.7 }}
+            >
+              "When does a man die? When he is hit by a bullet? No! When he suffers a disease? No! When he ate a soup made out of a poisonous mushroom? No! A man dies when he is forgotten!" — The Shelf keeps your core aspirations alive so you never forget who you imagine becoming.
+            </ScrambledText>
           </div>
         </div>
       </section>

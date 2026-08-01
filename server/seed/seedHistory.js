@@ -34,7 +34,10 @@ function seedHistory() {
       { id: 'L06', kind: 'constraint', claim: 'I only have 2 hours a day on weekdays', domain_tags: ['learning-how-to-learn'], confidence: 0.9, provenance: 'Stated in interview.', source: 'interview', status: 'active', strength: 0.8, created_day: 1, updated_day: 1 },
       { id: 'L07', kind: 'aspiration', claim: 'I want to get into competitive programming', domain_tags: ['algorithms'], confidence: 0.5, provenance: 'Stated in interview as a side interest.', source: 'interview', status: 'purged', strength: 0.0, created_day: 1, updated_day: 18 },
       { id: 'L08', kind: 'tension', claim: 'You say you want to learn databases deeply, but you spend time watching Docker tutorials', domain_tags: ['databases', 'deployment'], confidence: 0.8, provenance: 'Inferred from interview contradiction.', source: 'interview', status: 'active', strength: 0.6, created_day: 1, updated_day: 1 },
-      { id: 'L09', kind: 'preference', claim: 'I learn by building, not by reading — deliver me challenges before essays', domain_tags: ['learning-how-to-learn'], confidence: 0.9, provenance: 'Accepted from day 14 weekly review based on artifact pattern.', source: 'user_edit', status: 'active', strength: 0.9, created_day: 14, updated_day: 14 }
+      { id: 'L09', kind: 'preference', claim: 'I learn by building, not by reading — deliver me challenges before essays', domain_tags: ['learning-how-to-learn'], confidence: 0.9, provenance: 'Accepted from day 14 weekly review based on artifact pattern.', source: 'user_edit', status: 'active', strength: 0.9, created_day: 14, updated_day: 14 },
+      { id: 'L10', kind: 'competence', claim: 'I can deploy docker container environments manually', domain_tags: ['deployment'], confidence: 0.95, provenance: 'Observed and verified via Docker build logs submission.', source: 'user_edit', status: 'active', strength: 0.95, created_day: 6, updated_day: 6 },
+      { id: 'L11', kind: 'aspiration', claim: 'I want to master Redis caching strategies', domain_tags: ['distributed-systems'], confidence: 0.85, provenance: 'Claimed after building Redis limiter middleware.', source: 'user_edit', status: 'active', strength: 0.85, created_day: 13, updated_day: 13 },
+      { id: 'L12', kind: 'tension', claim: 'Stated goal to write clean APIs contradicts high complexity logs in limiter middleware', domain_tags: ['api-design'], confidence: 0.75, provenance: 'Spotted by Weekly Review agent.', source: 'system_inferred', status: 'active', strength: 0.5, created_day: 15, updated_day: 15 }
     ];
 
     const insertRow = db.prepare(`INSERT INTO ledger_rows (id, user_id, kind, claim, domain_tags, confidence, provenance, source, status, strength, created_day, updated_day) VALUES (@id, 1, @kind, @claim, @domain_tags, @confidence, @provenance, @source, @status, @strength, @created_day, @updated_day)`);
@@ -45,11 +48,17 @@ function seedHistory() {
     // 4. Ledger Events (The Trail)
     const ledgerEvents = [
       // Day 1 creations
-      ...ledgerRows.filter(r => r.id !== 'L09').map(r => ({ day: 1, row_id: r.id, event: 'created', before: null, after: r, rationale: 'Created during onboarding interview' })),
+      ...ledgerRows.filter(r => !['L09', 'L10', 'L11', 'L12'].includes(r.id)).map(r => ({ day: 1, row_id: r.id, event: 'created', before: null, after: r, rationale: 'Created during onboarding interview' })),
+      // Day 6 L10 created
+      { day: 6, row_id: 'L10', event: 'created', before: null, after: ledgerRows.find(r => r.id === 'L10'), rationale: 'Implicitly verified via Docker build artifact.' },
       // Day 12 L03 dormant
       { day: 12, row_id: 'L03', event: 'dormant', before: { ...ledgerRows.find(r => r.id === 'L03'), status: 'active', strength: 0.3 }, after: ledgerRows.find(r => r.id === 'L03'), rationale: 'Stated four times, zero completions or artifacts in 12 days.' },
+      // Day 13 L11 created
+      { day: 13, row_id: 'L11', event: 'created', before: null, after: ledgerRows.find(r => r.id === 'L11'), rationale: 'User accepted Redis aspiration suggestion.' },
       // Day 14 L09 created
       { day: 14, row_id: 'L09', event: 'created', before: null, after: ledgerRows.find(r => r.id === 'L09'), rationale: 'Accepted by user during Day 14 review' },
+      // Day 15 L12 created
+      { day: 15, row_id: 'L12', event: 'created', before: null, after: ledgerRows.find(r => r.id === 'L12'), rationale: 'System detected high-complexity API design contradiction.' },
       // Day 18 L07 purged
       { day: 18, row_id: 'L07', event: 'purged', before: { ...ledgerRows.find(r => r.id === 'L07'), status: 'active', strength: 0.4 }, after: ledgerRows.find(r => r.id === 'L07'), rationale: 'User clicked "I am not that person anymore"' }
     ];
@@ -71,7 +80,13 @@ function seedHistory() {
       { id: 'H01', pattern: 'You start at 22:40 on weeknights and stop after 18 minutes', metric: 'time_of_day', value_json: JSON.stringify({ median_start: '22:40', median_minutes: 18 }), evidence_days: 14, confidence: 0.8, contradicts_row: null, first_day: 5, updated_day: 21 },
       { id: 'H02', pattern: 'Nothing over 25 minutes has ever been finished', metric: 'dropoff', value_json: JSON.stringify({ max_completed_minutes: 24 }), evidence_days: 21, confidence: 0.9, contradicts_row: 'L03', first_day: 7, updated_day: 21 },
       { id: 'H03', pattern: 'You finish 70% of experiences and 20% of ideas', metric: 'modality', value_json: JSON.stringify({ experience_rate: 0.7, idea_rate: 0.2 }), evidence_days: 21, confidence: 0.85, contradicts_row: null, first_day: 14, updated_day: 21 },
-      { id: 'H04', pattern: 'opened 4, finished 0, over 12 days', metric: 'modality', value_json: JSON.stringify({ papers_opened: 4, papers_finished: 0 }), evidence_days: 12, confidence: 0.9, contradicts_row: 'L03', first_day: 1, updated_day: 12 }
+      { id: 'H04', pattern: 'opened 4, finished 0, over 12 days', metric: 'modality', value_json: JSON.stringify({ papers_opened: 4, papers_finished: 0 }), evidence_days: 12, confidence: 0.9, contradicts_row: 'L03', first_day: 1, updated_day: 12 },
+      { id: 'H05', pattern: 'You commit code mostly between 09:00 and 11:00 on Saturdays', metric: 'time_of_day', value_json: JSON.stringify({ window: 'morning' }), evidence_days: 3, confidence: 0.75, contradicts_row: null, first_day: 7, updated_day: 21 },
+      { id: 'H06', pattern: '90% bounce rate on deployment video guides', metric: 'bounce_rate', value_json: JSON.stringify({ bounce: 0.9 }), evidence_days: 10, confidence: 0.8, contradicts_row: null, first_day: 10, updated_day: 21 },
+      { id: 'H07', pattern: 'You spend 40 mins on API design exercises but skip math logic', metric: 'topic_focus', value_json: JSON.stringify({ api_time: 40 }), evidence_days: 6, confidence: 0.82, contradicts_row: null, first_day: 15, updated_day: 21 },
+      { id: 'H08', pattern: 'Active learning streak matches rate limiter challenges', metric: 'streak', value_json: JSON.stringify({ current_streak: 5 }), evidence_days: 5, confidence: 0.88, contradicts_row: null, first_day: 13, updated_day: 21 },
+      { id: 'H09', pattern: 'Docker tutorial retention is 15% lower than active terminal tasks', metric: 'retention', value_json: JSON.stringify({ active: 0.8, passive: 0.65 }), evidence_days: 14, confidence: 0.84, contradicts_row: 'L08', first_day: 5, updated_day: 21 },
+      { id: 'H10', pattern: 'Weekly review action rate is 100% on suggested code changes', metric: 'acceptance', value_json: JSON.stringify({ reviews_responded: 2 }), evidence_days: 21, confidence: 0.95, contradicts_row: null, first_day: 7, updated_day: 21 }
     ];
     
     const insertHabit = db.prepare(`INSERT INTO habits (id, user_id, pattern, metric, value_json, evidence_days, confidence, contradicts_row, first_day, updated_day) VALUES (@id, 1, @pattern, @metric, @value_json, @evidence_days, @confidence, @contradicts_row, @first_day, @updated_day)`);
@@ -79,27 +94,38 @@ function seedHistory() {
       insertHabit.run(h);
     }
 
-    // 6. Artifacts (3 in days 8-14, 5 in days 15-21)
+    // 6. Artifacts (12 total items)
     const artifacts = [
       { day: 9, body: 'Wrote a basic HTTP server in Node without Express', linked_item_id: 'C014', kind: 'code' },
       { day: 11, body: 'Configured a local Postgres instance and ran some queries', linked_item_id: 'C010', kind: 'practice' },
       { day: 13, body: 'Built a simple rate limiter middleware', linked_item_id: 'C012', kind: 'project' },
       { day: 15, body: 'Deployed the rate limiter to a local Redis instance', linked_item_id: 'C011', kind: 'practice' },
+      { day: 16, body: 'Configured GitHub Actions workflow for autotesting API routes', linked_item_id: 'C017', kind: 'code' },
       { day: 17, body: 'Drafted an email to Sarah about observability', linked_item_id: 'C015', kind: 'conversation' },
       { day: 18, body: 'Reviewed the caching logic with David', linked_item_id: 'C016', kind: 'conversation' },
+      { day: 18, body: 'Implemented customized middleware log rotation config', linked_item_id: 'C018', kind: 'code' },
       { day: 19, body: 'Finished the query planner challenge', linked_item_id: 'C013', kind: 'code' },
-      { day: 21, body: 'Wrote a summary of the tradeoffs in distributed caching', linked_item_id: 'C005', kind: 'note' }
+      { day: 20, body: 'Set up Prometheus metric scrapers for node health', linked_item_id: 'C019', kind: 'practice' },
+      { day: 21, body: 'Wrote a summary of the tradeoffs in distributed caching', linked_item_id: 'C005', kind: 'note' },
+      { day: 21, body: 'Optimized PostgreSQL connection pool sizes for multi-tenant service', linked_item_id: 'C020', kind: 'code' }
     ];
     const insertArtifact = db.prepare(`INSERT INTO artifacts (user_id, day, body, linked_item_id, kind) VALUES (1, @day, @body, @linked_item_id, @kind)`);
     for (const a of artifacts) {
       insertArtifact.run(a);
     }
 
-    // 6b. Proofs of Action (Sample demo proofs)
+    // 6b. Proofs of Action (10 total verified proofs)
     const proofs = [
       { delivery_id: '1', day: 9, proof_type: 'url', proof_content: 'https://github.com/Mayank-iitj/TheShelf/pull/12', verified: 1, created_at: new Date().toISOString() },
+      { delivery_id: '2', day: 11, proof_type: 'text', proof_content: 'Configured local schema and successfully inserted mock logs using copy streams.', verified: 1, created_at: new Date().toISOString() },
       { delivery_id: '3', day: 13, proof_type: 'text', proof_content: 'Built a sliding window rate limiter in Express with unit tests covering 100 req/min edge cases.', verified: 1, created_at: new Date().toISOString() },
-      { delivery_id: '5', day: 19, proof_type: 'url', proof_content: 'https://github.com/Mayank-iitj/TheShelf/pull/44', verified: 1, created_at: new Date().toISOString() }
+      { delivery_id: '4', day: 15, proof_type: 'url', proof_content: 'https://github.com/Mayank-iitj/TheShelf/pull/22', verified: 1, created_at: new Date().toISOString() },
+      { delivery_id: '5', day: 19, proof_type: 'url', proof_content: 'https://github.com/Mayank-iitj/TheShelf/pull/44', verified: 1, created_at: new Date().toISOString() },
+      { delivery_id: '6', day: 16, proof_type: 'text', proof_content: 'Added yaml file under github/workflows, verified green build test execution.', verified: 1, created_at: new Date().toISOString() },
+      { delivery_id: '7', day: 18, proof_type: 'text', proof_content: 'Resolved memory leak in middleware log stream listener.', verified: 1, created_at: new Date().toISOString() },
+      { delivery_id: '8', day: 20, proof_type: 'url', proof_content: 'https://github.com/Mayank-iitj/TheShelf/pull/58', verified: 1, created_at: new Date().toISOString() },
+      { delivery_id: '9', day: 21, proof_type: 'text', proof_content: 'Analyzed LRU cache eviction complexity, benchmarked redis vs memory implementation.', verified: 1, created_at: new Date().toISOString() },
+      { delivery_id: '10', day: 21, proof_type: 'url', proof_content: 'https://github.com/Mayank-iitj/TheShelf/pull/62', verified: 1, created_at: new Date().toISOString() }
     ];
     const insertProof = db.prepare(`INSERT INTO proofs (user_id, delivery_id, day, proof_type, proof_content, verified, created_at) VALUES (1, @delivery_id, @day, @proof_type, @proof_content, @verified, @created_at)`);
     for (const p of proofs) {
