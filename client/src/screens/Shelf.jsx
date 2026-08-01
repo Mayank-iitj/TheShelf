@@ -1,5 +1,20 @@
 import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { ChevronDown, ChevronRight, Tag, Zap, Coffee, TerminalSquare } from 'lucide-react';
 import { fetchShelf } from '../lib/api';
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 24 } }
+};
 
 function Shelf({ day }) {
   const [data, setData] = useState({ items: [], action: null });
@@ -22,90 +37,119 @@ function Shelf({ day }) {
     setExpandedScore(prev => ({ ...prev, [id]: !prev[id] }));
   };
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div style={{ color: 'var(--text-muted)' }}>Loading the Shelf...</div>;
 
   const { items, action } = data;
 
   return (
-    <div className="fade-enter-active">
-      <h1 style={{ marginBottom: '40px' }}>Today's Shelf</h1>
+    <div>
+      <h1 style={{ marginBottom: '40px' }} className="text-gradient">Today's Shelf</h1>
 
       {action && (
-        <div style={{ marginBottom: '40px', paddingBottom: '24px', borderBottom: '1px solid var(--rule)' }}>
+        <motion.div 
+          initial={{ opacity: 0, height: 0 }} 
+          animate={{ opacity: 1, height: 'auto' }} 
+          style={{ marginBottom: '40px', paddingBottom: '24px', borderBottom: '1px solid var(--border-rule)', overflow: 'hidden' }}
+        >
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontWeight: 600 }} onClick={() => setExpandedTrace(!expandedTrace)}>
-            Today I chose to <em>{action.intervention}</em>. 
-            <span style={{ color: 'var(--dim)', fontSize: '0.875rem' }}>
-              {expandedTrace ? '▾' : '▸'} why
+            Today I chose to <em style={{ color: 'var(--accent-cyan)' }}>{action.intervention}</em>. 
+            <span style={{ color: 'var(--text-muted)', display: 'flex', alignItems: 'center' }}>
+              {expandedTrace ? <ChevronDown size={16} /> : <ChevronRight size={16} />} why
             </span>
           </div>
           {expandedTrace && (
-            <div style={{ marginTop: '16px', color: 'var(--dim)' }}>
+            <motion.div 
+              initial={{ opacity: 0, y: -10 }} 
+              animate={{ opacity: 1, y: 0 }} 
+              style={{ marginTop: '16px', color: 'var(--text-muted)' }}
+            >
               <p><strong>Rationale:</strong> {action.rationale}</p>
               {action.considered && action.considered.length > 0 && (
                 <div style={{ marginTop: '12px' }}>
                   <strong>Considered Alternatives:</strong>
-                  <ul style={{ paddingLeft: '20px', marginTop: '8px' }}>
+                  <ul style={{ paddingLeft: '20px', marginTop: '8px', listStyleType: 'square' }}>
                     {action.considered.map((alt, idx) => (
-                      <li key={idx}><em>{alt.intervention}</em>: {alt.rejected_because}</li>
+                      <li key={idx} style={{ marginBottom: '4px' }}><em>{alt.intervention}</em>: {alt.rejected_because}</li>
                     ))}
                   </ul>
                 </div>
               )}
-            </div>
+            </motion.div>
           )}
-        </div>
+        </motion.div>
       )}
 
       {action && action.intervention === 'withhold' ? (
-        <div style={{ textAlign: 'center', padding: '60px 0', color: 'var(--dim)', fontStyle: 'italic', fontSize: '1.25rem' }}>
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }} 
+          animate={{ opacity: 1, scale: 1 }} 
+          style={{ textAlign: 'center', padding: '60px 0', color: 'var(--text-muted)', fontStyle: 'italic', fontSize: '1.25rem' }}
+        >
           {action.rationale}
-        </div>
+        </motion.div>
       ) : (
-        <div className="cards-container">
-          {items.map((item, idx) => {
+        <motion.div variants={containerVariants} initial="hidden" animate="show" className="cards-container">
+          {items.map((item) => {
             const isRest = item.type === 'rest';
             const citedRows = item.cited_rows ? JSON.parse(item.cited_rows) : [];
 
             return (
-              <div key={item.id} className="card" style={{ background: isRest ? 'rgba(0,0,0,0.02)' : 'var(--paper)', border: isRest ? '1px dashed var(--dim)' : '1px solid var(--rule)' }}>
+              <motion.div 
+                key={item.id} 
+                variants={itemVariants}
+                whileHover={{ y: -4, scale: 1.01 }}
+                className="card" 
+                style={{ background: isRest ? 'var(--bg-main)' : 'var(--bg-card)', border: isRest ? '1px dashed var(--text-muted)' : '1px solid var(--border-rule)' }}
+              >
                 <div className="card-meta">
-                  <span className="mono">{item.id}</span>
+                  <span className="mono" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <TerminalSquare size={14} /> {item.id}
+                  </span>
                   <span>{item.source}</span>
-                  <span>{item.type}</span>
+                  <span style={{ display: 'flex', alignItems: 'center', gap: '4px', color: isRest ? 'var(--text-muted)' : 'var(--accent-orange)' }}>
+                    {isRest ? <Coffee size={14} /> : <Zap size={14} />} {item.type}
+                  </span>
                   <span>{item.minutes}m</span>
-                  <span>{Array.from({length: item.difficulty || 1}).map(() => '●').join('')}</span>
+                  <span style={{ color: 'var(--accent-cyan)' }}>{Array.from({length: item.difficulty || 1}).map(() => '●').join('')}</span>
                 </div>
                 
-                <h2 className="card-title">{item.title}</h2>
+                <h2 className="card-title" style={{ marginTop: '16px' }}>{item.title}</h2>
                 
-                <div style={{ margin: '16px 0', fontSize: '1.125rem' }}>
+                <div style={{ margin: '16px 0', fontSize: '1.125rem', color: 'var(--text-main)' }}>
                   {item.why_now} 
                   {citedRows.map(rowId => (
-                    <span key={rowId} className="chip" style={{ marginLeft: '8px' }}>[{rowId}]</span>
+                    <span key={rowId} className="chip" style={{ marginLeft: '8px', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                      <Tag size={12} /> {rowId}
+                    </span>
                   ))}
                 </div>
 
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '24px' }}>
-                  <button className="btn mono" style={{ fontSize: '0.75rem', border: 'none', padding: 0 }} onClick={() => toggleScore(item.id)}>
-                    {expandedScore[item.id] ? '▾' : '▸'} score
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '32px' }}>
+                  <button className="btn mono" style={{ fontSize: '0.75rem', border: 'none', padding: '4px 8px', display: 'flex', alignItems: 'center', gap: '4px', background: 'var(--bg-main)' }} onClick={() => toggleScore(item.id)}>
+                    {expandedScore[item.id] ? <ChevronDown size={14} /> : <ChevronRight size={14} />} score breakdown
                   </button>
                 </div>
                 
                 {expandedScore[item.id] && (
-                  <div style={{ marginTop: '16px', fontSize: '0.875rem', color: 'var(--dim)', background: 'rgba(0,0,0,0.03)', padding: '12px' }} className="mono">
-                    Score Breakdown: {item.score_breakdown ? item.score_breakdown : JSON.stringify({ score: item.score })}
-                  </div>
+                  <motion.div 
+                    initial={{ opacity: 0, height: 0 }} 
+                    animate={{ opacity: 1, height: 'auto' }} 
+                    style={{ marginTop: '16px', fontSize: '0.875rem', color: 'var(--text-muted)', background: 'var(--bg-main)', padding: '16px', borderRadius: 'var(--radius-sm)' }} 
+                    className="mono"
+                  >
+                    {item.score_breakdown ? item.score_breakdown : JSON.stringify({ score: item.score })}
+                  </motion.div>
                 )}
-              </div>
+              </motion.div>
             );
           })}
           
           {items.length > 0 && (
-            <div style={{ textAlign: 'center', marginTop: '40px', color: 'var(--dim)' }}>
+            <motion.div variants={itemVariants} style={{ textAlign: 'center', marginTop: '40px', color: 'var(--text-muted)' }}>
               That's everything for today.
-            </div>
+            </motion.div>
           )}
-        </div>
+        </motion.div>
       )}
     </div>
   );

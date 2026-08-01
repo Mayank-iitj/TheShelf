@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { submitOnboarding } from '../lib/api';
 
 const QUESTIONS = [
   "What are you trying to become good at, and why that?",
@@ -25,31 +26,33 @@ function Onboarding({ onComplete }) {
     if (step < QUESTIONS.length - 1) {
       setStep(step + 1);
     } else {
-      finishOnboarding();
+      finishOnboarding(newAnswers);
     }
   };
 
-  const finishOnboarding = () => {
+  const finishOnboarding = async (finalAnswers) => {
     setCommitting(true);
-    // Simulate LLM delay in deriving ledger rows
-    setTimeout(() => {
-      setCommitting(false);
-      onComplete();
-    }, 2000);
+    try {
+      await submitOnboarding(finalAnswers);
+    } catch (e) {
+      console.error("Onboarding failed:", e);
+    }
+    setCommitting(false);
+    onComplete();
   };
 
   if (committing) {
     return (
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', flexDirection: 'column' }}>
-        <h1 style={{ fontSize: '2rem', marginBottom: '24px' }}>Drafting your Ledger...</h1>
-        <div style={{ color: 'var(--dim)', fontFamily: 'var(--font-mono)' }}>Translating answers into measurable claims.</div>
+        <h1 style={{ fontSize: '2rem', marginBottom: '24px' }} className="text-gradient">Drafting your Ledger...</h1>
+        <div style={{ color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>Translating answers into measurable claims.</div>
       </div>
     );
   }
 
   return (
     <div className="fade-enter-active" style={{ maxWidth: '600px', margin: '100px auto' }}>
-      <div style={{ fontSize: '2rem', fontFamily: 'var(--font-display)', marginBottom: '40px', lineHeight: 1.4 }}>
+      <div style={{ fontSize: '2.5rem', fontFamily: 'var(--font-display)', marginBottom: '40px', lineHeight: 1.4, fontWeight: 700 }}>
         {QUESTIONS[step]}
       </div>
       
@@ -59,16 +62,17 @@ function Onboarding({ onComplete }) {
         onChange={e => setAnswer(e.target.value)}
         onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleNext(); } }}
         style={{ 
-          width: '100%', height: '150px', padding: '16px', fontSize: '1.125rem', 
-          fontFamily: 'var(--font-body)', border: '1px solid var(--rule)', 
-          background: 'var(--paper)', color: 'var(--ink)', resize: 'none',
-          marginBottom: '24px'
+          width: '100%', height: '150px', padding: '24px', fontSize: '1.25rem', 
+          fontFamily: 'var(--font-body)', border: '1px solid var(--border-rule)', 
+          background: 'var(--bg-card)', color: 'var(--text-main)', resize: 'none',
+          marginBottom: '32px', borderRadius: 'var(--radius-md)', outline: 'none',
+          boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.2)'
         }}
         placeholder="Type your answer..."
       />
       
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <button className="btn" onClick={handleNext} style={{ fontSize: '1.125rem', padding: '12px 24px', background: 'var(--ink)', color: 'var(--paper)' }}>
+        <button className="btn" onClick={handleNext} style={{ fontSize: '1.125rem', padding: '12px 32px', background: 'var(--accent-cyan)', color: 'var(--bg-main)', border: 'none', borderRadius: 'var(--radius-sm)' }}>
           {step === QUESTIONS.length - 1 ? 'Commit' : 'Next'}
         </button>
       </div>

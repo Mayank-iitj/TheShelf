@@ -1,95 +1,101 @@
-export async function fetchClock() {
-  const res = await fetch('/api/clock');
+// In development, Vite proxies /api → localhost:3001.
+// In production (Vercel), set VITE_API_URL to your Render backend URL.
+const API_BASE = import.meta.env.VITE_API_URL || '';
+
+async function api(path, options = {}) {
+  const url = `${API_BASE}${path}`;
+  const res = await fetch(url, options);
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`API Error ${res.status}: ${text}`);
+  }
   return res.json();
 }
 
+export async function fetchClock() {
+  return api('/api/clock');
+}
+
 export async function setClock(day) {
-  const res = await fetch('/api/clock', {
+  return api('/api/clock', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ day })
   });
-  return res.json();
 }
 
 export async function fetchLedger(day) {
-  const res = await fetch(`/api/ledger?day=${day}`);
-  return res.json();
+  return api(`/api/ledger?day=${day}`);
 }
 
 export async function editLedgerRow(rowId, claim) {
-  const res = await fetch(`/api/ledger/${rowId}`, {
+  return api(`/api/ledger/${rowId}`, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ claim })
   });
-  return res.json();
 }
 
 export async function purgeLedgerRow(rowId) {
-  const res = await fetch(`/api/ledger/${rowId}/purge`, { method: 'POST' });
-  return res.json();
+  return api(`/api/ledger/${rowId}/purge`, { method: 'POST' });
 }
 
 export async function fetchShelf(day, ranker = 'growth') {
-  const res = await fetch(`/api/shelf?day=${day}&ranker=${ranker}`);
-  return res.json();
+  return api(`/api/shelf?day=${day}&ranker=${ranker}`);
 }
 
 export async function fetchTwin(day) {
-  const res = await fetch(`/api/twin?day=${day}`);
-  return res.json();
+  return api(`/api/twin?day=${day}`);
 }
 
 export async function fetchWeights() {
-  const res = await fetch('/api/weights');
-  return res.json();
+  return api('/api/weights');
 }
 
 export async function setWeights(weights) {
-  const res = await fetch('/api/weights', {
+  return api('/api/weights', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(weights)
   });
-  return res.json();
 }
 
 export async function fetchHabits(day) {
-  const res = await fetch(`/api/habits?day=${day}`);
-  return res.json();
+  return api(`/api/habits?day=${day}`);
 }
 
 export async function fetchStage(day) {
-  const res = await fetch(`/api/stage?day=${day}`);
-  return res.json();
+  return api(`/api/stage?day=${day}`);
 }
 
 export async function fetchFutureSelf() {
-  const res = await fetch('/api/future-self');
-  return res.json();
+  return api('/api/future-self');
 }
 
 export async function fetchPotential(day) {
-  const res = await fetch(`/api/potential?day=${day}`);
-  return res.json();
+  return api(`/api/potential?day=${day}`);
 }
 
 export async function resetSimulation() {
-  const res = await fetch('/api/reset', { method: 'POST' });
-  return res.json();
+  return api('/api/reset', { method: 'POST' });
 }
 
 export async function fetchReview(day) {
-  const res = await fetch(`/api/review?day=${day}`);
-  return res.json();
+  return api(`/api/review?day=${day}`);
 }
 
 export async function acceptReview(rowIds) {
-  const res = await fetch('/api/review/accept', {
+  return api('/api/review/accept', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ rowIds })
   });
-  return res.json();
+}
+
+export async function submitOnboarding(answers) {
+  return api('/api/onboarding', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ answers })
+  });
 }

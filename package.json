@@ -4,17 +4,22 @@
   "description": "The Shelf",
   "main": "server/index.js",
   "scripts": {
-    "seed": "node server/seed/generateItems.js && node server/seed/seedContent.js && node server/seed/seedHistory.js",
+    "seed": "node server/seed/seedContent.js && node server/seed/seedHistory.js",
+    "start": "node server/index.js",
     "dev:server": "node server/index.js",
     "dev:client": "cd client && npm run dev",
-    "dev": "npm install -g concurrently && concurrently \"npm run dev:server\" \"npm run dev:client\""
+    "dev": "npx concurrently \"npm run dev:server\" \"npm run dev:client\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "better-sqlite3": "^11.1.2",
-    "express": "^4.19.2"
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^4.19.2",
+    "groq-sdk": "^1.5.0",
+    "helmet": "^8.3.0",
+    "morgan": "^1.11.0"
   }
 }

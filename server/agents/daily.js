@@ -2,7 +2,6 @@ const { db } = require('../db');
 const { getPotentialIndex } = require('../engine/potential');
 const { getStage } = require('../engine/stage');
 const { detectHabits } = require('../engine/habits');
-
 const { callLLM } = require('../lib/llm');
 
 const DAILY_SYSTEM_PROMPT = `
@@ -25,18 +24,18 @@ Return ONLY JSON:
 `;
 
 async function runDailyAgent(userId, day) {
-  console.log(\`Running daily agent for user \${userId} on day \${day}...\`);
+  console.log(`Running daily agent for user ${userId} on day ${day}...`);
   
   const potential = getPotentialIndex(userId, day);
   const stage = getStage(userId, day);
   const habits = detectHabits(userId, day);
   
-  const userPrompt = \`
-    Stage: \${stage.stage} (\${stage.explanation})
-    Potential Index: \${potential}
-    Habits: \${JSON.stringify(habits)}
-    Day: \${day}
-  \`;
+  const userPrompt = `
+    Stage: ${stage.stage} (${stage.explanation})
+    Potential Index: ${potential}
+    Habits: ${JSON.stringify(habits)}
+    Day: ${day}
+  `;
 
   const fallback = {
     intervention: "deliver",
@@ -56,9 +55,8 @@ async function runDailyAgent(userId, day) {
     ];
   }
 
-  let response = await callLLM(DAILY_SYSTEM_PROMPT, userPrompt, fallback);
+  const response = await callLLM(DAILY_SYSTEM_PROMPT, userPrompt, fallback);
 
-  
   const insertAction = db.prepare(`
     INSERT INTO agent_actions (user_id, day, intervention, rationale, payload_json, state, considered_json)
     VALUES (?, ?, ?, ?, ?, ?, ?)

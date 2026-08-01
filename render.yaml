@@ -1,0 +1,21 @@
+# TheSmith — Render Backend Deployment
+#
+# This file configures the Render web service. It is referenced automatically
+# when you link this repo to a Render project.
+
+services:
+  - type: web
+    name: thesmith-api
+    env: node
+    plan: free
+    buildCommand: npm install --ignore-scripts
+    startCommand: node server/index.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: GROQ_API_KEY
+        sync: false   # Set this as a secret in the Render dashboard
+      - key: CORS_ORIGIN
+        sync: false   # Set to your Vercel URL e.g. https://thesmith.vercel.app

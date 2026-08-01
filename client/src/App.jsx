@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { LayoutDashboard, Activity, BookOpen, UserCircle, CalendarClock } from 'lucide-react';
 import './styles.css';
 import { fetchClock, setClock, fetchPotential, fetchStage } from './lib/api';
 import Shelf from './screens/Shelf';
@@ -38,17 +40,6 @@ function App() {
     return <Onboarding onComplete={() => setOnboarded(true)} />;
   }
 
-  function renderScreen() {
-    switch (currentScreen) {
-      case 'shelf': return <Shelf day={day} />;
-      case 'twin': return <Twin day={day} />;
-      case 'ledger': return <Ledger day={day} />;
-      case 'futureself': return <FutureSelf day={day} />;
-      case 'review': return <Review day={day} />;
-      default: return <Shelf day={day} />;
-    }
-  }
-
   return (
     <div className="app-container">
       <div className="scrubber">
@@ -67,8 +58,15 @@ function App() {
 
       <header className="header">
         <div>
-          <div className="potential-index mono">{potential}</div>
-          <div style={{fontSize: '0.875rem', color: 'var(--dim)'}}>Potential Index</div>
+          <motion.div 
+            key={potential}
+            initial={{ scale: 1.5, opacity: 0, filter: 'blur(10px)' }}
+            animate={{ scale: 1, opacity: 1, filter: 'blur(0px)' }}
+            className="potential-index mono"
+          >
+            {potential}
+          </motion.div>
+          <div style={{fontSize: '0.875rem', color: 'var(--text-muted)'}}>Potential Index</div>
         </div>
         <div style={{textAlign: 'right'}}>
           <div className="mono" style={{fontSize: '1.25rem'}}>{stage.stage}</div>
@@ -79,16 +77,41 @@ function App() {
       <div className="main-content">
         <aside className="sidebar">
           <nav>
-            <a href="#shelf" className={currentScreen === 'shelf' ? 'active' : ''} onClick={(e) => { e.preventDefault(); setCurrentScreen('shelf'); }}>Today's Shelf</a>
-            <a href="#twin" className={currentScreen === 'twin' ? 'active' : ''} onClick={(e) => { e.preventDefault(); setCurrentScreen('twin'); }}>Attention Twin</a>
-            <a href="#ledger" className={currentScreen === 'ledger' ? 'active' : ''} onClick={(e) => { e.preventDefault(); setCurrentScreen('ledger'); }}>Identity Ledger</a>
-            <a href="#futureself" className={currentScreen === 'futureself' ? 'active' : ''} onClick={(e) => { e.preventDefault(); setCurrentScreen('futureself'); }}>Future Self</a>
-            <a href="#review" className={currentScreen === 'review' ? 'active' : ''} onClick={(e) => { e.preventDefault(); setCurrentScreen('review'); }}>Weekly Review</a>
+            <a href="#shelf" className={currentScreen === 'shelf' ? 'active' : ''} onClick={(e) => { e.preventDefault(); setCurrentScreen('shelf'); }}>
+              <LayoutDashboard size={20} /> Today's Shelf
+            </a>
+            <a href="#twin" className={currentScreen === 'twin' ? 'active' : ''} onClick={(e) => { e.preventDefault(); setCurrentScreen('twin'); }}>
+              <Activity size={20} /> Attention Twin
+            </a>
+            <a href="#ledger" className={currentScreen === 'ledger' ? 'active' : ''} onClick={(e) => { e.preventDefault(); setCurrentScreen('ledger'); }}>
+              <BookOpen size={20} /> Identity Ledger
+            </a>
+            <a href="#futureself" className={currentScreen === 'futureself' ? 'active' : ''} onClick={(e) => { e.preventDefault(); setCurrentScreen('futureself'); }}>
+              <UserCircle size={20} /> Future Self
+            </a>
+            <a href="#review" className={currentScreen === 'review' ? 'active' : ''} onClick={(e) => { e.preventDefault(); setCurrentScreen('review'); }}>
+              <CalendarClock size={20} /> Weekly Review
+            </a>
           </nav>
         </aside>
         
         <main className="content-area">
-          {renderScreen()}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentScreen}
+              initial={{ opacity: 0, y: 10, filter: 'blur(5px)' }}
+              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              exit={{ opacity: 0, y: -10, filter: 'blur(5px)' }}
+              transition={{ duration: 0.2 }}
+              style={{ width: '100%', height: '100%' }}
+            >
+              {currentScreen === 'shelf' && <Shelf day={day} />}
+              {currentScreen === 'twin' && <Twin day={day} />}
+              {currentScreen === 'ledger' && <Ledger day={day} />}
+              {currentScreen === 'futureself' && <FutureSelf day={day} />}
+              {currentScreen === 'review' && <Review day={day} />}
+            </motion.div>
+          </AnimatePresence>
         </main>
       </div>
     </div>

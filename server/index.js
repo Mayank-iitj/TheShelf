@@ -12,19 +12,46 @@ const { getPotentialIndex } = require('./engine/potential');
 const { getStage } = require('./engine/stage');
 const { detectHabits } = require('./engine/habits');
 const { runDailyAgent } = require('./agents/daily');
+const { runOnboardingAgent } = require('./agents/onboarding');
+const { runReviewAgent } = require('./agents/review');
 const { seedContent } = require('./seed/seedContent');
 const { seedHistory } = require('./seed/seedHistory');
 
 const app = express();
-app.use(helmet({ contentSecurityPolicy: false })); // allow dev scripts
-app.use(cors());
+
+// CORS: allow the Vercel frontend and localhost dev
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  process.env.CORS_ORIGIN, // e.g. https://thesmith.vercel.app
+].filter(Boolean);
+
+app.use(cors({
+  origin: (origin, callback) => {
+    // Allow requests with no origin (curl, Render health checks) or allowed origins
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error(`CORS policy: origin ${origin} not allowed`));
+    }
+  },
+  credentials: true,
+}));
+
+app.use(helmet({ contentSecurityPolicy: false }));
 app.use(morgan('dev'));
 app.use(express.json());
+
 
 // Serve static frontend in production
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/dist')));
 }
+
+// Health check for Render / load balancers
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
+});
 
 // API Surface
 
@@ -179,14 +206,58 @@ app.post('/api/reset', (req, res) => {
   res.json({ success: true });
 });
 
-app.get('/api/review', (req, res) => {
-  const day = req.query.day ? parseInt(req.query.day, 10) : getDay();
-  const review = db.prepare(`SELECT * FROM reviews WHERE day = ?`).get(day);
-  res.json(review || {});
+app.post('/api/onboarding', async (req, res, next) => {
+  try {
+    const { answers } = req.body;
+    const result = await runOnboardingAgent(answers);
+    
+    // Clear old seeded ledger to start fresh
+    db.prepare(`DELETE FROM ledger_rows`).run();
+    db.prepare(`DELETE FROM future_self`).run();
+    
+    db.prepare(`INSERT INTO future_self (user_id, portrait, markers_json) VALUES (1, ?, ?)`).run(result.future_self.portrait, '[]');
+    
+    const insertRow = db.prepare(`INSERT INTO ledger_rows (id, user_id, kind, claim, domain_tags_json, confidence, provenance, source, status, strength, created_day, updated_day) VALUES (?, 1, ?, ?, ?, 0.9, 'Onboarding interview', 'interview', 'active', ?, 1, 1)`);
+    
+    result.ledger_rows.forEach((row, i) => {
+      insertRow.run(`L0${i+1}`, row.kind, row.claim, JSON.stringify(row.domain_tags || []), row.strength || 0.8);
+    });
+    
+    res.json({ success: true, result });
+  } catch (err) {
+    next(err);
+  }
+});
+
+app.get('/api/review', async (req, res, next) => {
+  try {
+    const day = req.query.day ? parseInt(req.query.day, 10) : getDay();
+    let review = db.prepare(`SELECT * FROM reviews WHERE day = ?`).get(day);
+    
+    if (!review && (day === 7 || day === 14 || day === 21)) {
+      // Need to generate a review
+      const ledger = db.prepare(`SELECT * FROM ledger_rows WHERE status != 'purged'`).all();
+      const habits = detectHabits(1, day);
+      const recentActions = db.prepare(`SELECT * FROM agent_actions WHERE day > ? AND day <= ?`).all(day - 7, day);
+      
+      const generated = await runReviewAgent(ledger, habits, recentActions);
+      
+      db.prepare(`INSERT INTO reviews (user_id, day, proposed_json) VALUES (1, ?, ?)`).run(day, JSON.stringify(generated.proposals));
+      review = db.prepare(`SELECT * FROM reviews WHERE day = ?`).get(day);
+    }
+    
+    res.json(review || {});
+  } catch (err) {
+    next(err);
+  }
 });
 
 app.post('/api/review/accept', (req, res) => {
-  // Mock accept logic
+  const { rowIds } = req.body;
+  const day = getDay();
+  
+  // Here we would lookup the proposals for the current day and apply them to the ledger.
+  // For the sake of the demo, we'll just mock success.
   res.json({ success: true });
 });
 
@@ -205,5 +276,29 @@ if (process.env.NODE_ENV === 'production') {
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-  console.log(\`Server running on port \${PORT}\`);
+  console.log(`🔥 TheSmith API running on port ${PORT}`);
+  console.log(`🤖 GROQ_API_KEY: ${process.env.GROQ_API_KEY ? 'LOADED ✓' : 'MISSING ✗ — AI fallbacks will be used'}`);
+
+  // Auto-seed database on startup if it's empty
+  try {
+    const count = db.prepare(`SELECT COUNT(*) as c FROM sqlite_master WHERE type='table' AND name='content_items'`).get();
+    if (!count || count.c === 0) {
+      console.log('📦 Database is empty — running initial seed...');
+      seedContent();
+      seedHistory();
+      console.log('✅ Seed complete.');
+    } else {
+      const itemCount = db.prepare(`SELECT COUNT(*) as c FROM content_items`).get();
+      if (itemCount.c === 0) {
+        console.log('📦 No content found — seeding content and history...');
+        seedContent();
+        seedHistory();
+        console.log('✅ Seed complete.');
+      } else {
+        console.log(`📚 Database ready: ${itemCount.c} content items loaded.`);
+      }
+    }
+  } catch (err) {
+    console.error('Seed error (non-fatal):', err.message);
+  }
 });

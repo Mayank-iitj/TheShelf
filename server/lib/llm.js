@@ -1,34 +1,34 @@
-const Anthropic = require('@anthropic-ai/sdk');
+const Groq = require('groq-sdk');
 
-let anthropic = null;
-if (process.env.ANTHROPIC_API_KEY) {
-  anthropic = new Anthropic({
-    apiKey: process.env.ANTHROPIC_API_KEY,
+let groq = null;
+if (process.env.GROQ_API_KEY) {
+  groq = new Groq({
+    apiKey: process.env.GROQ_API_KEY,
   });
 }
 
 /**
- * Calls Anthropic Claude with the given prompt and system instructions.
+ * Calls Groq with the given prompt and system instructions.
  * Requires the output to be JSON.
  */
 async function callLLM(systemPrompt, userPrompt, fallback) {
-  if (!anthropic) {
-    console.warn("No ANTHROPIC_API_KEY provided. Using deterministic fallback.");
+  if (!groq) {
+    console.warn("No GROQ_API_KEY provided. Using deterministic fallback.");
     return fallback;
   }
 
   try {
-    const response = await anthropic.messages.create({
-      model: 'claude-3-5-sonnet-20240620',
-      max_tokens: 1024,
-      system: systemPrompt,
+    const response = await groq.chat.completions.create({
+      model: 'llama3-70b-8192',
       messages: [
+        { role: 'system', content: systemPrompt },
         { role: 'user', content: userPrompt }
       ],
-      temperature: 0.2
+      temperature: 0.2,
+      response_format: { type: 'json_object' }
     });
 
-    const text = response.content[0].text;
+    const text = response.choices[0].message.content;
     
     // Strip markdown fences if present
     const cleaned = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
