@@ -7,13 +7,15 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const { db } = require('./db');
 
-const { rankGrowth, getWeights, setWeights } = require('./engine/rank');
+const { getWeights, setWeights } = require('./engine/rank');
 const { rankAttention } = require('./engine/attentionTwin');
 const { getPotentialIndex } = require('./engine/potential');
 const { getStage } = require('./engine/stage');
 const { detectHabits } = require('./engine/habits');
 const { runDailyAgent } = require('./agents/daily');
+const { runCuratorAgent } = require('./agents/curator');
 const { runOnboardingAgent } = require('./agents/onboarding');
+const { saveOnboardingAnswers } = require('./lib/profile');
 const { runReviewAgent } = require('./agents/review');
 const { runMasterAgent } = require('./agents/master');
 const { runFutureSelfChat } = require('./agents/futureSelfChat');
@@ -132,43 +134,59 @@ app.get('/api/shelf', async (req, res, next) => {
     }
 
     // Pre-computed deliveries for this day/ranker, if already persisted.
-    let items = db.prepare(`
-      SELECT c.*, d.why_now, d.cited_rows, d.score_breakdown
+    const selectDeliveries = () => db.prepare(`
+      SELECT c.*, d.id AS delivery_id, d.why_now, d.cited_rows, d.score, d.score_breakdown, d.opened, d.completed
       FROM deliveries d
       JOIN content_items c ON d.item_id = c.id
       WHERE d.day = ? AND d.ranker = ? AND d.user_id = 1
+      ORDER BY d.slot
     `).all(day, ranker);
 
-    if (items.length === 0 && ranker === 'growth') {
-      const ledgerRows = db.prepare(`SELECT * FROM ledger_rows WHERE user_id = 1 AND status != 'purged'`).all();
-      const ranked = rankGrowth(1, day);
+    let items = selectDeliveries();
 
+    // No shelf for this day yet: curate one now from the user's own onboarding
+    // answers, ledger and habits via Groq (falls back to pool ranking offline).
+    let source = items.length > 0 ? 'cached' : null;
+    let shelfNote = null;
+
+    if (items.length === 0 && ranker === 'growth') {
+      const curated = await runCuratorAgent(1, day, action?.intervention || 'deliver');
+      items = curated.items;
+      source = curated.source;
+      shelfNote = curated.shelf_note;
+    } else if (items.length === 0 && ranker === 'attention') {
+      // The twin's counterfactual: what a pure engagement feed would have served.
+      // Deliberately NOT personalized to the ledger — that is the comparison.
       const insertDelivery = db.prepare(`
         INSERT INTO deliveries (user_id, day, item_id, ranker, slot, why_now, cited_rows, score, score_breakdown, opened, completed, dwell_minutes)
-        VALUES (1, ?, ?, 'growth', ?, ?, ?, ?, ?, 0, 0, 0)
+        VALUES (1, ?, ?, 'attention', ?, '', '[]', ?, ?, 0, 0, 0)
       `);
-
-      items = ranked.map((i, slot) => {
-        const itemTags = JSON.parse(i.tags);
-        const matchingRow = ledgerRows
-          .filter(r => r.status !== 'purged')
-          .find(r => JSON.parse(r.domain_tags).some(t => itemTags.includes(t)));
-
-        const why_now = matchingRow
-          ? `Because you said: "${matchingRow.claim}" (${matchingRow.id}).`
-          : 'Because it challenges your current understanding.';
-        const cited_rows = JSON.stringify(matchingRow ? [matchingRow.id] : []);
-        const score_breakdown = JSON.stringify(i.breakdown);
-
-        insertDelivery.run(day, i.id, slot, why_now, cited_rows, i.score, score_breakdown);
-
-        return { ...i, why_now, cited_rows, score_breakdown };
+      rankAttention(1, day).forEach((item, slot) => {
+        insertDelivery.run(day, item.id, slot, item.score, JSON.stringify(item.breakdown));
       });
+      items = selectDeliveries();
+      source = 'attention-ranker';
     }
+
+    // What the shelf was built from — shown in the dashboard so the
+    // personalization is visible rather than implied.
+    const futureSelf = db.prepare(`SELECT * FROM future_self WHERE user_id = 1`).get();
+    const citedIds = [...new Set(items.flatMap(i => {
+      try { return JSON.parse(i.cited_rows || '[]'); } catch (e) { return []; }
+    }))];
+    const citedClaims = citedIds.length > 0
+      ? db.prepare(`SELECT id, kind, claim FROM ledger_rows WHERE user_id = 1 AND id IN (${citedIds.map(() => '?').join(',')})`).all(...citedIds)
+      : [];
 
     res.json({
       action: action ? { intervention: action.intervention, rationale: action.rationale, considered: JSON.parse(action.considered_json || '[]') } : null,
-      items
+      items,
+      personalization: {
+        source,
+        shelf_note: shelfNote,
+        portrait: futureSelf?.portrait || null,
+        cited_claims: citedClaims
+      }
     });
   } catch (err) {
     next(err);
@@ -272,6 +290,8 @@ app.post('/api/onboarding/reset', (req, res) => {
   db.prepare(`DELETE FROM reviews`).run();
   db.prepare(`DELETE FROM regret_responses`).run();
   db.prepare(`DELETE FROM proofs`).run();
+  db.prepare(`DELETE FROM content_items WHERE source = 'Curated for you'`).run();
+  db.prepare(`DELETE FROM app_state WHERE key LIKE 'onboarding_answers_%'`).run();
   db.prepare(`UPDATE app_state SET value = '1' WHERE key = 'current_day'`).run();
   res.json({ success: true });
 });
@@ -279,11 +299,16 @@ app.post('/api/onboarding/reset', (req, res) => {
 app.post('/api/onboarding', async (req, res, next) => {
   try {
     const { answers } = req.body;
+
+    // Keep the raw answers: the curator and daily agents ground on the user's
+    // own words, which the derived ledger rows only summarize.
+    saveOnboardingAnswers(1, answers);
+
     const result = await runOnboardingAgent(answers);
 
     // Dynamic 21-day timeline simulation using the new onboarding answers
     simulateHistoryForUser(1, result);
-    
+
     res.json({ success: true, result });
   } catch (err) {
     next(err);
@@ -368,12 +393,19 @@ app.post('/api/proof', (req, res) => {
     VALUES (1, ?, ?, ?, ?, 1, ?)`).run(delivery_id || 'manual', day, proof_type || 'text', proof_content, now);
 
   // Mark delivery as completed if delivery_id provided
-  if (delivery_id && !isNaN(parseInt(delivery_id))) {
+  let linkedItemId = null;
+  if (delivery_id && !isNaN(parseInt(delivery_id, 10))) {
     db.prepare(`UPDATE deliveries SET completed = 1 WHERE id = ?`).run(delivery_id);
+    // Competence is computed by joining artifacts to content_items, so the
+    // artifact has to point at the item — storing the delivery id here meant
+    // proofs never counted toward competence.
+    linkedItemId = db.prepare(`SELECT item_id FROM deliveries WHERE id = ?`).get(delivery_id)?.item_id || null;
+  } else if (delivery_id) {
+    linkedItemId = db.prepare(`SELECT id FROM content_items WHERE id = ?`).get(delivery_id)?.id || null;
   }
 
   // Create an artifact record
-  db.prepare(`INSERT INTO artifacts (user_id, day, body, linked_item_id, kind) VALUES (1, ?, ?, ?, 'proof')`).run(day, proof_content, delivery_id || null);
+  db.prepare(`INSERT INTO artifacts (user_id, day, body, linked_item_id, kind) VALUES (1, ?, ?, ?, 'proof')`).run(day, proof_content, linkedItemId);
 
   res.json({ success: true, message: 'Proof submitted. Your Identity Ledger has been updated.' });
 });

@@ -285,14 +285,16 @@ function simulateHistoryForUser(userId, result) {
     ];
     const insertHabit = db.prepare(`
       INSERT INTO habits (id, user_id, pattern, metric, value_json, evidence_days, confidence, contradicts_row, first_day, updated_day)
-      VALUES (@id, ?, @pattern, @metric, @value_json, @evidence_days, @confidence, @contradicts_row, @first_day, @updated_day)
+      VALUES (@id, @user_id, @pattern, @metric, @value_json, @evidence_days, @confidence, @contradicts_row, @first_day, @updated_day)
     `);
     habits.forEach(h => insertHabit.run({ ...h, user_id: userId }));
 
     // 6. Deliveries & Agent Actions
     db.prepare(`DELETE FROM deliveries WHERE user_id = ?`).run(userId);
     db.prepare(`DELETE FROM agent_actions WHERE user_id = ?`).run(userId);
-    
+    // Shelf items curated for a previous onboarding no longer describe this user.
+    db.prepare(`DELETE FROM content_items WHERE source = 'Curated for you'`).run();
+
     // Find content matching user tags
     const allItems = db.prepare(`SELECT * FROM content_items`).all();
     const matchingItems = allItems.filter(item => {
@@ -305,34 +307,55 @@ function simulateHistoryForUser(userId, result) {
 
     const insertDelivery = db.prepare(`
       INSERT INTO deliveries (user_id, day, item_id, ranker, slot, why_now, cited_rows, score, score_breakdown, opened, completed, dwell_minutes)
-      VALUES (?, @day, @item_id, @ranker, @slot, @why_now, @cited_rows, @score, @score_breakdown, @opened, @completed, @dwell_minutes)
+      VALUES (@user_id, @day, @item_id, @ranker, @slot, @why_now, @cited_rows, @score, @score_breakdown, @opened, @completed, @dwell_minutes)
     `);
     const insertAction = db.prepare(`
       INSERT INTO agent_actions (user_id, day, intervention, rationale, considered_json)
-      VALUES (?, @day, @intervention, @rationale, @considered_json)
+      VALUES (@user_id, @day, @intervention, @rationale, @considered_json)
     `);
 
-    for (let d = 1; d <= 21; d++) {
+    // Day 21 is where the user lands, so it is left empty on purpose: the daily
+    // and curator agents generate that day live from this onboarding, instead of
+    // the user opening the dashboard onto pre-simulated filler.
+    const CURRENT_DAY = 21;
+
+    for (let d = 1; d < CURRENT_DAY; d++) {
       // Create a curator action for the day
       const intervention = d === 7 ? 'challenge' : d === 14 ? 'rest' : 'deliver';
-      insertAction.run(userId, {
+      insertAction.run({
+        user_id: userId,
         day: d,
         intervention,
         rationale: `Curating daily focus for Day ${d} targeting ${userTags[0]}.`,
         considered_json: JSON.stringify(['deliver', 'challenge', 'withhold'])
       });
 
-      // Growth deliveries (3 items)
+      // Growth deliveries (3 items). Sampled without replacement — drawing at
+      // random each slot put the same item on a day's shelf twice.
+      const dayPicks = [...contentPool].sort(() => 0.5 - Math.random()).slice(0, 3);
+
       for (let slot = 0; slot < 3; slot++) {
-        const item = contentPool[Math.floor(Math.random() * contentPool.length)];
+        const item = dayPicks[slot] || contentPool[slot % contentPool.length];
         const completed = Math.random() > 0.4 ? 1 : 0;
-        insertDelivery.run(userId, {
+
+        // Cite the claim this item actually overlaps, so scrubbing back through
+        // the timeline shows the user's own words rather than one fixed sentence.
+        let itemTags = [];
+        try { itemTags = JSON.parse(item.tags); } catch (e) { itemTags = []; }
+        const citedRow = activeRows.find(r => {
+          try { return JSON.parse(r.domain_tags).some(t => itemTags.includes(t)); } catch (e) { return false; }
+        }) || activeRows[0];
+
+        insertDelivery.run({
+          user_id: userId,
           day: d,
           item_id: item.id,
           ranker: 'growth',
           slot,
-          why_now: `Aligned with your goal to master ${userTags[0]}.`,
-          cited_rows: JSON.stringify([activeRows[0]?.id || 'L01']),
+          why_now: citedRow
+            ? `Because you said: "${citedRow.claim}" (${citedRow.id}).`
+            : `Aligned with your goal to master ${userTags[0]}.`,
+          cited_rows: JSON.stringify(citedRow ? [citedRow.id] : []),
           score: 0.85,
           score_breakdown: '{}',
           opened: completed ? 1 : (Math.random() > 0.5 ? 1 : 0),
@@ -342,9 +365,12 @@ function simulateHistoryForUser(userId, result) {
       }
 
       // Attention deliveries (3 items)
+      const attentionPicks = [...allItems].sort(() => 0.5 - Math.random()).slice(0, 3);
+
       for (let slot = 0; slot < 3; slot++) {
-        const item = allItems[Math.floor(Math.random() * allItems.length)];
-        insertDelivery.run(userId, {
+        const item = attentionPicks[slot] || allItems[slot % allItems.length];
+        insertDelivery.run({
+          user_id: userId,
           day: d,
           item_id: item.id,
           ranker: 'attention',
@@ -366,24 +392,26 @@ function simulateHistoryForUser(userId, result) {
     
     const insertArtifact = db.prepare(`
       INSERT INTO artifacts (user_id, day, body, linked_item_id, kind)
-      VALUES (?, @day, @body, @linked_item_id, @kind)
+      VALUES (@user_id, @day, @body, @linked_item_id, @kind)
     `);
     const insertProof = db.prepare(`
       INSERT INTO proofs (user_id, delivery_id, day, proof_type, proof_content, verified, created_at)
-      VALUES (?, @delivery_id, @day, @proof_type, @proof_content, @verified, @created_at)
+      VALUES (@user_id, @delivery_id, @day, @proof_type, @proof_content, @verified, @created_at)
     `);
 
     for (let i = 1; i <= 10; i++) {
       const day = 2 + i * 1.8;
       const artifactBody = `Completed practice task on ${userTags[0] || 'engineering'} focus: Verified API schema and handled error states.`;
-      insertArtifact.run(userId, {
+      insertArtifact.run({
+        user_id: userId,
         day: Math.floor(day),
         body: artifactBody,
         linked_item_id: `C0${i.toString().padStart(2, '0')}`,
         kind: 'practice'
       });
 
-      insertProof.run(userId, {
+      insertProof.run({
+        user_id: userId,
         delivery_id: i.toString(),
         day: Math.floor(day),
         proof_type: 'text',
@@ -410,7 +438,7 @@ function simulateHistoryForUser(userId, result) {
       JSON.stringify(['L09'])
     );
 
-  });
+  })();
   console.log('Dynamic history simulation successfully complete.');
 }
 
