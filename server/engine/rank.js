@@ -101,4 +101,4 @@ function rankGrowth(userId, day) {
   return top3.slice(0, 3);
 }
 
-module.exports = { rankGrowth, getWeights, setWeights };
+module.exports = { rankGrowth, scoreItem, getWeights, setWeights };

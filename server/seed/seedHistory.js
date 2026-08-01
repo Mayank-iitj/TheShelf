@@ -292,7 +292,9 @@ function simulateHistoryForUser(userId, result) {
     // 6. Deliveries & Agent Actions
     db.prepare(`DELETE FROM deliveries WHERE user_id = ?`).run(userId);
     db.prepare(`DELETE FROM agent_actions WHERE user_id = ?`).run(userId);
-    
+    // Shelf items curated for a previous onboarding no longer describe this user.
+    db.prepare(`DELETE FROM content_items WHERE source = 'Curated for you'`).run();
+
     // Find content matching user tags
     const allItems = db.prepare(`SELECT * FROM content_items`).all();
     const matchingItems = allItems.filter(item => {
@@ -312,7 +314,12 @@ function simulateHistoryForUser(userId, result) {
       VALUES (@user_id, @day, @intervention, @rationale, @considered_json)
     `);
 
-    for (let d = 1; d <= 21; d++) {
+    // Day 21 is where the user lands, so it is left empty on purpose: the daily
+    // and curator agents generate that day live from this onboarding, instead of
+    // the user opening the dashboard onto pre-simulated filler.
+    const CURRENT_DAY = 21;
+
+    for (let d = 1; d < CURRENT_DAY; d++) {
       // Create a curator action for the day
       const intervention = d === 7 ? 'challenge' : d === 14 ? 'rest' : 'deliver';
       insertAction.run({
@@ -323,18 +330,32 @@ function simulateHistoryForUser(userId, result) {
         considered_json: JSON.stringify(['deliver', 'challenge', 'withhold'])
       });
 
-      // Growth deliveries (3 items)
+      // Growth deliveries (3 items). Sampled without replacement — drawing at
+      // random each slot put the same item on a day's shelf twice.
+      const dayPicks = [...contentPool].sort(() => 0.5 - Math.random()).slice(0, 3);
+
       for (let slot = 0; slot < 3; slot++) {
-        const item = contentPool[Math.floor(Math.random() * contentPool.length)];
+        const item = dayPicks[slot] || contentPool[slot % contentPool.length];
         const completed = Math.random() > 0.4 ? 1 : 0;
+
+        // Cite the claim this item actually overlaps, so scrubbing back through
+        // the timeline shows the user's own words rather than one fixed sentence.
+        let itemTags = [];
+        try { itemTags = JSON.parse(item.tags); } catch (e) { itemTags = []; }
+        const citedRow = activeRows.find(r => {
+          try { return JSON.parse(r.domain_tags).some(t => itemTags.includes(t)); } catch (e) { return false; }
+        }) || activeRows[0];
+
         insertDelivery.run({
           user_id: userId,
           day: d,
           item_id: item.id,
           ranker: 'growth',
           slot,
-          why_now: `Aligned with your goal to master ${userTags[0]}.`,
-          cited_rows: JSON.stringify([activeRows[0]?.id || 'L01']),
+          why_now: citedRow
+            ? `Because you said: "${citedRow.claim}" (${citedRow.id}).`
+            : `Aligned with your goal to master ${userTags[0]}.`,
+          cited_rows: JSON.stringify(citedRow ? [citedRow.id] : []),
           score: 0.85,
           score_breakdown: '{}',
           opened: completed ? 1 : (Math.random() > 0.5 ? 1 : 0),
@@ -344,8 +365,10 @@ function simulateHistoryForUser(userId, result) {
       }
 
       // Attention deliveries (3 items)
+      const attentionPicks = [...allItems].sort(() => 0.5 - Math.random()).slice(0, 3);
+
       for (let slot = 0; slot < 3; slot++) {
-        const item = allItems[Math.floor(Math.random() * allItems.length)];
+        const item = attentionPicks[slot] || allItems[slot % allItems.length];
         insertDelivery.run({
           user_id: userId,
           day: d,

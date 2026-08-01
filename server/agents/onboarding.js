@@ -1,35 +1,5 @@
 const { callLLM } = require('../lib/llm');
-
-// Vocabulary of domain tags actually used by the content pool (server/seed/content.json).
-// Matching answers against these keeps ledger rows connected to real content for ranking.
-const TAG_KEYWORDS = {
-  'http': ['http', 'web server', 'request', 'protocol'],
-  'security': ['security', 'auth', 'vulnerab', 'exploit', 'encrypt'],
-  'databases': ['database', 'postgres', 'mongo', 'db '],
-  'sql': ['sql', 'query', 'queries'],
-  'distributed-systems': ['distributed', 'microservice', 'cluster', 'consensus'],
-  'systems-thinking': ['systems', 'architecture', 'design pattern'],
-  'deployment': ['deploy', 'docker', 'kubernetes', 'ci/cd', 'pipeline'],
-  'api-design': ['api', 'rest', 'graphql', 'endpoint'],
-  'caching': ['cache', 'caching', 'redis'],
-  'concurrency': ['concurren', 'thread', 'async', 'parallel'],
-  'debugging': ['debug', 'bug', 'incident', 'troubleshoot'],
-  'observability': ['observab', 'logging', 'metrics', 'monitor'],
-  'testing': ['test', 'testing', 'qa'],
-  'career': ['career', 'job', 'company', 'engineer', 'role'],
-  'communication': ['communicat', 'writing', 'essay', 'talk', 'present'],
-  'learning-how-to-learn': ['learn', 'study', 'read', 'practice'],
-  'burnout': ['burnout', 'tired', 'exhaust', 'overwhelm'],
-  'indexing': ['index', 'search'],
-};
-
-function extractTags(text, fallbackTags = []) {
-  const lower = (text || '').toLowerCase();
-  const found = Object.entries(TAG_KEYWORDS)
-    .filter(([, keywords]) => keywords.some(kw => lower.includes(kw)))
-    .map(([tag]) => tag);
-  return found.length > 0 ? found.slice(0, 3) : fallbackTags;
-}
+const { VOCAB, extractTags, normalizeTags } = require('../lib/tags');
 
 function truncate(text, max = 140) {
   const clean = (text || '').trim().replace(/\s+/g, ' ');
@@ -147,7 +117,7 @@ You will output exactly one JSON object with two top-level keys: "future_self" a
 2. "ledger_rows" should be an array of objects. Each object must have:
 - "kind": either "aspiration", "competence", or "preference"
 - "claim": a bold, first-person statement (e.g. "I want to be a backend engineer at a product company within a year")
-- "domain_tags": an array of 1-3 lowercase string tags (e.g. ["career", "engineering"])
+- "domain_tags": an array of 1-3 tags chosen ONLY from this list: ${VOCAB.join(', ')}
 - "strength": a float between 0.1 and 1.0 representing how strongly they seem to hold this
 
 Generate 3-5 high-quality ledger rows based ONLY on what the user actually said.
@@ -188,9 +158,15 @@ function normalizeResult(result, fallback) {
         ? future_self.markers
         : fallback.future_self.markers
     },
-    ledger_rows: Array.isArray(safe.ledger_rows) && safe.ledger_rows.length > 0
+    // Tags decide which content a claim can ever match, so anything outside the
+    // content vocabulary is remapped rather than stored as a dead tag.
+    ledger_rows: (Array.isArray(safe.ledger_rows) && safe.ledger_rows.length > 0
       ? safe.ledger_rows
       : fallback.ledger_rows
+    ).map(row => ({
+      ...row,
+      domain_tags: normalizeTags(row.domain_tags, row.claim)
+    }))
   };
 }
 

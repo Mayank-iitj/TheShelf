@@ -17,7 +17,7 @@ const itemVariants = {
 };
 
 function Shelf({ day }) {
-  const [data, setData] = useState({ items: [], action: null });
+  const [data, setData] = useState({ items: [], action: null, personalization: null });
   const [loading, setLoading] = useState(true);
   const [expandedTrace, setExpandedTrace] = useState(false);
   const [expandedScore, setExpandedScore] = useState({});
@@ -46,7 +46,8 @@ function Shelf({ day }) {
     if (!proofText.trim()) return;
     setSubmittingProof(true);
     try {
-      await submitProof(activeProofItem?.id, proofType, proofText);
+      // delivery_id is what the server can mark completed; item id is the fallback.
+      await submitProof(activeProofItem?.delivery_id ?? activeProofItem?.id, proofType, proofText);
       setCompletedItems(prev => ({ ...prev, [activeProofItem.id]: true }));
       setActiveProofItem(null);
       setProofText('');
@@ -66,7 +67,12 @@ function Shelf({ day }) {
     );
   }
 
-  const { items, action } = data;
+  const { items, action, personalization } = data;
+
+  // Ledger claims the curator cited today, keyed by row id so each chip can
+  // show the actual sentence the user committed to instead of a bare "L03".
+  const claimById = {};
+  (personalization?.cited_claims || []).forEach(c => { claimById[c.id] = c; });
 
   const renderBreakdown = (jsonStr, score) => {
     if (!jsonStr) return <div className="mono" style={{ fontSize: '0.875rem' }}>Score: {Number(score).toFixed(2)}</div>;
@@ -96,6 +102,44 @@ function Shelf({ day }) {
   return (
     <div>
       <h1 className="screen-title">Today's Shelf</h1>
+
+      {personalization?.portrait && (
+        <motion.div
+          initial={{ opacity: 0, y: -6 }}
+          animate={{ opacity: 1, y: 0 }}
+          style={{
+            marginBottom: '28px', padding: '18px 20px',
+            background: 'var(--bg-surface-sunken)',
+            border: '1px solid var(--border-hairline)',
+            borderLeft: '2px solid var(--accent-cyan)',
+            borderRadius: 'var(--radius-md)'
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginBottom: '10px' }}>
+            <span className="chip" style={{ background: 'rgba(33, 210, 237, 0.15)', color: 'var(--accent-cyan)', display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+              <Sparkles size={12} /> {personalization.source === 'fallback' ? 'Curated from your ledger' : 'Curated for you'}
+            </span>
+            {personalization.shelf_note && (
+              <span style={{ color: 'var(--text-secondary)', fontSize: '0.9375rem' }}>{personalization.shelf_note}</span>
+            )}
+          </div>
+
+          <div style={{ color: 'var(--text-secondary)', fontSize: '0.9375rem', lineHeight: 1.6 }}>
+            Built against what you said you're becoming: <em style={{ color: 'var(--text-primary)', fontStyle: 'normal' }}>"{personalization.portrait}"</em>
+          </div>
+
+          {(personalization.cited_claims || []).length > 0 && (
+            <div style={{ marginTop: '14px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+              {personalization.cited_claims.map(c => (
+                <div key={c.id} style={{ display: 'flex', gap: '10px', alignItems: 'baseline', fontSize: '0.875rem' }}>
+                  <span className="mono" style={{ color: 'var(--accent-cyan)' }}>{c.id}</span>
+                  <span style={{ color: 'var(--text-muted)' }}>{c.claim}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </motion.div>
+      )}
 
       {action && (
         <motion.div
@@ -224,13 +268,29 @@ function Shelf({ day }) {
                 <h2 className="card-title" style={{ marginTop: '16px' }}>{item.title}</h2>
                 
                 <div style={{ margin: '16px 0', fontSize: '1.125rem', color: 'var(--text-main)' }}>
-                  {item.why_now} 
+                  {item.why_now}
                   {citedRows.map(rowId => (
-                    <span key={rowId} className="chip" style={{ marginLeft: '8px', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                    <span
+                      key={rowId}
+                      className="chip"
+                      title={claimById[rowId]?.claim || 'Ledger row'}
+                      style={{ marginLeft: '8px', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                    >
                       <Tag size={12} /> {rowId}
                     </span>
                   ))}
                 </div>
+
+                {item.completion_condition && (
+                  <div style={{
+                    fontSize: '0.9375rem', color: 'var(--text-secondary)',
+                    background: 'var(--bg-surface-sunken)', border: '1px solid var(--border-hairline)',
+                    borderRadius: 'var(--radius-sm)', padding: '12px 14px'
+                  }}>
+                    <span className="mono" style={{ color: 'var(--accent-orange)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Done when</span>
+                    <div style={{ marginTop: '6px' }}>{item.completion_condition}</div>
+                  </div>
+                )}
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '32px', flexWrap: 'wrap', gap: '12px' }}>
                   <button className="btn mono" style={{ fontSize: '0.75rem', border: 'none', padding: '4px 8px', display: 'flex', alignItems: 'center', gap: '4px', background: 'var(--bg-main)' }} onClick={() => toggleScore(item.id)}>

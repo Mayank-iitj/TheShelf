@@ -3,6 +3,7 @@ const { getPotentialIndex } = require('../engine/potential');
 const { getStage } = require('../engine/stage');
 const { detectHabits } = require('../engine/habits');
 const { callLLM } = require('../lib/llm');
+const { buildUserContext, formatUserContext } = require('../lib/profile');
 
 const DAILY_SYSTEM_PROMPT = `
 You are a growth curator deciding what to do for one person today. You are not a feed.
@@ -90,30 +91,19 @@ async function runDailyAgent(userId, day) {
   const stage = getStage(userId, day);
   const habits = detectHabits(userId, day);
 
-  const ledger = db.prepare(`SELECT id, kind, claim, strength, status FROM ledger_rows WHERE user_id = ? AND status IN ('active', 'dormant')`).all(userId);
-  const recentDeliveries = db.prepare(`
-    SELECT day, item_id, ranker, opened, completed FROM deliveries
-    WHERE user_id = ? AND day >= ? AND day < ? ORDER BY day
-  `).all(userId, Math.max(1, day - 7), day);
-  const artifactsLast7 = db.prepare(`SELECT day, kind FROM artifacts WHERE user_id = ? AND day >= ? AND day < ? ORDER BY day`).all(userId, Math.max(1, day - 7), day);
+  // The decision has to be grounded in what this person said and did, not just
+  // in aggregate scores — so the prompt carries their interview answers,
+  // future-self portrait, ledger rows, habits, recent deliveries and artifacts
+  // alongside the metrics. buildUserContext assembles the same picture the
+  // curator agent sees, so both reason over one description of the user.
+  const ctx = buildUserContext(userId, day);
 
-  const userPrompt = `
-    Stage: ${stage.stage} (${stage.explanation})
-    Potential Index: ${potential}
-    Day: ${day}
-
-    Identity ledger (their stated aspirations, competencies, tensions, constraints):
-    ${JSON.stringify(ledger)}
-
-    Observed behavioural habits (patterns detected from actual usage, may contradict ledger rows):
-    ${JSON.stringify(habits)}
-
-    Deliveries in the last 7 days (what was already shown, and whether it was opened/completed):
-    ${JSON.stringify(recentDeliveries)}
-
-    Artifacts (proof of real work) submitted in the last 7 days:
-    ${JSON.stringify(artifactsLast7)}
-  `;
+  const userPrompt = [
+    formatUserContext(ctx, day),
+    `\nStage: ${stage.stage} (${stage.explanation})`,
+    `Potential Index: ${potential}`,
+    '\nDecide what to do for this person today.'
+  ].join('\n');
 
   const fallback = buildFallback(userId, day, stage, habits);
 
