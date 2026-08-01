@@ -79,3 +79,17 @@ export async function resetSimulation() {
   const res = await fetch('/api/reset', { method: 'POST' });
   return res.json();
 }
+
+export async function fetchReview(day) {
+  const res = await fetch(`/api/review?day=${day}`);
+  return res.json();
+}
+
+export async function acceptReview(rowIds) {
+  const res = await fetch('/api/review/accept', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ rowIds })
+  });
+  return res.json();
+}

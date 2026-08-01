@@ -167,6 +167,17 @@ app.post('/api/reset', (req, res) => {
   res.json({ success: true });
 });
 
+app.get('/api/review', (req, res) => {
+  const day = req.query.day ? parseInt(req.query.day, 10) : getDay();
+  const review = db.prepare(`SELECT * FROM reviews WHERE day = ?`).get(day);
+  res.json(review || {});
+});
+
+app.post('/api/review/accept', (req, res) => {
+  // Mock accept logic
+  res.json({ success: true });
+});
+
 const PORT = 3001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
