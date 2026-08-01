@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, ChevronDown, Zap, BookOpen, Activity, UserCircle, Brain, Shield } from 'lucide-react';
+import { ArrowRight, ChevronDown, Zap, BookOpen, Activity, UserCircle, Brain, Shield, Cpu, Mic, Compass, Lock, FileText } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import FlowingMenu from '../components/FlowingMenu';
 import FallingText from '../components/FallingText';
@@ -110,6 +110,36 @@ export default function Landing() {
       desc: 'Built around long-term fulfillment. No infinite scroll. No engagement traps. An empty day is a valid output.',
       tag: 'Philosophy',
     },
+    {
+      icon: <Cpu size={28} style={{ color: 'var(--accent-cyan)' }} />,
+      label: 'Supreme Master Agent',
+      desc: 'Consolidates all sub-agents into a unified Master Alignment Score, executive status tracking, and strategic directives.',
+      tag: 'AI Orchestrator',
+    },
+    {
+      icon: <Mic size={28} />,
+      label: 'Voice Onboarding',
+      desc: 'Talk to the assistant via Web Speech API; it compiles your spoken career goals into structured ledger claims.',
+      tag: 'Interface',
+    },
+    {
+      icon: <Compass size={28} />,
+      label: '60-Day Projections',
+      desc: 'Side-by-side counterfactual predictions demonstrating your growth potential compared to the default algorithm trap.',
+      tag: 'Projections',
+    },
+    {
+      icon: <Lock size={28} />,
+      label: 'Zero-Item Day Shield',
+      desc: 'Automatically locks the platform when focus is already optimal, saving your mind from dopamine decay.',
+      tag: 'Defense',
+    },
+    {
+      icon: <FileText size={28} />,
+      label: 'Portable Passport',
+      desc: 'One-click export of your verified identity as JSON. Portable parameters to boot-seed external AI agents.',
+      tag: 'Sovereignty',
+    }
   ];
 
   const steps = [
