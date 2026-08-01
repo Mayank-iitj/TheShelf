@@ -129,17 +129,6 @@ app.get('/api/shelf', async (req, res, next) => {
       action = db.prepare(`SELECT * FROM agent_actions WHERE user_id = 1 AND day = ?`).get(day);
     }
 
-    if (action && (action.intervention === 'withhold' || action.intervention === 'rest')) {
-      return res.json({
-        action: {
-          intervention: action.intervention,
-          rationale: action.rationale,
-          considered: JSON.parse(action.considered_json || '[]')
-        },
-        items: []
-      });
-    }
-
     // Pre-computed deliveries for this day/ranker, if already persisted.
     let items = db.prepare(`
       SELECT c.*, d.why_now, d.cited_rows, d.score_breakdown
