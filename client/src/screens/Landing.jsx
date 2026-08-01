@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, ChevronDown, Zap, BookOpen, Activity, UserCircle, Brain, Shield } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import FlowingMenu from '../components/FlowingMenu';
 import FallingText from '../components/FallingText';
 import BorderGlow from '../components/BorderGlow';
@@ -57,7 +58,9 @@ function Counter({ target, suffix = '' }) {
 }
 
 /* ─── Main Landing Component ─── */
-export default function Landing({ onEnterApp }) {
+export default function Landing() {
+  const navigate = useNavigate();
+  const onEnterApp = () => navigate('/login');
   const [liveScore, setLiveScore] = useState(0);
   const heroRef = useRef(null);
   const { scrollYProgress } = useScroll({ target: heroRef });

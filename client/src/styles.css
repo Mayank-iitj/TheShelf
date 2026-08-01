@@ -284,6 +284,7 @@ h1, h2, h3, h4 {
   width: 100%;
   height: 150px;
   padding: 24px;
+  box-sizing: border-box; /* Ensures it fits perfectly inside the container */
   font-size: 1.25rem;
   font-family: var(--font-body);
   border: 1px solid var(--border-rule);
@@ -291,7 +292,7 @@ h1, h2, h3, h4 {
   color: var(--text-main);
   resize: none;
   margin-bottom: 32px;
-  border-radius: var(--radius-md);
+  border-radius: 16px; /* Enhanced curve from the edges */
   outline: none;
   box-shadow: inset 0 2px 8px rgba(0,0,0,0.2);
   transition: all 0.2s ease;

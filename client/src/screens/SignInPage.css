@@ -1,0 +1,123 @@
+.signin-layout {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  font-family: 'Inter', sans-serif;
+  overflow: hidden;
+}
+
+/* LEFT PANE */
+.signin-left {
+  flex: 1;
+  background: radial-gradient(circle at 0% 0%, #15002b 0%, #050505 60%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem;
+  position: relative;
+}
+
+.signin-left-content {
+  max-width: 480px;
+  width: 100%;
+}
+
+.signin-logo-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 3rem;
+}
+
+.signin-logo-icon {
+  background: #ff3333;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signin-logo-text {
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+}
+
+.signin-heading {
+  font-family: 'Playfair Display', serif; /* Trying to match the serif look */
+  font-style: italic;
+  font-weight: 600;
+  font-size: 3rem;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  color: #fff;
+}
+
+.signin-description {
+  color: #a3a3a3;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  margin-bottom: 2.5rem;
+}
+
+.signin-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  width: 100%;
+  margin-bottom: 2.5rem;
+}
+
+.signin-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.signin-features li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #d4d4d4;
+  font-size: 0.95rem;
+}
+
+.signin-check {
+  color: #8b5cf6; /* purple color for checkmarks based on screenshot */
+}
+
+
+/* RIGHT PANE */
+.signin-right {
+  flex: 1;
+  background: #ffffff;
+  color: #111827;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 100vh;
+}
+
+.signin-clerk-container {
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #111827;
+}
+
+@media (max-width: 900px) {
+  .signin-layout {
+    flex-direction: column;
+  }
+  .signin-left {
+    display: none; /* Hide left pane on mobile */
+  }
+}
