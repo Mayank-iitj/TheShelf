@@ -133,17 +133,6 @@ function Shelf({ day }) {
 
       {/* Feature 2: Zero-Item Day State */}
       {action && action.intervention === 'withhold' ? (
-<<<<<<< HEAD
-        <motion.div
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="empty-state"
-        >
-          <Moon size={22} />
-          <div>
-            <div className="empty-state-title">Nothing prescribed today</div>
-            <div className="empty-state-body">{action.rationale}</div>
-=======
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }} 
           animate={{ opacity: 1, scale: 1 }} 
@@ -186,7 +175,6 @@ function Shelf({ day }) {
 
           <div style={{ color: 'var(--accent-cyan)', fontSize: '0.875rem', fontFamily: 'var(--font-mono)' }}>
             ✓ Potential Index protected • No low-yield distractions served
->>>>>>> aa2f4c2 (feat: Add Profile section, 5 judge-impressing features, and SaaS dashboard UI/UX overhaul)
           </div>
         </motion.div>
       ) : items.length === 0 ? (
@@ -208,10 +196,6 @@ function Shelf({ day }) {
               <motion.div
                 key={item.id}
                 variants={itemVariants}
-<<<<<<< HEAD
-                whileHover={{ y: -2 }}
-                className={`card ${isRest ? 'card--rest' : ''}`}
-=======
                 whileHover={{ y: -4, scale: 1.01 }}
                 className="card" 
                 style={{ 
@@ -219,40 +203,16 @@ function Shelf({ day }) {
                   border: isCompleted ? '1px solid var(--accent-cyan)' : isRest ? '1px dashed var(--text-muted)' : '1px solid var(--border-rule)',
                   opacity: isCompleted ? 0.85 : 1
                 }}
->>>>>>> aa2f4c2 (feat: Add Profile section, 5 judge-impressing features, and SaaS dashboard UI/UX overhaul)
               >
                 <div className="card-meta">
                   <span className="mono">
                     <TerminalSquare size={13} /> {item.id}
                   </span>
                   <span>{item.source}</span>
-                  <span style={{ color: isRest ? 'var(--text-tertiary)' : 'var(--attention)' }}>
+                  <span style={{ color: isRest ? 'var(--text-tertiary)' : 'var(--accent-orange)' }}>
                     {isRest ? <Coffee size={13} /> : <Zap size={13} />} {item.type}
                   </span>
                   <span>{item.minutes}m</span>
-<<<<<<< HEAD
-                  <span style={{ color: 'var(--growth)' }}>{Array.from({length: item.difficulty || 1}).map(() => '●').join('')}</span>
-                </div>
-
-                <h2 className="card-title">{item.title}</h2>
-
-                <div style={{ margin: '12px 0 20px', fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-                  {item.why_now}
-                  {citedRows.length > 0 && (
-                    <div style={{ marginTop: '10px', display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-                      {citedRows.map(rowId => (
-                        <span key={rowId} className="chip" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                          <Tag size={11} /> {rowId}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                </div>
-
-                <div style={{ display: 'flex', justifyContent: 'flex-end', paddingTop: '16px', borderTop: '1px solid var(--border-hairline)' }}>
-                  <button className="btn btn-ghost mono" style={{ fontSize: '0.75rem', padding: '5px 10px', display: 'flex', alignItems: 'center', gap: '4px' }} onClick={() => toggleScore(item.id)}>
-                    {expandedScore[item.id] ? <ChevronDown size={13} /> : <ChevronRight size={13} />} score breakdown
-=======
                   <span style={{ color: 'var(--accent-cyan)' }}>{Array.from({length: item.difficulty || 1}).map(() => '●').join('')}</span>
                   {isCompleted && (
                     <span className="chip" style={{ background: 'rgba(34, 197, 94, 0.2)', color: '#4ade80', marginLeft: 'auto' }}>
@@ -275,10 +235,8 @@ function Shelf({ day }) {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '32px', flexWrap: 'wrap', gap: '12px' }}>
                   <button className="btn mono" style={{ fontSize: '0.75rem', border: 'none', padding: '4px 8px', display: 'flex', alignItems: 'center', gap: '4px', background: 'var(--bg-main)' }} onClick={() => toggleScore(item.id)}>
                     {expandedScore[item.id] ? <ChevronDown size={14} /> : <ChevronRight size={14} />} score breakdown
->>>>>>> aa2f4c2 (feat: Add Profile section, 5 judge-impressing features, and SaaS dashboard UI/UX overhaul)
                   </button>
 
-                  {/* Feature 1: Proof of Action Button */}
                   <button 
                     onClick={() => setActiveProofItem(item)}
                     className="btn"

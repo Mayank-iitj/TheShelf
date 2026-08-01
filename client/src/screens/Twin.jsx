@@ -120,32 +120,6 @@ function Twin({ day }) {
         </div>
       </div>
 
-<<<<<<< HEAD
-      <div style={{ borderTop: '1px solid var(--border-hairline)', paddingTop: '36px' }}>
-        <h2 style={{ fontSize: '1.125rem', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <GitCompare size={17} style={{ color: 'var(--text-tertiary)' }} /> Divergence
-        </h2>
-
-        <div style={{ display: 'flex', gap: '20px', alignItems: 'stretch' }}>
-          <div style={{ height: '240px', flex: 1, background: 'var(--bg-surface)', padding: '20px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-hairline)' }}>
-            {hasChartData ? (
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={series} margin={{ top: 5, right: 8, left: 0, bottom: 5 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="var(--border-hairline)" vertical={false} />
-                  <XAxis dataKey="day" stroke="var(--text-tertiary)" fontSize={12} tickLine={false} axisLine={{ stroke: 'var(--border-hairline-strong)' }} />
-                  <YAxis domain={['auto', 'auto']} stroke="var(--text-tertiary)" fontSize={12} tickLine={false} axisLine={false} width={28} />
-                  <Tooltip contentStyle={{ backgroundColor: 'var(--bg-surface-hover)', border: '1px solid var(--border-hairline-strong)', borderRadius: '8px', fontSize: '0.8125rem' }} labelStyle={{ color: 'var(--text-secondary)' }} />
-                  <Line type="monotone" dataKey="potential" name="Growth potential" stroke="var(--growth)" strokeWidth={2.5} dot={false} />
-                  <Line type="monotone" dataKey="attention_potential" name="Attention potential" stroke="var(--attention)" strokeWidth={2.5} dot={false} strokeDasharray="4 4" />
-                </LineChart>
-              </ResponsiveContainer>
-            ) : (
-              <div style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '6px', color: 'var(--text-tertiary)' }}>
-                <GitCompare size={20} />
-                <div style={{ fontSize: '0.875rem' }}>Not enough days logged yet to chart divergence.</div>
-              </div>
-            )}
-=======
       <div style={{ borderTop: '1px solid var(--border-rule)', paddingTop: '40px', marginBottom: '60px' }}>
         <h2>Divergence</h2>
         <div style={{ display: 'flex', gap: '48px', alignItems: 'center', marginBottom: '24px' }}>
@@ -159,18 +133,12 @@ function Twin({ day }) {
                 <Line type="monotone" dataKey="attention_potential" stroke="var(--accent-orange)" strokeWidth={3} dot={false} strokeDasharray="5 5" />
               </LineChart>
             </ResponsiveContainer>
->>>>>>> aa2f4c2 (feat: Add Profile section, 5 judge-impressing features, and SaaS dashboard UI/UX overhaul)
           </div>
-
-          <div style={{ width: '210px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-hairline)', borderRadius: 'var(--radius-md)', padding: '18px', flex: 1 }}>
-              <div style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '8px' }}>Attention Reclaimed</div>
-              <div className="mono" style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--growth)' }}>{minutesReclaimed}m</div>
-            </div>
-            <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-hairline)', borderRadius: 'var(--radius-md)', padding: '18px', flex: 1 }}>
-              <div style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '8px' }}>Artifacts Created</div>
-              <div className="mono" style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--text-primary)' }}>{artifactsReclaimed}</div>
-            </div>
+          <div style={{ width: '250px' }}>
+            <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)', marginBottom: '8px' }}>Attention Reclaimed</div>
+            <div className="mono text-gradient" style={{ fontSize: '2.5rem', marginBottom: '16px', fontWeight: 'bold' }}>{minutesReclaimed}m</div>
+            <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)', marginBottom: '8px' }}>Artifacts Created</div>
+            <div className="mono text-gradient" style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>{artifactsReclaimed}</div>
           </div>
         </div>
       </div>
