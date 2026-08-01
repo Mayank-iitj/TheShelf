@@ -138,6 +138,42 @@ graph TB
 
 ---
 
+## ✦ The 21-Day Guided Demo Experience
+
+To show judges, creators, and users the complete lifecycle of **The Shelf**, the development environment is loaded with a pre-seeded **21-day behavioral timeline**. 
+
+- **Day Scrubber (1-21)**: Interact with the slider at the top of the SaaS Dashboard to time-travel through the simulated days.
+- **Dynamic Ledger History**: Watch your **Potential Index** rise or plateau, new competence claims solidify, and conflict-marked tensions emerge.
+- **Real-Time Synthesis**: On any day, navigate to the **Master Orchestrator** Command Center to trigger an instantaneous re-evaluation of current status, metrics, and directives by Groq.
+
+---
+
+## ✦ System Components & Deep Dive
+
+### 🤖 The 7 Curator Interventions
+The Daily Curator Agent evaluates user focus and cognitive load every morning to decide which action to take:
+1. **Deliver**: Serves direct, highly relevant learning resources aligned with active ledger claims.
+2. **Challenge**: Proposes an active coding challenge or practice task to verify competence.
+3. **Mentor Intro**: Suggests relevant industry experts or peers to contact, fostering social context.
+4. **Counterpoint**: Displays opposing view articles to challenge echo-chamber confirmation bias.
+5. **Revisit**: Surfaced previously learned or dormant concepts to combat the forgetting curve.
+6. **Rest**: Suggests taking a step back when fatigue markers are detected.
+7. **Withhold (Zero-Item Day)**: Locks the platform completely. No items are curated. The UI displays an anti-dopamine visual shield advising focus on existing work.
+
+### 🎙️ Voice Onboarding & Web Speech API
+- Access the microphone-enabled interview step during onboarding.
+- Say your goals out loud; the Web Speech API captures your words in real time, and the **Onboarding Agent** parses natural speech into structured competence/aspiration tables.
+
+### 🛂 Portable Identity Passport (`identity_passport.json`)
+- Export your audited identity markers at any point from the profile screen.
+- Downloadable format containing:
+  - Active aspirations and constraints.
+  - Strengths and confidence indexes.
+  - Verified proofs (GitHub PR links, text completions).
+  - Pre-formatted system prompt templates to seed other AI assistants (ChatGPT, Claude) with your real-world background.
+
+---
+
 ## ✦ Detailed Tech Stack Specifications
 
 | Layer | Technologies & Tools |
