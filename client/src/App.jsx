@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { LayoutDashboard, Activity, BookOpen, UserCircle, CalendarClock, User, ShieldCheck } from 'lucide-react';
+import { LayoutDashboard, Activity, BookOpen, UserCircle, CalendarClock, User, ShieldCheck, Cpu } from 'lucide-react';
 import './styles.css';
 import { setClock, fetchPotential, fetchStage } from './lib/api';
 import Landing from './screens/Landing';
@@ -12,6 +12,7 @@ import Review from './screens/Review';
 import Onboarding from './screens/Onboarding';
 import SignInPage from './screens/SignInPage';
 import Profile from './screens/Profile';
+import MasterAgent from './screens/MasterAgent';
 import { useAuth, UserButton } from '@clerk/react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
@@ -88,6 +89,12 @@ function DashboardFlow({ day, handleScrubberChange, potential, stage, currentScr
           <div className="main-content" style={{ marginTop: '64px' }}>
             <aside className="sidebar">
               <nav>
+                <a href="#master" className={currentScreen === 'master' ? 'active' : ''} onClick={(e) => { e.preventDefault(); setCurrentScreen('master'); }} style={{ background: currentScreen === 'master' ? 'rgba(33, 210, 237, 0.15)' : 'transparent', color: currentScreen === 'master' ? 'var(--accent-cyan)' : 'inherit', borderRadius: '10px', fontWeight: 700 }}>
+                  <Cpu size={20} style={{ color: 'var(--accent-cyan)' }} /> Master Orchestrator
+                </a>
+
+                <div style={{ height: '1px', background: 'var(--border-rule)', margin: '12px 0' }} />
+
                 <a href="#shelf" className={currentScreen === 'shelf' ? 'active' : ''} onClick={(e) => { e.preventDefault(); setCurrentScreen('shelf'); }}>
                   <LayoutDashboard size={20} /> Today's Shelf
                 </a>
@@ -122,6 +129,7 @@ function DashboardFlow({ day, handleScrubberChange, potential, stage, currentScr
                   transition={{ duration: 0.2 }}
                   style={{ width: '100%', height: '100%' }}
                 >
+                  {currentScreen === 'master' && <MasterAgent day={day} />}
                   {currentScreen === 'shelf' && <Shelf day={day} />}
                   {currentScreen === 'twin' && <Twin day={day} />}
                   {currentScreen === 'ledger' && <Ledger day={day} />}
@@ -142,7 +150,7 @@ function App() {
   const [day, setDayState] = useState(1);
   const [potential, setPotential] = useState(0);
   const [stage, setStage] = useState({ stage: 'orienting', explanation: '' });
-  const [currentScreen, setCurrentScreen] = useState('shelf');
+  const [currentScreen, setCurrentScreen] = useState('master');
   const [onboarded, setOnboarded] = useState(false);
 
   useEffect(() => {

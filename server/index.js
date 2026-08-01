@@ -14,6 +14,7 @@ const { detectHabits } = require('./engine/habits');
 const { runDailyAgent } = require('./agents/daily');
 const { runOnboardingAgent } = require('./agents/onboarding');
 const { runReviewAgent } = require('./agents/review');
+const { runMasterAgent } = require('./agents/master');
 const { seedContent } = require('./seed/seedContent');
 const { seedHistory } = require('./seed/seedHistory');
 
@@ -370,6 +371,17 @@ app.post('/api/proof', (req, res) => {
   db.prepare(`INSERT INTO artifacts (user_id, day, body, linked_item_id, kind) VALUES (1, ?, ?, ?, 'proof')`).run(day, proof_content, delivery_id || null);
 
   res.json({ success: true, message: 'Proof submitted. Your Identity Ledger has been updated.' });
+});
+
+// GET /api/master — Master Orchestrator Agent Synthesis
+app.get('/api/master', async (req, res, next) => {
+  try {
+    const day = req.query.day ? parseInt(req.query.day, 10) : getDay();
+    const result = await runMasterAgent(1, day);
+    res.json(result);
+  } catch (err) {
+    next(err);
+  }
 });
 
 // GET /api/passport — Export the Identity Passport JSON

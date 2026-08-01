@@ -42,9 +42,10 @@ A continuous visual divergence chart comparing your **Potential Index** (what yo
 Showcases the AI making the ultimate call: withholding content entirely. When the AI agent determines your cognitive load and focus are already optimal, it locks the shelf with an anti-dopamine visual shield.
 
 ### 🤖 Multi-Agent Engine (Groq Llama 3.3 70B)
-1. **Onboarding Agent:** Translates structured interview (voice or text) into verifiable identity claims.
-2. **Daily Curator Agent:** Evaluates 7 distinct interventions (deliver, challenge, mentor intro, counterpoint, revisit, rest, withhold) and logs rejected alternatives.
-3. **Weekly Review Agent:** Wakes up every 7 days to analyze habit patterns, highlight hypocrisies, and propose ledger diffs.
+1. **Master Orchestrator Agent:** Supreme supervisor synthesizing outputs from all sub-agents into a unified Master Alignment Score (0-100), executive trajectory verdict, and strategic directive.
+2. **Onboarding Agent:** Translates structured interview (voice or text) into verifiable identity claims.
+3. **Daily Curator Agent:** Evaluates 7 distinct interventions (deliver, challenge, mentor intro, counterpoint, revisit, rest, withhold) and logs rejected alternatives.
+4. **Weekly Review Agent:** Wakes up every 7 days to analyze habit patterns, highlight hypocrisies, and propose ledger diffs.
 
 ---
 
@@ -58,6 +59,7 @@ graph TB
         Dashboard["SaaS Dashboard Shell"]
         
         subgraph Dashboard_Screens["Dashboard Views"]
+            MasterView["Master Agent Command Center & Alignment Score"]
             ShelfView["Today's Shelf + Proof Modal"]
             TwinView["Attention Twin & 60-Day Counterfactual"]
             LedgerView["Identity Ledger & Time-Travel"]
@@ -78,6 +80,7 @@ graph TB
 
     subgraph API_Layer["🚀 Express.js API Layer (Port 3001)"]
         ClockRouter["/api/clock (Simulation Time)"]
+        MasterRouter["/api/master (Master Orchestrator Synthesis)"]
         ShelfRouter["/api/shelf (Growth vs Attention)"]
         TwinRouter["/api/twin (Divergence & Metrics)"]
         LedgerRouter["/api/ledger (Event Sourcing)"]
@@ -95,9 +98,14 @@ graph TB
     end
 
     subgraph Agent_Layer["🤖 Autonomous Groq Multi-Agent Ecosystem"]
+        MasterAgent["Master Orchestrator Agent\n(Supreme Synthesis & Alignment Score)"]
         OnboardAgent["Onboarding Agent\n(Interview -> Identity Claims)"]
         DailyAgent["Daily Curator Agent\n(7 Interventions & Rationale)"]
         ReviewAgent["Weekly Review Agent\n(Contradiction & Diff Engine)"]
+        
+        MasterAgent --> OnboardAgent
+        MasterAgent --> DailyAgent
+        MasterAgent --> ReviewAgent
     end
 
     subgraph LLM_Infra["⚡ AI Infrastructure"]

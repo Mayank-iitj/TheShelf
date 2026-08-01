@@ -108,6 +108,10 @@ export async function submitProof(delivery_id, proof_type, proof_content) {
   });
 }
 
+export async function fetchMaster(day) {
+  return api(`/api/master?day=${day}`);
+}
+
 export async function fetchPassport() {
   const API_BASE = import.meta.env.VITE_API_URL || '';
   const res = await fetch(`${API_BASE}/api/passport`);
