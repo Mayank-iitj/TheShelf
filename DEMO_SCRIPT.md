@@ -72,8 +72,9 @@ you — you approve or reject each one."*
 
 ### 10. Master Orchestrator (20s)
 Click **Master Orchestrator**. Hit **"Run Master Synthesis"** live — this is a real,
-un-cached Groq call happening in front of them. Point at the Alignment Score and the three
-sub-agent status cards. Say: *"This is the supervisor synthesizing what all three agents
+un-cached Groq call happening in front of them. Point at the Alignment Score meter, then
+scroll to the Executive Synthesis and the three sub-agent signal rows underneath it.
+Say: *"This is the supervisor synthesizing what all three agents
 know into one verdict, live, right now."*
 
 ### 10b. Future Self — Ask Your Future Self chat (20-30s, great Q&A hook)
