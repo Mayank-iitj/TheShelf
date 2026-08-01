@@ -1,0 +1,4327 @@
+[
+  {
+    "id": "C001",
+    "title": "Introduction to  systems thinking",
+    "url": "https://example.com/item-1",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 52,
+    "difficulty": 3,
+    "tags": [
+      "learning-how-to-learn",
+      "http"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.97,
+    "novelty": 0.61
+  },
+  {
+    "id": "C002",
+    "title": "Introduction to  career",
+    "url": "https://example.com/item-2",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 17,
+    "difficulty": 3,
+    "tags": [
+      "systems-thinking",
+      "http"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.86,
+    "novelty": 0.51
+  },
+  {
+    "id": "C003",
+    "title": "Introduction to  observability",
+    "url": "https://example.com/item-3",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 29,
+    "difficulty": 2,
+    "tags": [
+      "security",
+      "distributed-systems"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.05,
+    "novelty": 0.35
+  },
+  {
+    "id": "C004",
+    "title": "Introduction to  caching",
+    "url": "https://example.com/item-4",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 52,
+    "difficulty": 3,
+    "tags": [
+      "sql",
+      "deployment"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.53,
+    "novelty": 0.26
+  },
+  {
+    "id": "C005",
+    "title": "Introduction to  api design",
+    "url": "https://example.com/item-5",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 37,
+    "difficulty": 4,
+    "tags": [
+      "deployment",
+      "testing"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.16,
+    "novelty": 0.86
+  },
+  {
+    "id": "C006",
+    "title": "Introduction to  observability",
+    "url": "https://example.com/item-6",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 6,
+    "difficulty": 4,
+    "tags": [
+      "caching",
+      "sql"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.36,
+    "novelty": 0.51
+  },
+  {
+    "id": "C007",
+    "title": "Introduction to  indexing",
+    "url": "https://example.com/item-7",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 45,
+    "difficulty": 3,
+    "tags": [
+      "deployment",
+      "learning-how-to-learn"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.15,
+    "novelty": 0.19
+  },
+  {
+    "id": "C008",
+    "title": "Introduction to  http",
+    "url": "https://example.com/item-8",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 29,
+    "difficulty": 3,
+    "tags": [
+      "systems-thinking",
+      "security"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.98,
+    "novelty": 0.82
+  },
+  {
+    "id": "C009",
+    "title": "Introduction to  http",
+    "url": "https://example.com/item-9",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 13,
+    "difficulty": 3,
+    "tags": [
+      "indexing",
+      "api-design"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.47,
+    "novelty": 0.85
+  },
+  {
+    "id": "C010",
+    "title": "Against  testing",
+    "url": "https://example.com/item-10",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 39,
+    "difficulty": 2,
+    "tags": [
+      "indexing",
+      "career"
+    ],
+    "stance": "contrarian",
+    "thumbnail_heat": 0.93,
+    "novelty": 0.66
+  },
+  {
+    "id": "C011",
+    "title": "Introduction to  communication",
+    "url": "https://example.com/item-11",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 17,
+    "difficulty": 3,
+    "tags": [
+      "concurrency",
+      "caching"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.81,
+    "novelty": 0.63
+  },
+  {
+    "id": "C012",
+    "title": "Against  caching",
+    "url": "https://example.com/item-12",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 5,
+    "difficulty": 3,
+    "tags": [
+      "systems-thinking",
+      "observability"
+    ],
+    "stance": "contrarian",
+    "thumbnail_heat": 0.34,
+    "novelty": 0.28
+  },
+  {
+    "id": "C013",
+    "title": "Introduction to  api design",
+    "url": "https://example.com/item-13",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 18,
+    "difficulty": 3,
+    "tags": [
+      "caching",
+      "indexing"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.66,
+    "novelty": 0.82
+  },
+  {
+    "id": "C014",
+    "title": "Introduction to  learning how-to-learn",
+    "url": "https://example.com/item-14",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 5,
+    "difficulty": 3,
+    "tags": [
+      "distributed-systems",
+      "security"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.28,
+    "novelty": 0.71
+  },
+  {
+    "id": "C015",
+    "title": "Introduction to  http",
+    "url": "https://example.com/item-15",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 12,
+    "difficulty": 4,
+    "tags": [
+      "caching",
+      "api-design"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.17,
+    "novelty": 0.09
+  },
+  {
+    "id": "C016",
+    "title": "Introduction to  databases",
+    "url": "https://example.com/item-16",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 58,
+    "difficulty": 3,
+    "tags": [
+      "http",
+      "debugging"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.73,
+    "novelty": 0.84
+  },
+  {
+    "id": "C017",
+    "title": "Against  indexing",
+    "url": "https://example.com/item-17",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 48,
+    "difficulty": 3,
+    "tags": [
+      "api-design",
+      "deployment"
+    ],
+    "stance": "contrarian",
+    "thumbnail_heat": 0.62,
+    "novelty": 0.97
+  },
+  {
+    "id": "C018",
+    "title": "Introduction to  learning how-to-learn",
+    "url": "https://example.com/item-18",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 24,
+    "difficulty": 2,
+    "tags": [
+      "http",
+      "databases"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.56,
+    "novelty": 0.57
+  },
+  {
+    "id": "C019",
+    "title": "Introduction to  security",
+    "url": "https://example.com/item-19",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 36,
+    "difficulty": 3,
+    "tags": [
+      "http",
+      "indexing"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.08,
+    "novelty": 0.89
+  },
+  {
+    "id": "C020",
+    "title": "Against  sql",
+    "url": "https://example.com/item-20",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 48,
+    "difficulty": 4,
+    "tags": [
+      "concurrency",
+      "testing"
+    ],
+    "stance": "contrarian",
+    "thumbnail_heat": 0.41,
+    "novelty": 0.54
+  },
+  {
+    "id": "C021",
+    "title": "Introduction to  indexing",
+    "url": "https://example.com/item-21",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 59,
+    "difficulty": 4,
+    "tags": [
+      "learning-how-to-learn",
+      "http"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.63,
+    "novelty": 0.63
+  },
+  {
+    "id": "C022",
+    "title": "Introduction to  http",
+    "url": "https://example.com/item-22",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 21,
+    "difficulty": 3,
+    "tags": [
+      "concurrency",
+      "http"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.61,
+    "novelty": 0.03
+  },
+  {
+    "id": "C023",
+    "title": "Introduction to  systems thinking",
+    "url": "https://example.com/item-23",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 29,
+    "difficulty": 4,
+    "tags": [
+      "learning-how-to-learn",
+      "concurrency"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.93,
+    "novelty": 0.88
+  },
+  {
+    "id": "C024",
+    "title": "Introduction to  http",
+    "url": "https://example.com/item-24",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 37,
+    "difficulty": 4,
+    "tags": [
+      "learning-how-to-learn",
+      "observability"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.92,
+    "novelty": 0.31
+  },
+  {
+    "id": "C025",
+    "title": "Against  caching",
+    "url": "https://example.com/item-25",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 45,
+    "difficulty": 3,
+    "tags": [
+      "learning-how-to-learn",
+      "indexing"
+    ],
+    "stance": "contrarian",
+    "thumbnail_heat": 0.81,
+    "novelty": 0.04
+  },
+  {
+    "id": "C026",
+    "title": "Against  indexing",
+    "url": "https://example.com/item-26",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 52,
+    "difficulty": 3,
+    "tags": [
+      "api-design",
+      "caching"
+    ],
+    "stance": "contrarian",
+    "thumbnail_heat": 0.15,
+    "novelty": 0.88
+  },
+  {
+    "id": "C027",
+    "title": "Introduction to  distributed systems",
+    "url": "https://example.com/item-27",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 58,
+    "difficulty": 3,
+    "tags": [
+      "systems-thinking",
+      "deployment"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.37,
+    "novelty": 0.78
+  },
+  {
+    "id": "C028",
+    "title": "Introduction to  sql",
+    "url": "https://example.com/item-28",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 8,
+    "difficulty": 4,
+    "tags": [
+      "sql",
+      "learning-how-to-learn"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.87,
+    "novelty": 0.29
+  },
+  {
+    "id": "C029",
+    "title": "Introduction to  distributed systems",
+    "url": "https://example.com/item-29",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 18,
+    "difficulty": 3,
+    "tags": [
+      "learning-how-to-learn",
+      "security"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.89,
+    "novelty": 0.39
+  },
+  {
+    "id": "C030",
+    "title": "Introduction to  deployment",
+    "url": "https://example.com/item-30",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 45,
+    "difficulty": 2,
+    "tags": [
+      "http",
+      "systems-thinking"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.56,
+    "novelty": 0.12
+  },
+  {
+    "id": "C031",
+    "title": "Introduction to  observability",
+    "url": "https://example.com/item-31",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 36,
+    "difficulty": 3,
+    "tags": [
+      "http",
+      "learning-how-to-learn"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.72,
+    "novelty": 0.38
+  },
+  {
+    "id": "C032",
+    "title": "Introduction to  api design",
+    "url": "https://example.com/item-32",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 29,
+    "difficulty": 4,
+    "tags": [
+      "http",
+      "caching"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.53,
+    "novelty": 0.45
+  },
+  {
+    "id": "C033",
+    "title": "Introduction to  burnout",
+    "url": "https://example.com/item-33",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 49,
+    "difficulty": 3,
+    "tags": [
+      "indexing",
+      "security"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.13,
+    "novelty": 0.99
+  },
+  {
+    "id": "C034",
+    "title": "Against  sql",
+    "url": "https://example.com/item-34",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 34,
+    "difficulty": 2,
+    "tags": [
+      "security",
+      "distributed-systems"
+    ],
+    "stance": "contrarian",
+    "thumbnail_heat": 0.22,
+    "novelty": 0.45
+  },
+  {
+    "id": "C035",
+    "title": "Introduction to  deployment",
+    "url": "https://example.com/item-35",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 22,
+    "difficulty": 4,
+    "tags": [
+      "api-design",
+      "deployment"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0,
+    "novelty": 0.03
+  },
+  {
+    "id": "C036",
+    "title": "Against  sql",
+    "url": "https://example.com/item-36",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 56,
+    "difficulty": 2,
+    "tags": [
+      "indexing",
+      "caching"
+    ],
+    "stance": "contrarian",
+    "thumbnail_heat": 0.43,
+    "novelty": 0.18
+  },
+  {
+    "id": "C037",
+    "title": "Introduction to  testing",
+    "url": "https://example.com/item-37",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 26,
+    "difficulty": 3,
+    "tags": [
+      "concurrency",
+      "databases"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.04,
+    "novelty": 0.31
+  },
+  {
+    "id": "C038",
+    "title": "Introduction to  http",
+    "url": "https://example.com/item-38",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 57,
+    "difficulty": 2,
+    "tags": [
+      "http",
+      "deployment"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.91,
+    "novelty": 0.19
+  },
+  {
+    "id": "C039",
+    "title": "Introduction to  observability",
+    "url": "https://example.com/item-39",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 43,
+    "difficulty": 3,
+    "tags": [
+      "databases",
+      "concurrency"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.08,
+    "novelty": 0.95
+  },
+  {
+    "id": "C040",
+    "title": "Introduction to  sql",
+    "url": "https://example.com/item-40",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 36,
+    "difficulty": 4,
+    "tags": [
+      "distributed-systems",
+      "learning-how-to-learn"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.05,
+    "novelty": 0.59
+  },
+  {
+    "id": "C041",
+    "title": "Introduction to  security",
+    "url": "https://example.com/item-41",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 8,
+    "difficulty": 3,
+    "tags": [
+      "career",
+      "http"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.38,
+    "novelty": 0.5
+  },
+  {
+    "id": "C042",
+    "title": "Introduction to  observability",
+    "url": "https://example.com/item-42",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 27,
+    "difficulty": 2,
+    "tags": [
+      "deployment",
+      "databases"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.46,
+    "novelty": 0.93
+  },
+  {
+    "id": "C043",
+    "title": "Introduction to  deployment",
+    "url": "https://example.com/item-43",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 20,
+    "difficulty": 2,
+    "tags": [
+      "api-design",
+      "concurrency"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.34,
+    "novelty": 0.95
+  },
+  {
+    "id": "C044",
+    "title": "Introduction to  communication",
+    "url": "https://example.com/item-44",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 25,
+    "difficulty": 3,
+    "tags": [
+      "learning-how-to-learn",
+      "testing"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.07,
+    "novelty": 0.11
+  },
+  {
+    "id": "C045",
+    "title": "Introduction to  systems thinking",
+    "url": "https://example.com/item-45",
+    "source": "The Shelf",
+    "bucket": "media",
+    "type": "story",
+    "minutes": 5,
+    "difficulty": 4,
+    "tags": [
+      "indexing",
+      "http"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.42,
+    "novelty": 0.96
+  },
+  {
+    "id": "C046",
+    "title": "Introduction to  learning how-to-learn",
+    "url": "https://example.com/item-46",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 29,
+    "difficulty": 4,
+    "tags": [
+      "api-design",
+      "http"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.64,
+    "novelty": 0.3
+  },
+  {
+    "id": "C047",
+    "title": "Introduction to  testing",
+    "url": "https://example.com/item-47",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 36,
+    "difficulty": 2,
+    "tags": [
+      "http",
+      "career"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.72,
+    "novelty": 0.89
+  },
+  {
+    "id": "C048",
+    "title": "Introduction to  http",
+    "url": "https://example.com/item-48",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 41,
+    "difficulty": 4,
+    "tags": [
+      "testing",
+      "deployment"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.37,
+    "novelty": 0
+  },
+  {
+    "id": "C049",
+    "title": "Introduction to  learning how-to-learn",
+    "url": "https://example.com/item-49",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 34,
+    "difficulty": 3,
+    "tags": [
+      "observability",
+      "security"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.55,
+    "novelty": 0.03
+  },
+  {
+    "id": "C050",
+    "title": "Introduction to  http",
+    "url": "https://example.com/item-50",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 51,
+    "difficulty": 3,
+    "tags": [
+      "http",
+      "databases"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.66,
+    "novelty": 0.24
+  },
+  {
+    "id": "C051",
+    "title": "Introduction to  debugging",
+    "url": "https://example.com/item-51",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 7,
+    "difficulty": 3,
+    "tags": [
+      "http",
+      "api-design"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.27,
+    "novelty": 0.26
+  },
+  {
+    "id": "C052",
+    "title": "Introduction to  communication",
+    "url": "https://example.com/item-52",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 8,
+    "difficulty": 3,
+    "tags": [
+      "career",
+      "concurrency"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.37,
+    "novelty": 0.16
+  },
+  {
+    "id": "C053",
+    "title": "Introduction to  http",
+    "url": "https://example.com/item-53",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 38,
+    "difficulty": 3,
+    "tags": [
+      "http",
+      "observability"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.48,
+    "novelty": 0.36
+  },
+  {
+    "id": "C054",
+    "title": "Introduction to  indexing",
+    "url": "https://example.com/item-54",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 55,
+    "difficulty": 3,
+    "tags": [
+      "http",
+      "deployment"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.15,
+    "novelty": 0.4
+  },
+  {
+    "id": "C055",
+    "title": "Introduction to  api design",
+    "url": "https://example.com/item-55",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 27,
+    "difficulty": 3,
+    "tags": [
+      "debugging",
+      "databases"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.48,
+    "novelty": 0.2
+  },
+  {
+    "id": "C056",
+    "title": "Introduction to  caching",
+    "url": "https://example.com/item-56",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 24,
+    "difficulty": 3,
+    "tags": [
+      "api-design",
+      "concurrency"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.18,
+    "novelty": 0.82
+  },
+  {
+    "id": "C057",
+    "title": "Introduction to  learning how-to-learn",
+    "url": "https://example.com/item-57",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 21,
+    "difficulty": 3,
+    "tags": [
+      "caching",
+      "indexing"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.37,
+    "novelty": 0.89
+  },
+  {
+    "id": "C058",
+    "title": "Introduction to  indexing",
+    "url": "https://example.com/item-58",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 44,
+    "difficulty": 2,
+    "tags": [
+      "communication",
+      "caching"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.75,
+    "novelty": 0.44
+  },
+  {
+    "id": "C059",
+    "title": "Against  http",
+    "url": "https://example.com/item-59",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 36,
+    "difficulty": 4,
+    "tags": [
+      "distributed-systems",
+      "api-design"
+    ],
+    "stance": "contrarian",
+    "thumbnail_heat": 0.81,
+    "novelty": 0.12
+  },
+  {
+    "id": "C060",
+    "title": "Introduction to  http",
+    "url": "https://example.com/item-60",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 44,
+    "difficulty": 2,
+    "tags": [
+      "indexing",
+      "sql"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.08,
+    "novelty": 0.52
+  },
+  {
+    "id": "C061",
+    "title": "Introduction to  http",
+    "url": "https://example.com/item-61",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 46,
+    "difficulty": 4,
+    "tags": [
+      "career",
+      "indexing"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.69,
+    "novelty": 0.59
+  },
+  {
+    "id": "C062",
+    "title": "Introduction to  sql",
+    "url": "https://example.com/item-62",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 11,
+    "difficulty": 2,
+    "tags": [
+      "security",
+      "distributed-systems"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.45,
+    "novelty": 0.53
+  },
+  {
+    "id": "C063",
+    "title": "Introduction to  api design",
+    "url": "https://example.com/item-63",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 26,
+    "difficulty": 3,
+    "tags": [
+      "distributed-systems",
+      "concurrency"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.63,
+    "novelty": 0.68
+  },
+  {
+    "id": "C064",
+    "title": "Introduction to  observability",
+    "url": "https://example.com/item-64",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 37,
+    "difficulty": 3,
+    "tags": [
+      "debugging",
+      "http"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.89,
+    "novelty": 0.87
+  },
+  {
+    "id": "C065",
+    "title": "Introduction to  concurrency",
+    "url": "https://example.com/item-65",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 33,
+    "difficulty": 4,
+    "tags": [
+      "distributed-systems",
+      "communication"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.59,
+    "novelty": 0.21
+  },
+  {
+    "id": "C066",
+    "title": "Introduction to  indexing",
+    "url": "https://example.com/item-66",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 22,
+    "difficulty": 4,
+    "tags": [
+      "indexing",
+      "learning-how-to-learn"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.94,
+    "novelty": 0.85
+  },
+  {
+    "id": "C067",
+    "title": "Against  career",
+    "url": "https://example.com/item-67",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 32,
+    "difficulty": 3,
+    "tags": [
+      "systems-thinking",
+      "distributed-systems"
+    ],
+    "stance": "contrarian",
+    "thumbnail_heat": 0.25,
+    "novelty": 0.32
+  },
+  {
+    "id": "C068",
+    "title": "Introduction to  databases",
+    "url": "https://example.com/item-68",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 13,
+    "difficulty": 4,
+    "tags": [
+      "indexing",
+      "security"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.88,
+    "novelty": 0.58
+  },
+  {
+    "id": "C069",
+    "title": "Against  caching",
+    "url": "https://example.com/item-69",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 50,
+    "difficulty": 3,
+    "tags": [
+      "http",
+      "databases"
+    ],
+    "stance": "contrarian",
+    "thumbnail_heat": 0.06,
+    "novelty": 0.75
+  },
+  {
+    "id": "C070",
+    "title": "Introduction to  databases",
+    "url": "https://example.com/item-70",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 50,
+    "difficulty": 4,
+    "tags": [
+      "indexing",
+      "api-design"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.37,
+    "novelty": 0.98
+  },
+  {
+    "id": "C071",
+    "title": "Introduction to  api design",
+    "url": "https://example.com/item-71",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 43,
+    "difficulty": 3,
+    "tags": [
+      "http",
+      "learning-how-to-learn"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.09,
+    "novelty": 0.99
+  },
+  {
+    "id": "C072",
+    "title": "Introduction to  security",
+    "url": "https://example.com/item-72",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 27,
+    "difficulty": 2,
+    "tags": [
+      "security",
+      "testing"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.95,
+    "novelty": 0.18
+  },
+  {
+    "id": "C073",
+    "title": "Introduction to  security",
+    "url": "https://example.com/item-73",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 14,
+    "difficulty": 4,
+    "tags": [
+      "systems-thinking",
+      "distributed-systems"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.18,
+    "novelty": 0.71
+  },
+  {
+    "id": "C074",
+    "title": "Introduction to  caching",
+    "url": "https://example.com/item-74",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 12,
+    "difficulty": 2,
+    "tags": [
+      "deployment",
+      "api-design"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.29,
+    "novelty": 0.78
+  },
+  {
+    "id": "C075",
+    "title": "Introduction to  debugging",
+    "url": "https://example.com/item-75",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 41,
+    "difficulty": 4,
+    "tags": [
+      "http",
+      "concurrency"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.39,
+    "novelty": 0.65
+  },
+  {
+    "id": "C076",
+    "title": "Introduction to  career",
+    "url": "https://example.com/item-76",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 57,
+    "difficulty": 3,
+    "tags": [
+      "sql",
+      "distributed-systems"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.99,
+    "novelty": 0.04
+  },
+  {
+    "id": "C077",
+    "title": "Introduction to  systems thinking",
+    "url": "https://example.com/item-77",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 28,
+    "difficulty": 2,
+    "tags": [
+      "sql",
+      "databases"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.08,
+    "novelty": 0.98
+  },
+  {
+    "id": "C078",
+    "title": "Introduction to  learning how-to-learn",
+    "url": "https://example.com/item-78",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 25,
+    "difficulty": 2,
+    "tags": [
+      "career",
+      "databases"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.58,
+    "novelty": 0.52
+  },
+  {
+    "id": "C079",
+    "title": "Introduction to  communication",
+    "url": "https://example.com/item-79",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 53,
+    "difficulty": 4,
+    "tags": [
+      "distributed-systems",
+      "indexing"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.31,
+    "novelty": 0.88
+  },
+  {
+    "id": "C080",
+    "title": "Introduction to  indexing",
+    "url": "https://example.com/item-80",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 19,
+    "difficulty": 3,
+    "tags": [
+      "api-design",
+      "observability"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.28,
+    "novelty": 0.38
+  },
+  {
+    "id": "C081",
+    "title": "Introduction to  http",
+    "url": "https://example.com/item-81",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 35,
+    "difficulty": 4,
+    "tags": [
+      "distributed-systems",
+      "sql"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.1,
+    "novelty": 0.48
+  },
+  {
+    "id": "C082",
+    "title": "Introduction to  security",
+    "url": "https://example.com/item-82",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 51,
+    "difficulty": 4,
+    "tags": [
+      "api-design",
+      "systems-thinking"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.6,
+    "novelty": 0.31
+  },
+  {
+    "id": "C083",
+    "title": "Introduction to  databases",
+    "url": "https://example.com/item-83",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 28,
+    "difficulty": 2,
+    "tags": [
+      "burnout",
+      "distributed-systems"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.01,
+    "novelty": 0.99
+  },
+  {
+    "id": "C084",
+    "title": "Introduction to  indexing",
+    "url": "https://example.com/item-84",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 17,
+    "difficulty": 1,
+    "tags": [
+      "deployment",
+      "concurrency"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.19,
+    "novelty": 0.47
+  },
+  {
+    "id": "C085",
+    "title": "Introduction to  sql",
+    "url": "https://example.com/item-85",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 48,
+    "difficulty": 2,
+    "tags": [
+      "http",
+      "testing"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.09,
+    "novelty": 0.81
+  },
+  {
+    "id": "C086",
+    "title": "Against  sql",
+    "url": "https://example.com/item-86",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 39,
+    "difficulty": 4,
+    "tags": [
+      "systems-thinking",
+      "api-design"
+    ],
+    "stance": "contrarian",
+    "thumbnail_heat": 0.62,
+    "novelty": 0.98
+  },
+  {
+    "id": "C087",
+    "title": "Against  security",
+    "url": "https://example.com/item-87",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 16,
+    "difficulty": 4,
+    "tags": [
+      "http",
+      "testing"
+    ],
+    "stance": "contrarian",
+    "thumbnail_heat": 0.34,
+    "novelty": 0.24
+  },
+  {
+    "id": "C088",
+    "title": "Introduction to  http",
+    "url": "https://example.com/item-88",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 12,
+    "difficulty": 3,
+    "tags": [
+      "http",
+      "indexing"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.92,
+    "novelty": 0.24
+  },
+  {
+    "id": "C089",
+    "title": "Introduction to  systems thinking",
+    "url": "https://example.com/item-89",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 46,
+    "difficulty": 3,
+    "tags": [
+      "sql",
+      "career"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.4,
+    "novelty": 0.94
+  },
+  {
+    "id": "C090",
+    "title": "Introduction to  concurrency",
+    "url": "https://example.com/item-90",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 36,
+    "difficulty": 4,
+    "tags": [
+      "sql",
+      "observability"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.37,
+    "novelty": 0.25
+  },
+  {
+    "id": "C091",
+    "title": "Against  http",
+    "url": "https://example.com/item-91",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 16,
+    "difficulty": 3,
+    "tags": [
+      "distributed-systems",
+      "concurrency"
+    ],
+    "stance": "contrarian",
+    "thumbnail_heat": 0.2,
+    "novelty": 0.93
+  },
+  {
+    "id": "C092",
+    "title": "Against  sql",
+    "url": "https://example.com/item-92",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 9,
+    "difficulty": 3,
+    "tags": [
+      "http",
+      "databases"
+    ],
+    "stance": "contrarian",
+    "thumbnail_heat": 0.7,
+    "novelty": 0.47
+  },
+  {
+    "id": "C093",
+    "title": "Introduction to  distributed systems",
+    "url": "https://example.com/item-93",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 54,
+    "difficulty": 3,
+    "tags": [
+      "concurrency",
+      "indexing"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.82,
+    "novelty": 0.12
+  },
+  {
+    "id": "C094",
+    "title": "Introduction to  distributed systems",
+    "url": "https://example.com/item-94",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 23,
+    "difficulty": 4,
+    "tags": [
+      "http",
+      "concurrency"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.62,
+    "novelty": 0.14
+  },
+  {
+    "id": "C095",
+    "title": "Introduction to  sql",
+    "url": "https://example.com/item-95",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 49,
+    "difficulty": 4,
+    "tags": [
+      "learning-how-to-learn",
+      "debugging"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.73,
+    "novelty": 0.63
+  },
+  {
+    "id": "C096",
+    "title": "Introduction to  distributed systems",
+    "url": "https://example.com/item-96",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 51,
+    "difficulty": 4,
+    "tags": [
+      "career",
+      "security"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.31,
+    "novelty": 0.98
+  },
+  {
+    "id": "C097",
+    "title": "Introduction to  testing",
+    "url": "https://example.com/item-97",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 5,
+    "difficulty": 2,
+    "tags": [
+      "api-design",
+      "sql"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.88,
+    "novelty": 0.34
+  },
+  {
+    "id": "C098",
+    "title": "Introduction to  http",
+    "url": "https://example.com/item-98",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 15,
+    "difficulty": 3,
+    "tags": [
+      "career",
+      "indexing"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.48,
+    "novelty": 0.78
+  },
+  {
+    "id": "C099",
+    "title": "Introduction to  testing",
+    "url": "https://example.com/item-99",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 31,
+    "difficulty": 2,
+    "tags": [
+      "concurrency",
+      "testing"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.75,
+    "novelty": 0.74
+  },
+  {
+    "id": "C100",
+    "title": "Introduction to  learning how-to-learn",
+    "url": "https://example.com/item-100",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 30,
+    "difficulty": 3,
+    "tags": [
+      "databases",
+      "sql"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.97,
+    "novelty": 0.48
+  },
+  {
+    "id": "C101",
+    "title": "Introduction to  sql",
+    "url": "https://example.com/item-101",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 17,
+    "difficulty": 2,
+    "tags": [
+      "observability",
+      "caching"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.25,
+    "novelty": 0.39
+  },
+  {
+    "id": "C102",
+    "title": "Introduction to  learning how-to-learn",
+    "url": "https://example.com/item-102",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 35,
+    "difficulty": 3,
+    "tags": [
+      "api-design",
+      "learning-how-to-learn"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.04,
+    "novelty": 0.84
+  },
+  {
+    "id": "C103",
+    "title": "Introduction to  distributed systems",
+    "url": "https://example.com/item-103",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 20,
+    "difficulty": 3,
+    "tags": [
+      "career",
+      "security"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.44,
+    "novelty": 0.92
+  },
+  {
+    "id": "C104",
+    "title": "Introduction to  deployment",
+    "url": "https://example.com/item-104",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 29,
+    "difficulty": 3,
+    "tags": [
+      "burnout",
+      "indexing"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.87,
+    "novelty": 0.55
+  },
+  {
+    "id": "C105",
+    "title": "Introduction to  indexing",
+    "url": "https://example.com/item-105",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 13,
+    "difficulty": 2,
+    "tags": [
+      "sql",
+      "http"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.31,
+    "novelty": 0.13
+  },
+  {
+    "id": "C106",
+    "title": "Against  deployment",
+    "url": "https://example.com/item-106",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 15,
+    "difficulty": 3,
+    "tags": [
+      "debugging",
+      "observability"
+    ],
+    "stance": "contrarian",
+    "thumbnail_heat": 0.45,
+    "novelty": 0.18
+  },
+  {
+    "id": "C107",
+    "title": "Introduction to  systems thinking",
+    "url": "https://example.com/item-107",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 8,
+    "difficulty": 3,
+    "tags": [
+      "testing",
+      "systems-thinking"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.88,
+    "novelty": 0.65
+  },
+  {
+    "id": "C108",
+    "title": "Introduction to  caching",
+    "url": "https://example.com/item-108",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 22,
+    "difficulty": 3,
+    "tags": [
+      "security",
+      "http"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.21,
+    "novelty": 0.04
+  },
+  {
+    "id": "C109",
+    "title": "Introduction to  indexing",
+    "url": "https://example.com/item-109",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 57,
+    "difficulty": 4,
+    "tags": [
+      "concurrency",
+      "caching"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.01,
+    "novelty": 0.23
+  },
+  {
+    "id": "C110",
+    "title": "Introduction to  deployment",
+    "url": "https://example.com/item-110",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 53,
+    "difficulty": 3,
+    "tags": [
+      "security",
+      "sql"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.49,
+    "novelty": 0.45
+  },
+  {
+    "id": "C111",
+    "title": "Introduction to  career",
+    "url": "https://example.com/item-111",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 34,
+    "difficulty": 2,
+    "tags": [
+      "observability",
+      "career"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.14,
+    "novelty": 0.69
+  },
+  {
+    "id": "C112",
+    "title": "Introduction to  sql",
+    "url": "https://example.com/item-112",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 9,
+    "difficulty": 2,
+    "tags": [
+      "distributed-systems",
+      "databases"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.61,
+    "novelty": 0.65
+  },
+  {
+    "id": "C113",
+    "title": "Introduction to  http",
+    "url": "https://example.com/item-113",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 49,
+    "difficulty": 4,
+    "tags": [
+      "burnout",
+      "learning-how-to-learn"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.9,
+    "novelty": 0.94
+  },
+  {
+    "id": "C114",
+    "title": "Introduction to  testing",
+    "url": "https://example.com/item-114",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 25,
+    "difficulty": 2,
+    "tags": [
+      "sql",
+      "observability"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.61,
+    "novelty": 0.29
+  },
+  {
+    "id": "C115",
+    "title": "Introduction to  databases",
+    "url": "https://example.com/item-115",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 56,
+    "difficulty": 4,
+    "tags": [
+      "learning-how-to-learn",
+      "distributed-systems"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.83,
+    "novelty": 0.45
+  },
+  {
+    "id": "C116",
+    "title": "Against  sql",
+    "url": "https://example.com/item-116",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 7,
+    "difficulty": 2,
+    "tags": [
+      "caching",
+      "distributed-systems"
+    ],
+    "stance": "contrarian",
+    "thumbnail_heat": 0.53,
+    "novelty": 0.14
+  },
+  {
+    "id": "C117",
+    "title": "Against  sql",
+    "url": "https://example.com/item-117",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 19,
+    "difficulty": 2,
+    "tags": [
+      "databases",
+      "systems-thinking"
+    ],
+    "stance": "contrarian",
+    "thumbnail_heat": 0.33,
+    "novelty": 0.49
+  },
+  {
+    "id": "C118",
+    "title": "Introduction to  api design",
+    "url": "https://example.com/item-118",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 53,
+    "difficulty": 2,
+    "tags": [
+      "http",
+      "api-design"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.66,
+    "novelty": 0.54
+  },
+  {
+    "id": "C119",
+    "title": "Against  debugging",
+    "url": "https://example.com/item-119",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 9,
+    "difficulty": 3,
+    "tags": [
+      "http",
+      "security"
+    ],
+    "stance": "contrarian",
+    "thumbnail_heat": 0.5,
+    "novelty": 0.74
+  },
+  {
+    "id": "C120",
+    "title": "Introduction to  http",
+    "url": "https://example.com/item-120",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 12,
+    "difficulty": 2,
+    "tags": [
+      "observability",
+      "api-design"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.38,
+    "novelty": 0.89
+  },
+  {
+    "id": "C121",
+    "title": "Introduction to  communication",
+    "url": "https://example.com/item-121",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 55,
+    "difficulty": 3,
+    "tags": [
+      "systems-thinking",
+      "http"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0,
+    "novelty": 0.41
+  },
+  {
+    "id": "C122",
+    "title": "Introduction to  distributed systems",
+    "url": "https://example.com/item-122",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 54,
+    "difficulty": 2,
+    "tags": [
+      "indexing",
+      "security"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.3,
+    "novelty": 0.78
+  },
+  {
+    "id": "C123",
+    "title": "Introduction to  http",
+    "url": "https://example.com/item-123",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 13,
+    "difficulty": 4,
+    "tags": [
+      "indexing",
+      "communication"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.68,
+    "novelty": 0.71
+  },
+  {
+    "id": "C124",
+    "title": "Introduction to  testing",
+    "url": "https://example.com/item-124",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 45,
+    "difficulty": 4,
+    "tags": [
+      "indexing",
+      "communication"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.98,
+    "novelty": 0.62
+  },
+  {
+    "id": "C125",
+    "title": "Introduction to  http",
+    "url": "https://example.com/item-125",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 18,
+    "difficulty": 2,
+    "tags": [
+      "learning-how-to-learn",
+      "databases"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.2,
+    "novelty": 0.57
+  },
+  {
+    "id": "C126",
+    "title": "Introduction to  systems thinking",
+    "url": "https://example.com/item-126",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 8,
+    "difficulty": 4,
+    "tags": [
+      "databases",
+      "api-design"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.94,
+    "novelty": 0.61
+  },
+  {
+    "id": "C127",
+    "title": "Introduction to  databases",
+    "url": "https://example.com/item-127",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 48,
+    "difficulty": 3,
+    "tags": [
+      "sql",
+      "databases"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.2,
+    "novelty": 0.64
+  },
+  {
+    "id": "C128",
+    "title": "Introduction to  observability",
+    "url": "https://example.com/item-128",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 44,
+    "difficulty": 4,
+    "tags": [
+      "communication",
+      "sql"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.6,
+    "novelty": 0.21
+  },
+  {
+    "id": "C129",
+    "title": "Introduction to  distributed systems",
+    "url": "https://example.com/item-129",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 37,
+    "difficulty": 3,
+    "tags": [
+      "communication",
+      "sql"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.42,
+    "novelty": 0.51
+  },
+  {
+    "id": "C130",
+    "title": "Introduction to  api design",
+    "url": "https://example.com/item-130",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 6,
+    "difficulty": 4,
+    "tags": [
+      "observability",
+      "career"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.49,
+    "novelty": 0.12
+  },
+  {
+    "id": "C131",
+    "title": "Introduction to  indexing",
+    "url": "https://example.com/item-131",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 23,
+    "difficulty": 3,
+    "tags": [
+      "concurrency",
+      "http"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.41,
+    "novelty": 0.77
+  },
+  {
+    "id": "C132",
+    "title": "Introduction to  databases",
+    "url": "https://example.com/item-132",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 14,
+    "difficulty": 3,
+    "tags": [
+      "caching",
+      "indexing"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.02,
+    "novelty": 0.56
+  },
+  {
+    "id": "C133",
+    "title": "Introduction to  systems thinking",
+    "url": "https://example.com/item-133",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 49,
+    "difficulty": 4,
+    "tags": [
+      "indexing",
+      "concurrency"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.54,
+    "novelty": 0.47
+  },
+  {
+    "id": "C134",
+    "title": "Introduction to  api design",
+    "url": "https://example.com/item-134",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 49,
+    "difficulty": 2,
+    "tags": [
+      "http",
+      "databases"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.49,
+    "novelty": 0.52
+  },
+  {
+    "id": "C135",
+    "title": "Against  distributed systems",
+    "url": "https://example.com/item-135",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 51,
+    "difficulty": 3,
+    "tags": [
+      "concurrency",
+      "deployment"
+    ],
+    "stance": "contrarian",
+    "thumbnail_heat": 0.93,
+    "novelty": 0.95
+  },
+  {
+    "id": "C136",
+    "title": "Introduction to  systems thinking",
+    "url": "https://example.com/item-136",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 37,
+    "difficulty": 3,
+    "tags": [
+      "http",
+      "databases"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.47,
+    "novelty": 0.79
+  },
+  {
+    "id": "C137",
+    "title": "Introduction to  http",
+    "url": "https://example.com/item-137",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 54,
+    "difficulty": 4,
+    "tags": [
+      "sql",
+      "security"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.43,
+    "novelty": 0.58
+  },
+  {
+    "id": "C138",
+    "title": "Introduction to  communication",
+    "url": "https://example.com/item-138",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 59,
+    "difficulty": 4,
+    "tags": [
+      "systems-thinking",
+      "distributed-systems"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.46,
+    "novelty": 0.39
+  },
+  {
+    "id": "C139",
+    "title": "Introduction to  databases",
+    "url": "https://example.com/item-139",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 12,
+    "difficulty": 3,
+    "tags": [
+      "api-design",
+      "burnout"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.15,
+    "novelty": 0.37
+  },
+  {
+    "id": "C140",
+    "title": "Introduction to  http",
+    "url": "https://example.com/item-140",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 41,
+    "difficulty": 3,
+    "tags": [
+      "concurrency",
+      "debugging"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.63,
+    "novelty": 0.82
+  },
+  {
+    "id": "C141",
+    "title": "Introduction to  sql",
+    "url": "https://example.com/item-141",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 28,
+    "difficulty": 4,
+    "tags": [
+      "learning-how-to-learn",
+      "http"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.2,
+    "novelty": 0.61
+  },
+  {
+    "id": "C142",
+    "title": "Introduction to  indexing",
+    "url": "https://example.com/item-142",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 46,
+    "difficulty": 3,
+    "tags": [
+      "sql",
+      "systems-thinking"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.35,
+    "novelty": 0.13
+  },
+  {
+    "id": "C143",
+    "title": "Introduction to  concurrency",
+    "url": "https://example.com/item-143",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 19,
+    "difficulty": 2,
+    "tags": [
+      "http",
+      "security"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.68,
+    "novelty": 0.93
+  },
+  {
+    "id": "C144",
+    "title": "Introduction to  sql",
+    "url": "https://example.com/item-144",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 43,
+    "difficulty": 5,
+    "tags": [
+      "indexing",
+      "debugging"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.64,
+    "novelty": 0.42
+  },
+  {
+    "id": "C145",
+    "title": "Introduction to  communication",
+    "url": "https://example.com/item-145",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 12,
+    "difficulty": 3,
+    "tags": [
+      "http",
+      "databases"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.41,
+    "novelty": 0.87
+  },
+  {
+    "id": "C146",
+    "title": "Introduction to  learning how-to-learn",
+    "url": "https://example.com/item-146",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 41,
+    "difficulty": 5,
+    "tags": [
+      "databases",
+      "indexing"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.47,
+    "novelty": 0.16
+  },
+  {
+    "id": "C147",
+    "title": "Introduction to  systems thinking",
+    "url": "https://example.com/item-147",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 11,
+    "difficulty": 3,
+    "tags": [
+      "sql",
+      "api-design"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.17,
+    "novelty": 0.06
+  },
+  {
+    "id": "C148",
+    "title": "Introduction to  http",
+    "url": "https://example.com/item-148",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 12,
+    "difficulty": 3,
+    "tags": [
+      "learning-how-to-learn",
+      "burnout"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.75,
+    "novelty": 0.64
+  },
+  {
+    "id": "C149",
+    "title": "Introduction to  api design",
+    "url": "https://example.com/item-149",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 18,
+    "difficulty": 2,
+    "tags": [
+      "caching",
+      "databases"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.9,
+    "novelty": 0.93
+  },
+  {
+    "id": "C150",
+    "title": "Introduction to  systems thinking",
+    "url": "https://example.com/item-150",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "idea",
+    "minutes": 34,
+    "difficulty": 3,
+    "tags": [
+      "http",
+      "systems-thinking"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.55,
+    "novelty": 0.72
+  },
+  {
+    "id": "C151",
+    "title": "Introduction to  observability",
+    "url": "https://example.com/item-151",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "tool",
+    "minutes": 20,
+    "difficulty": 3,
+    "tags": [
+      "deployment",
+      "testing"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.43,
+    "novelty": 0.19
+  },
+  {
+    "id": "C152",
+    "title": "Introduction to  http",
+    "url": "https://example.com/item-152",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "tool",
+    "minutes": 58,
+    "difficulty": 3,
+    "tags": [
+      "burnout",
+      "deployment"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.51,
+    "novelty": 0.99
+  },
+  {
+    "id": "C153",
+    "title": "Introduction to  burnout",
+    "url": "https://example.com/item-153",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "tool",
+    "minutes": 17,
+    "difficulty": 3,
+    "tags": [
+      "indexing",
+      "api-design"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.2,
+    "novelty": 0.21
+  },
+  {
+    "id": "C154",
+    "title": "Introduction to  observability",
+    "url": "https://example.com/item-154",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "tool",
+    "minutes": 31,
+    "difficulty": 2,
+    "tags": [
+      "career",
+      "distributed-systems"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.43,
+    "novelty": 0.7
+  },
+  {
+    "id": "C155",
+    "title": "Introduction to  sql",
+    "url": "https://example.com/item-155",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "tool",
+    "minutes": 37,
+    "difficulty": 4,
+    "tags": [
+      "concurrency",
+      "indexing"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.28,
+    "novelty": 0.3
+  },
+  {
+    "id": "C156",
+    "title": "Introduction to  sql",
+    "url": "https://example.com/item-156",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "tool",
+    "minutes": 38,
+    "difficulty": 2,
+    "tags": [
+      "communication",
+      "sql"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.06,
+    "novelty": 0.38
+  },
+  {
+    "id": "C157",
+    "title": "Introduction to  deployment",
+    "url": "https://example.com/item-157",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "tool",
+    "minutes": 34,
+    "difficulty": 3,
+    "tags": [
+      "security",
+      "burnout"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.58,
+    "novelty": 0.56
+  },
+  {
+    "id": "C158",
+    "title": "Introduction to  deployment",
+    "url": "https://example.com/item-158",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "tool",
+    "minutes": 25,
+    "difficulty": 3,
+    "tags": [
+      "http",
+      "systems-thinking"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.18,
+    "novelty": 0.37
+  },
+  {
+    "id": "C159",
+    "title": "Introduction to  http",
+    "url": "https://example.com/item-159",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "tool",
+    "minutes": 57,
+    "difficulty": 2,
+    "tags": [
+      "security",
+      "sql"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.77,
+    "novelty": 0.94
+  },
+  {
+    "id": "C160",
+    "title": "Introduction to  http",
+    "url": "https://example.com/item-160",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "tool",
+    "minutes": 43,
+    "difficulty": 3,
+    "tags": [
+      "testing",
+      "http"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.66,
+    "novelty": 0.93
+  },
+  {
+    "id": "C161",
+    "title": "Introduction to  observability",
+    "url": "https://example.com/item-161",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "tool",
+    "minutes": 32,
+    "difficulty": 3,
+    "tags": [
+      "concurrency",
+      "security"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.09,
+    "novelty": 0.18
+  },
+  {
+    "id": "C162",
+    "title": "Against  http",
+    "url": "https://example.com/item-162",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "tool",
+    "minutes": 47,
+    "difficulty": 3,
+    "tags": [
+      "http",
+      "concurrency"
+    ],
+    "stance": "contrarian",
+    "thumbnail_heat": 0.94,
+    "novelty": 0.98
+  },
+  {
+    "id": "C163",
+    "title": "Against  deployment",
+    "url": "https://example.com/item-163",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "tool",
+    "minutes": 50,
+    "difficulty": 2,
+    "tags": [
+      "caching",
+      "debugging"
+    ],
+    "stance": "contrarian",
+    "thumbnail_heat": 0.34,
+    "novelty": 0.96
+  },
+  {
+    "id": "C164",
+    "title": "Introduction to  databases",
+    "url": "https://example.com/item-164",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "tool",
+    "minutes": 37,
+    "difficulty": 3,
+    "tags": [
+      "sql",
+      "communication"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.2,
+    "novelty": 0.18
+  },
+  {
+    "id": "C165",
+    "title": "Introduction to  security",
+    "url": "https://example.com/item-165",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "tool",
+    "minutes": 16,
+    "difficulty": 3,
+    "tags": [
+      "systems-thinking",
+      "indexing"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.02,
+    "novelty": 0.99
+  },
+  {
+    "id": "C166",
+    "title": "Against  debugging",
+    "url": "https://example.com/item-166",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "tool",
+    "minutes": 50,
+    "difficulty": 3,
+    "tags": [
+      "http",
+      "concurrency"
+    ],
+    "stance": "contrarian",
+    "thumbnail_heat": 0.71,
+    "novelty": 0.47
+  },
+  {
+    "id": "C167",
+    "title": "Introduction to  api design",
+    "url": "https://example.com/item-167",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "tool",
+    "minutes": 30,
+    "difficulty": 3,
+    "tags": [
+      "distributed-systems",
+      "http"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.28,
+    "novelty": 0.02
+  },
+  {
+    "id": "C168",
+    "title": "Against  distributed systems",
+    "url": "https://example.com/item-168",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "tool",
+    "minutes": 23,
+    "difficulty": 3,
+    "tags": [
+      "http",
+      "api-design"
+    ],
+    "stance": "contrarian",
+    "thumbnail_heat": 0.45,
+    "novelty": 0.79
+  },
+  {
+    "id": "C169",
+    "title": "Introduction to  burnout",
+    "url": "https://example.com/item-169",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "tool",
+    "minutes": 35,
+    "difficulty": 3,
+    "tags": [
+      "api-design",
+      "deployment"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.08,
+    "novelty": 0.7
+  },
+  {
+    "id": "C170",
+    "title": "Introduction to  http",
+    "url": "https://example.com/item-170",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "tool",
+    "minutes": 43,
+    "difficulty": 4,
+    "tags": [
+      "burnout",
+      "http"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.37,
+    "novelty": 0.62
+  },
+  {
+    "id": "C171",
+    "title": "Introduction to  debugging",
+    "url": "https://example.com/item-171",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "tool",
+    "minutes": 37,
+    "difficulty": 1,
+    "tags": [
+      "indexing",
+      "burnout"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 1,
+    "novelty": 0.91
+  },
+  {
+    "id": "C172",
+    "title": "Introduction to  http",
+    "url": "https://example.com/item-172",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "tool",
+    "minutes": 41,
+    "difficulty": 4,
+    "tags": [
+      "career",
+      "deployment"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.3,
+    "novelty": 0.42
+  },
+  {
+    "id": "C173",
+    "title": "Against  burnout",
+    "url": "https://example.com/item-173",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "tool",
+    "minutes": 51,
+    "difficulty": 2,
+    "tags": [
+      "sql",
+      "distributed-systems"
+    ],
+    "stance": "contrarian",
+    "thumbnail_heat": 0.22,
+    "novelty": 0.05
+  },
+  {
+    "id": "C174",
+    "title": "Introduction to  sql",
+    "url": "https://example.com/item-174",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "tool",
+    "minutes": 48,
+    "difficulty": 3,
+    "tags": [
+      "debugging",
+      "sql"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.77,
+    "novelty": 0.38
+  },
+  {
+    "id": "C175",
+    "title": "Against  indexing",
+    "url": "https://example.com/item-175",
+    "source": "The Shelf",
+    "bucket": "knowledge",
+    "type": "tool",
+    "minutes": 27,
+    "difficulty": 2,
+    "tags": [
+      "caching",
+      "api-design"
+    ],
+    "stance": "contrarian",
+    "thumbnail_heat": 0.75,
+    "novelty": 0.47
+  },
+  {
+    "id": "C176",
+    "title": "Challenge: Master sql",
+    "url": "https://example.com/item-176",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 22,
+    "difficulty": 3,
+    "tags": [
+      "sql",
+      "communication"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.4,
+    "novelty": 0.65,
+    "completion_condition": "Build a proof of concept for sql and write down where it breaks."
+  },
+  {
+    "id": "C177",
+    "title": "Challenge: Master api-design",
+    "url": "https://example.com/item-177",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 33,
+    "difficulty": 2,
+    "tags": [
+      "api-design",
+      "debugging"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.78,
+    "novelty": 0.68,
+    "completion_condition": "Build a proof of concept for api-design and write down where it breaks."
+  },
+  {
+    "id": "C178",
+    "title": "Challenge: Master indexing",
+    "url": "https://example.com/item-178",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 8,
+    "difficulty": 3,
+    "tags": [
+      "indexing",
+      "systems-thinking"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.54,
+    "novelty": 0.31,
+    "completion_condition": "Build a proof of concept for indexing and write down where it breaks."
+  },
+  {
+    "id": "C179",
+    "title": "Challenge: Master caching",
+    "url": "https://example.com/item-179",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 13,
+    "difficulty": 3,
+    "tags": [
+      "caching",
+      "http"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.73,
+    "novelty": 0.68,
+    "completion_condition": "Build a proof of concept for caching and write down where it breaks."
+  },
+  {
+    "id": "C180",
+    "title": "Challenge: Master career",
+    "url": "https://example.com/item-180",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 19,
+    "difficulty": 4,
+    "tags": [
+      "career",
+      "api-design"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.06,
+    "novelty": 0.34,
+    "completion_condition": "Build a proof of concept for career and write down where it breaks."
+  },
+  {
+    "id": "C181",
+    "title": "Challenge: Master caching",
+    "url": "https://example.com/item-181",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 32,
+    "difficulty": 3,
+    "tags": [
+      "caching",
+      "api-design"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.1,
+    "novelty": 0.43,
+    "completion_condition": "Build a proof of concept for caching and write down where it breaks."
+  },
+  {
+    "id": "C182",
+    "title": "Challenge: Master http",
+    "url": "https://example.com/item-182",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 6,
+    "difficulty": 2,
+    "tags": [
+      "http",
+      "deployment"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.2,
+    "novelty": 0.27,
+    "completion_condition": "Build a proof of concept for http and write down where it breaks."
+  },
+  {
+    "id": "C183",
+    "title": "Challenge: Master burnout",
+    "url": "https://example.com/item-183",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 42,
+    "difficulty": 4,
+    "tags": [
+      "burnout",
+      "observability"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.44,
+    "novelty": 0.41,
+    "completion_condition": "Build a proof of concept for burnout and write down where it breaks."
+  },
+  {
+    "id": "C184",
+    "title": "Challenge: Master debugging",
+    "url": "https://example.com/item-184",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 14,
+    "difficulty": 3,
+    "tags": [
+      "debugging",
+      "caching"
+    ],
+    "stance": "contrarian",
+    "thumbnail_heat": 0.92,
+    "novelty": 0.72,
+    "completion_condition": "Build a proof of concept for debugging and write down where it breaks."
+  },
+  {
+    "id": "C185",
+    "title": "Challenge: Master career",
+    "url": "https://example.com/item-185",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 22,
+    "difficulty": 2,
+    "tags": [
+      "career",
+      "http"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.14,
+    "novelty": 0.51,
+    "completion_condition": "Build a proof of concept for career and write down where it breaks."
+  },
+  {
+    "id": "C186",
+    "title": "Challenge: Master distributed-systems",
+    "url": "https://example.com/item-186",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 31,
+    "difficulty": 2,
+    "tags": [
+      "distributed-systems",
+      "http"
+    ],
+    "stance": "contrarian",
+    "thumbnail_heat": 0.17,
+    "novelty": 0.06,
+    "completion_condition": "Build a proof of concept for distributed-systems and write down where it breaks."
+  },
+  {
+    "id": "C187",
+    "title": "Challenge: Master concurrency",
+    "url": "https://example.com/item-187",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 7,
+    "difficulty": 2,
+    "tags": [
+      "concurrency",
+      "systems-thinking"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.97,
+    "novelty": 0.11,
+    "completion_condition": "Build a proof of concept for concurrency and write down where it breaks."
+  },
+  {
+    "id": "C188",
+    "title": "Challenge: Master career",
+    "url": "https://example.com/item-188",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 37,
+    "difficulty": 2,
+    "tags": [
+      "career",
+      "security"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.5,
+    "novelty": 0.69,
+    "completion_condition": "Build a proof of concept for career and write down where it breaks."
+  },
+  {
+    "id": "C189",
+    "title": "Challenge: Master burnout",
+    "url": "https://example.com/item-189",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 48,
+    "difficulty": 3,
+    "tags": [
+      "burnout",
+      "deployment"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 1,
+    "novelty": 0.76,
+    "completion_condition": "Build a proof of concept for burnout and write down where it breaks."
+  },
+  {
+    "id": "C190",
+    "title": "Challenge: Master security",
+    "url": "https://example.com/item-190",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 20,
+    "difficulty": 3,
+    "tags": [
+      "security",
+      "testing"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.63,
+    "novelty": 0.7,
+    "completion_condition": "Build a proof of concept for security and write down where it breaks."
+  },
+  {
+    "id": "C191",
+    "title": "Challenge: Master deployment",
+    "url": "https://example.com/item-191",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 46,
+    "difficulty": 3,
+    "tags": [
+      "deployment",
+      "http"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.6,
+    "novelty": 0.25,
+    "completion_condition": "Build a proof of concept for deployment and write down where it breaks."
+  },
+  {
+    "id": "C192",
+    "title": "Challenge: Master http",
+    "url": "https://example.com/item-192",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 19,
+    "difficulty": 2,
+    "tags": [
+      "http",
+      "sql"
+    ],
+    "stance": "contrarian",
+    "thumbnail_heat": 0.36,
+    "novelty": 0.96,
+    "completion_condition": "Build a proof of concept for http and write down where it breaks."
+  },
+  {
+    "id": "C193",
+    "title": "Challenge: Master caching",
+    "url": "https://example.com/item-193",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 26,
+    "difficulty": 3,
+    "tags": [
+      "caching",
+      "deployment"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.07,
+    "novelty": 0.12,
+    "completion_condition": "Build a proof of concept for caching and write down where it breaks."
+  },
+  {
+    "id": "C194",
+    "title": "Challenge: Master databases",
+    "url": "https://example.com/item-194",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 32,
+    "difficulty": 3,
+    "tags": [
+      "databases",
+      "debugging"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.86,
+    "novelty": 0.51,
+    "completion_condition": "Build a proof of concept for databases and write down where it breaks."
+  },
+  {
+    "id": "C195",
+    "title": "Challenge: Master databases",
+    "url": "https://example.com/item-195",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 56,
+    "difficulty": 2,
+    "tags": [
+      "databases",
+      "caching"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.3,
+    "novelty": 0.96,
+    "completion_condition": "Build a proof of concept for databases and write down where it breaks."
+  },
+  {
+    "id": "C196",
+    "title": "Challenge: Master http",
+    "url": "https://example.com/item-196",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 19,
+    "difficulty": 3,
+    "tags": [
+      "http",
+      "databases"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.51,
+    "novelty": 1,
+    "completion_condition": "Build a proof of concept for http and write down where it breaks."
+  },
+  {
+    "id": "C197",
+    "title": "Challenge: Master api-design",
+    "url": "https://example.com/item-197",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 27,
+    "difficulty": 3,
+    "tags": [
+      "api-design",
+      "http"
+    ],
+    "stance": "contrarian",
+    "thumbnail_heat": 0.1,
+    "novelty": 0.77,
+    "completion_condition": "Build a proof of concept for api-design and write down where it breaks."
+  },
+  {
+    "id": "C198",
+    "title": "Challenge: Master learning-how-to-learn",
+    "url": "https://example.com/item-198",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 54,
+    "difficulty": 2,
+    "tags": [
+      "learning-how-to-learn",
+      "distributed-systems"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.03,
+    "novelty": 0.74,
+    "completion_condition": "Build a proof of concept for learning-how-to-learn and write down where it breaks."
+  },
+  {
+    "id": "C199",
+    "title": "Challenge: Master deployment",
+    "url": "https://example.com/item-199",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 54,
+    "difficulty": 2,
+    "tags": [
+      "deployment",
+      "distributed-systems"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.03,
+    "novelty": 0.06,
+    "completion_condition": "Build a proof of concept for deployment and write down where it breaks."
+  },
+  {
+    "id": "C200",
+    "title": "Challenge: Master indexing",
+    "url": "https://example.com/item-200",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 38,
+    "difficulty": 2,
+    "tags": [
+      "indexing",
+      "communication"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.84,
+    "novelty": 0.32,
+    "completion_condition": "Build a proof of concept for indexing and write down where it breaks."
+  },
+  {
+    "id": "C201",
+    "title": "Challenge: Master systems-thinking",
+    "url": "https://example.com/item-201",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 13,
+    "difficulty": 3,
+    "tags": [
+      "systems-thinking",
+      "sql"
+    ],
+    "stance": "contrarian",
+    "thumbnail_heat": 0.41,
+    "novelty": 0.5,
+    "completion_condition": "Build a proof of concept for systems-thinking and write down where it breaks."
+  },
+  {
+    "id": "C202",
+    "title": "Challenge: Master api-design",
+    "url": "https://example.com/item-202",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 33,
+    "difficulty": 3,
+    "tags": [
+      "api-design",
+      "communication"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.28,
+    "novelty": 0.96,
+    "completion_condition": "Build a proof of concept for api-design and write down where it breaks."
+  },
+  {
+    "id": "C203",
+    "title": "Challenge: Master api-design",
+    "url": "https://example.com/item-203",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 58,
+    "difficulty": 2,
+    "tags": [
+      "api-design",
+      "distributed-systems"
+    ],
+    "stance": "contrarian",
+    "thumbnail_heat": 0.37,
+    "novelty": 0.13,
+    "completion_condition": "Build a proof of concept for api-design and write down where it breaks."
+  },
+  {
+    "id": "C204",
+    "title": "Challenge: Master burnout",
+    "url": "https://example.com/item-204",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 7,
+    "difficulty": 2,
+    "tags": [
+      "burnout",
+      "api-design"
+    ],
+    "stance": "contrarian",
+    "thumbnail_heat": 0.26,
+    "novelty": 0.95,
+    "completion_condition": "Build a proof of concept for burnout and write down where it breaks."
+  },
+  {
+    "id": "C205",
+    "title": "Challenge: Master debugging",
+    "url": "https://example.com/item-205",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 23,
+    "difficulty": 4,
+    "tags": [
+      "debugging",
+      "indexing"
+    ],
+    "stance": "contrarian",
+    "thumbnail_heat": 0.47,
+    "novelty": 0.03,
+    "completion_condition": "Build a proof of concept for debugging and write down where it breaks."
+  },
+  {
+    "id": "C206",
+    "title": "Challenge: Master career",
+    "url": "https://example.com/item-206",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 38,
+    "difficulty": 4,
+    "tags": [
+      "career",
+      "security"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.08,
+    "novelty": 0.23,
+    "completion_condition": "Build a proof of concept for career and write down where it breaks."
+  },
+  {
+    "id": "C207",
+    "title": "Challenge: Master indexing",
+    "url": "https://example.com/item-207",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 30,
+    "difficulty": 3,
+    "tags": [
+      "indexing",
+      "learning-how-to-learn"
+    ],
+    "stance": "contrarian",
+    "thumbnail_heat": 0.8,
+    "novelty": 0.33,
+    "completion_condition": "Build a proof of concept for indexing and write down where it breaks."
+  },
+  {
+    "id": "C208",
+    "title": "Challenge: Master sql",
+    "url": "https://example.com/item-208",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 52,
+    "difficulty": 3,
+    "tags": [
+      "sql",
+      "databases"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.56,
+    "novelty": 0.14,
+    "completion_condition": "Build a proof of concept for sql and write down where it breaks."
+  },
+  {
+    "id": "C209",
+    "title": "Challenge: Master systems-thinking",
+    "url": "https://example.com/item-209",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 24,
+    "difficulty": 2,
+    "tags": [
+      "systems-thinking",
+      "http"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.46,
+    "novelty": 0.51,
+    "completion_condition": "Build a proof of concept for systems-thinking and write down where it breaks."
+  },
+  {
+    "id": "C210",
+    "title": "Challenge: Master learning-how-to-learn",
+    "url": "https://example.com/item-210",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 15,
+    "difficulty": 4,
+    "tags": [
+      "learning-how-to-learn",
+      "indexing"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.57,
+    "novelty": 0.49,
+    "completion_condition": "Build a proof of concept for learning-how-to-learn and write down where it breaks."
+  },
+  {
+    "id": "C211",
+    "title": "Challenge: Master concurrency",
+    "url": "https://example.com/item-211",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 36,
+    "difficulty": 3,
+    "tags": [
+      "concurrency",
+      "distributed-systems"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.7,
+    "novelty": 0.1,
+    "completion_condition": "Build a proof of concept for concurrency and write down where it breaks."
+  },
+  {
+    "id": "C212",
+    "title": "Challenge: Master caching",
+    "url": "https://example.com/item-212",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 30,
+    "difficulty": 3,
+    "tags": [
+      "caching",
+      "systems-thinking"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.76,
+    "novelty": 0.95,
+    "completion_condition": "Build a proof of concept for caching and write down where it breaks."
+  },
+  {
+    "id": "C213",
+    "title": "Challenge: Master http",
+    "url": "https://example.com/item-213",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 30,
+    "difficulty": 3,
+    "tags": [
+      "http",
+      "career"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.34,
+    "novelty": 0.87,
+    "completion_condition": "Build a proof of concept for http and write down where it breaks."
+  },
+  {
+    "id": "C214",
+    "title": "Challenge: Master sql",
+    "url": "https://example.com/item-214",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 54,
+    "difficulty": 3,
+    "tags": [
+      "sql",
+      "databases"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.39,
+    "novelty": 0.58,
+    "completion_condition": "Build a proof of concept for sql and write down where it breaks."
+  },
+  {
+    "id": "C215",
+    "title": "Challenge: Master learning-how-to-learn",
+    "url": "https://example.com/item-215",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 17,
+    "difficulty": 2,
+    "tags": [
+      "learning-how-to-learn",
+      "sql"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.88,
+    "novelty": 0.99,
+    "completion_condition": "Build a proof of concept for learning-how-to-learn and write down where it breaks."
+  },
+  {
+    "id": "C216",
+    "title": "Challenge: Master deployment",
+    "url": "https://example.com/item-216",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 45,
+    "difficulty": 3,
+    "tags": [
+      "deployment",
+      "distributed-systems"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.59,
+    "novelty": 0.6,
+    "completion_condition": "Build a proof of concept for deployment and write down where it breaks."
+  },
+  {
+    "id": "C217",
+    "title": "Challenge: Master debugging",
+    "url": "https://example.com/item-217",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 24,
+    "difficulty": 3,
+    "tags": [
+      "debugging",
+      "http"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.74,
+    "novelty": 0.1,
+    "completion_condition": "Build a proof of concept for debugging and write down where it breaks."
+  },
+  {
+    "id": "C218",
+    "title": "Challenge: Master career",
+    "url": "https://example.com/item-218",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 22,
+    "difficulty": 2,
+    "tags": [
+      "career",
+      "deployment"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.89,
+    "novelty": 0.19,
+    "completion_condition": "Build a proof of concept for career and write down where it breaks."
+  },
+  {
+    "id": "C219",
+    "title": "Challenge: Master observability",
+    "url": "https://example.com/item-219",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 40,
+    "difficulty": 3,
+    "tags": [
+      "observability",
+      "debugging"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.63,
+    "novelty": 0.98,
+    "completion_condition": "Build a proof of concept for observability and write down where it breaks."
+  },
+  {
+    "id": "C220",
+    "title": "Challenge: Master deployment",
+    "url": "https://example.com/item-220",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "challenge",
+    "minutes": 51,
+    "difficulty": 3,
+    "tags": [
+      "deployment",
+      "concurrency"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.03,
+    "novelty": 0.04,
+    "completion_condition": "Build a proof of concept for deployment and write down where it breaks."
+  },
+  {
+    "id": "C221",
+    "title": "Discuss databases with a senior",
+    "url": "https://example.com/item-221",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "mentor",
+    "minutes": 20,
+    "difficulty": 2,
+    "tags": [
+      "databases",
+      "http"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.33,
+    "novelty": 0.26,
+    "completion_condition": "Send an outreach message to discuss databases."
+  },
+  {
+    "id": "C222",
+    "title": "Discuss indexing with a senior",
+    "url": "https://example.com/item-222",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "mentor",
+    "minutes": 54,
+    "difficulty": 3,
+    "tags": [
+      "indexing",
+      "http"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.86,
+    "novelty": 0.31,
+    "completion_condition": "Send an outreach message to discuss indexing."
+  },
+  {
+    "id": "C223",
+    "title": "Discuss learning-how-to-learn with a senior",
+    "url": "https://example.com/item-223",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "mentor",
+    "minutes": 14,
+    "difficulty": 3,
+    "tags": [
+      "learning-how-to-learn",
+      "observability"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.33,
+    "novelty": 0.59,
+    "completion_condition": "Send an outreach message to discuss learning-how-to-learn."
+  },
+  {
+    "id": "C224",
+    "title": "Discuss sql with a senior",
+    "url": "https://example.com/item-224",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "mentor",
+    "minutes": 39,
+    "difficulty": 3,
+    "tags": [
+      "sql",
+      "api-design"
+    ],
+    "stance": "contrarian",
+    "thumbnail_heat": 0.6,
+    "novelty": 0.62,
+    "completion_condition": "Send an outreach message to discuss sql."
+  },
+  {
+    "id": "C225",
+    "title": "Discuss http with a senior",
+    "url": "https://example.com/item-225",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "mentor",
+    "minutes": 7,
+    "difficulty": 3,
+    "tags": [
+      "http",
+      "observability"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.53,
+    "novelty": 0.24,
+    "completion_condition": "Send an outreach message to discuss http."
+  },
+  {
+    "id": "C226",
+    "title": "Discuss systems-thinking with a senior",
+    "url": "https://example.com/item-226",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "mentor",
+    "minutes": 39,
+    "difficulty": 3,
+    "tags": [
+      "systems-thinking",
+      "communication"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.94,
+    "novelty": 0.39,
+    "completion_condition": "Send an outreach message to discuss systems-thinking."
+  },
+  {
+    "id": "C227",
+    "title": "Discuss career with a senior",
+    "url": "https://example.com/item-227",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "mentor",
+    "minutes": 22,
+    "difficulty": 4,
+    "tags": [
+      "career",
+      "testing"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.18,
+    "novelty": 0.52,
+    "completion_condition": "Send an outreach message to discuss career."
+  },
+  {
+    "id": "C228",
+    "title": "Discuss concurrency with a senior",
+    "url": "https://example.com/item-228",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "mentor",
+    "minutes": 5,
+    "difficulty": 3,
+    "tags": [
+      "concurrency",
+      "burnout"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.41,
+    "novelty": 0.08,
+    "completion_condition": "Send an outreach message to discuss concurrency."
+  },
+  {
+    "id": "C229",
+    "title": "Discuss api-design with a senior",
+    "url": "https://example.com/item-229",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "mentor",
+    "minutes": 58,
+    "difficulty": 2,
+    "tags": [
+      "api-design",
+      "career"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.34,
+    "novelty": 0.87,
+    "completion_condition": "Send an outreach message to discuss api-design."
+  },
+  {
+    "id": "C230",
+    "title": "Discuss sql with a senior",
+    "url": "https://example.com/item-230",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "mentor",
+    "minutes": 31,
+    "difficulty": 3,
+    "tags": [
+      "sql",
+      "deployment"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.85,
+    "novelty": 0.54,
+    "completion_condition": "Send an outreach message to discuss sql."
+  },
+  {
+    "id": "C231",
+    "title": "Discuss indexing with a senior",
+    "url": "https://example.com/item-231",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "mentor",
+    "minutes": 17,
+    "difficulty": 3,
+    "tags": [
+      "indexing",
+      "burnout"
+    ],
+    "stance": "contrarian",
+    "thumbnail_heat": 0.26,
+    "novelty": 0.15,
+    "completion_condition": "Send an outreach message to discuss indexing."
+  },
+  {
+    "id": "C232",
+    "title": "Discuss security with a senior",
+    "url": "https://example.com/item-232",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "mentor",
+    "minutes": 21,
+    "difficulty": 2,
+    "tags": [
+      "security",
+      "systems-thinking"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.74,
+    "novelty": 0.16,
+    "completion_condition": "Send an outreach message to discuss security."
+  },
+  {
+    "id": "C233",
+    "title": "Discuss systems-thinking with a senior",
+    "url": "https://example.com/item-233",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "mentor",
+    "minutes": 25,
+    "difficulty": 3,
+    "tags": [
+      "systems-thinking",
+      "burnout"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.08,
+    "novelty": 0.07,
+    "completion_condition": "Send an outreach message to discuss systems-thinking."
+  },
+  {
+    "id": "C234",
+    "title": "Discuss observability with a senior",
+    "url": "https://example.com/item-234",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "mentor",
+    "minutes": 6,
+    "difficulty": 3,
+    "tags": [
+      "observability",
+      "deployment"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.37,
+    "novelty": 0.93,
+    "completion_condition": "Send an outreach message to discuss observability."
+  },
+  {
+    "id": "C235",
+    "title": "Discuss distributed-systems with a senior",
+    "url": "https://example.com/item-235",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "mentor",
+    "minutes": 8,
+    "difficulty": 3,
+    "tags": [
+      "distributed-systems",
+      "systems-thinking"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.68,
+    "novelty": 0.25,
+    "completion_condition": "Send an outreach message to discuss distributed-systems."
+  },
+  {
+    "id": "C236",
+    "title": "Discuss api-design with a senior",
+    "url": "https://example.com/item-236",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "mentor",
+    "minutes": 38,
+    "difficulty": 3,
+    "tags": [
+      "api-design",
+      "concurrency"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.1,
+    "novelty": 0.16,
+    "completion_condition": "Send an outreach message to discuss api-design."
+  },
+  {
+    "id": "C237",
+    "title": "Discuss api-design with a senior",
+    "url": "https://example.com/item-237",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "mentor",
+    "minutes": 55,
+    "difficulty": 3,
+    "tags": [
+      "api-design",
+      "concurrency"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.54,
+    "novelty": 0.86,
+    "completion_condition": "Send an outreach message to discuss api-design."
+  },
+  {
+    "id": "C238",
+    "title": "Discuss sql with a senior",
+    "url": "https://example.com/item-238",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "mentor",
+    "minutes": 47,
+    "difficulty": 2,
+    "tags": [
+      "sql",
+      "security"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0,
+    "novelty": 0.83,
+    "completion_condition": "Send an outreach message to discuss sql."
+  },
+  {
+    "id": "C239",
+    "title": "Discuss indexing with a senior",
+    "url": "https://example.com/item-239",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "mentor",
+    "minutes": 14,
+    "difficulty": 3,
+    "tags": [
+      "indexing",
+      "sql"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.46,
+    "novelty": 0.65,
+    "completion_condition": "Send an outreach message to discuss indexing."
+  },
+  {
+    "id": "C240",
+    "title": "Discuss burnout with a senior",
+    "url": "https://example.com/item-240",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "mentor",
+    "minutes": 35,
+    "difficulty": 3,
+    "tags": [
+      "burnout",
+      "observability"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.57,
+    "novelty": 0.7,
+    "completion_condition": "Send an outreach message to discuss burnout."
+  },
+  {
+    "id": "C241",
+    "title": "Discuss distributed-systems with a senior",
+    "url": "https://example.com/item-241",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "mentor",
+    "minutes": 5,
+    "difficulty": 3,
+    "tags": [
+      "distributed-systems",
+      "caching"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.23,
+    "novelty": 0.53,
+    "completion_condition": "Send an outreach message to discuss distributed-systems."
+  },
+  {
+    "id": "C242",
+    "title": "Discuss indexing with a senior",
+    "url": "https://example.com/item-242",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "mentor",
+    "minutes": 52,
+    "difficulty": 3,
+    "tags": [
+      "indexing",
+      "distributed-systems"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.64,
+    "novelty": 0.43,
+    "completion_condition": "Send an outreach message to discuss indexing."
+  },
+  {
+    "id": "C243",
+    "title": "Discuss concurrency with a senior",
+    "url": "https://example.com/item-243",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "mentor",
+    "minutes": 26,
+    "difficulty": 3,
+    "tags": [
+      "concurrency",
+      "systems-thinking"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.46,
+    "novelty": 0.18,
+    "completion_condition": "Send an outreach message to discuss concurrency."
+  },
+  {
+    "id": "C244",
+    "title": "Discuss debugging with a senior",
+    "url": "https://example.com/item-244",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "mentor",
+    "minutes": 15,
+    "difficulty": 3,
+    "tags": [
+      "debugging",
+      "indexing"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.41,
+    "novelty": 0.41,
+    "completion_condition": "Send an outreach message to discuss debugging."
+  },
+  {
+    "id": "C245",
+    "title": "Discuss security with a senior",
+    "url": "https://example.com/item-245",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "mentor",
+    "minutes": 50,
+    "difficulty": 2,
+    "tags": [
+      "security",
+      "sql"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.52,
+    "novelty": 0.52,
+    "completion_condition": "Send an outreach message to discuss security."
+  },
+  {
+    "id": "C246",
+    "title": "Take the day off",
+    "url": "https://example.com/item-246",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "rest",
+    "minutes": 0,
+    "difficulty": 1,
+    "tags": [
+      "career",
+      "testing"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.75,
+    "novelty": 0.56,
+    "completion_condition": "Do no work today."
+  },
+  {
+    "id": "C247",
+    "title": "Take the day off",
+    "url": "https://example.com/item-247",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "rest",
+    "minutes": 0,
+    "difficulty": 1,
+    "tags": [
+      "security",
+      "concurrency"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.41,
+    "novelty": 0.25,
+    "completion_condition": "Do no work today."
+  },
+  {
+    "id": "C248",
+    "title": "Take the day off",
+    "url": "https://example.com/item-248",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "rest",
+    "minutes": 0,
+    "difficulty": 1,
+    "tags": [
+      "databases",
+      "deployment"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 1,
+    "novelty": 0.43,
+    "completion_condition": "Do no work today."
+  },
+  {
+    "id": "C249",
+    "title": "Take the day off",
+    "url": "https://example.com/item-249",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "rest",
+    "minutes": 0,
+    "difficulty": 1,
+    "tags": [
+      "systems-thinking",
+      "http"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.02,
+    "novelty": 0.31,
+    "completion_condition": "Do no work today."
+  },
+  {
+    "id": "C250",
+    "title": "Take the day off",
+    "url": "https://example.com/item-250",
+    "source": "The Shelf",
+    "bucket": "experience",
+    "type": "rest",
+    "minutes": 0,
+    "difficulty": 1,
+    "tags": [
+      "observability",
+      "http"
+    ],
+    "stance": "mainstream",
+    "thumbnail_heat": 0.21,
+    "novelty": 0.23,
+    "completion_condition": "Do no work today."
+  }
+]
