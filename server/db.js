@@ -41,6 +41,21 @@ const db = {
   exec(sql) {
     return _db.exec(sql);
   },
+  // better-sqlite3 compatibility: db.transaction(fn) returns a callable
+  // that runs fn inside a BEGIN/COMMIT block, rolling back on error.
+  transaction(fn) {
+    return (...args) => {
+      _db.exec('BEGIN');
+      try {
+        const result = fn(...args);
+        _db.exec('COMMIT');
+        return result;
+      } catch (err) {
+        _db.exec('ROLLBACK');
+        throw err;
+      }
+    };
+  },
   // Expose raw db for advanced use
   _raw: _db,
 };
