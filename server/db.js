@@ -2,17 +2,16 @@ const Database = require('better-sqlite3');
 const path = require('path');
 const fs = require('fs');
 
-const dbPath = path.resolve(__dirname, '../data/shelf.db');
-const schemaPath = path.resolve(__dirname, './schema.sql');
-
-// Ensure data directory exists
-const dataDir = path.dirname(dbPath);
-if (!fs.existsSync(dataDir)) {
-  fs.mkdirSync(dataDir, { recursive: true });
+const dbDir = path.join(__dirname, '../data');
+if (!fs.existsSync(dbDir)) {
+  fs.mkdirSync(dbDir, { recursive: true });
 }
 
-// Connect to the database
-const db = new Database(dbPath, { verbose: console.log });
+const dbPath = path.join(dbDir, 'shelf.db');
+const db = new Database(dbPath);
+
+// Enable WAL mode for better concurrency in production
+db.pragma('journal_mode = WAL');
 
 // Enable foreign keys
 db.pragma('foreign_keys = ON');

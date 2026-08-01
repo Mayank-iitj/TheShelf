@@ -1,5 +1,9 @@
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
+const helmet = require('helmet');
+const morgan = require('morgan');
 const { db } = require('./db');
 
 const { rankGrowth, getWeights, setWeights } = require('./engine/rank');
@@ -12,7 +16,15 @@ const { seedContent } = require('./seed/seedContent');
 const { seedHistory } = require('./seed/seedHistory');
 
 const app = express();
+app.use(helmet({ contentSecurityPolicy: false })); // allow dev scripts
+app.use(cors());
+app.use(morgan('dev'));
 app.use(express.json());
+
+// Serve static frontend in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../client/dist')));
+}
 
 // API Surface
 
@@ -178,7 +190,20 @@ app.post('/api/review/accept', (req, res) => {
   res.json({ success: true });
 });
 
-const PORT = 3001;
+// Global Error Handler
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Internal Server Error', message: err.message });
+});
+
+// Serve frontend for all other routes
+if (process.env.NODE_ENV === 'production') {
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+  });
+}
+
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(\`Server running on port \${PORT}\`);
 });
