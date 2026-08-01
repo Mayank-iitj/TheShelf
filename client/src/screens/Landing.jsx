@@ -9,6 +9,7 @@ import CircularGallery from '../components/CircularGallery';
 import RotatingText from '../components/RotatingText';
 import ScrollVelocity from '../components/ScrollVelocity';
 import TrueFocus from '../components/TrueFocus';
+import ScrollReveal from '../components/ScrollReveal';
 import PlasmaWave from '../components/PlasmaWave';
 import StaggeredMenu from '../components/StaggeredMenu';
 import Aurora from '../components/Aurora';
@@ -482,9 +483,15 @@ export default function Landing() {
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '100px', padding: '6px 16px', fontSize: '0.8rem', marginBottom: '24px' }}>
               ✦ How It Works
             </div>
-            <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 700, letterSpacing: '-0.04em', margin: 0 }}>
-              The process of<br />becoming
-            </h2>
+            <ScrollReveal
+              baseOpacity={0}
+              enableBlur={true}
+              baseRotation={5}
+              blurStrength={10}
+              containerClassName="text-gradient"
+            >
+              The process of becoming
+            </ScrollReveal>
           </motion.div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '2px' }}>
