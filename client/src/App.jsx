@@ -12,7 +12,7 @@ import Review from './screens/Review';
 import Onboarding from './screens/Onboarding';
 import SignInPage from './screens/SignInPage';
 import Profile from './screens/Profile';
-import { useAuth, UserButton } from '@clerk/react';
+import { useAuth, UserButton } from '@clerk/clerk-react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 function DashboardFlow({ day, handleScrubberChange, potential, stage, currentScreen, setCurrentScreen, onboarded, setOnboarded }) {

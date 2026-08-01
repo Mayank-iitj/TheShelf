@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useUser, useClerk, UserProfile } from '@clerk/react';
+import { useUser, useClerk, UserProfile } from '@clerk/clerk-react';
 import { motion } from 'framer-motion';
 import { Download, ShieldCheck, Zap, BookOpen, Clock, Sparkles, Settings, RotateCcw, LogOut, Calendar } from 'lucide-react';
 import { fetchPassport, fetchPotential, fetchLedger, fetchTwin, resetSimulation } from '../lib/api';

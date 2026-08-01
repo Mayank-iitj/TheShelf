@@ -1,4 +1,4 @@
-import { SignIn, useAuth } from "@clerk/react";
+import { SignIn, useAuth } from "@clerk/clerk-react";
 import { Navigate } from "react-router-dom";
 import { Check } from "lucide-react";
 import "./SignInPage.css";

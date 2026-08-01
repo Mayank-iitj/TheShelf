@@ -12,7 +12,7 @@ export default defineConfig({
       'react',
       'react-dom',
       'react-router-dom',
-      '@clerk/react',
+      '@clerk/clerk-react',
       'framer-motion',
       'motion/react',
       'gsap',
