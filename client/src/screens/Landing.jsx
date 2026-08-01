@@ -353,7 +353,7 @@ export default function Landing({ onEnterApp }) {
         <FlowingMenu items={demoItems} bgColor="#000" />
       </section>
 
-      {/* ─── ABOUT / WHAT IS THESMITH ─── */}
+      {/* ─── ABOUT / WHAT IS The Shelf ─── */}
       <section id="the-philosophy" style={{ padding: '120px 48px', background: 'rgba(255,255,255,0.02)', borderTop: '1px solid rgba(255,255,255,0.05)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'center' }}>
           <motion.div initial={{ opacity: 0, x: -40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={smoothTransition}>
@@ -362,7 +362,7 @@ export default function Landing({ onEnterApp }) {
             </div>
             <div style={{ marginBottom: '24px', display: 'flex', justifyContent: 'flex-start' }}>
               <TrueFocus 
-                sentence="What is TheSmith?"
+                sentence="What is The Shelf?"
                 manualMode={false}
                 blurAmount={4}
                 borderColor="#21d2ed"
@@ -372,7 +372,7 @@ export default function Landing({ onEnterApp }) {
               />
             </div>
             <p style={{ color: 'rgba(255,255,255,0.55)', lineHeight: 1.8, fontSize: '1.05rem', marginBottom: '32px' }}>
-              TheSmith is a radical departure from the dopamine-driven engagement loops of modern algorithms. Instead of a passive feed designed to hijack attention, it is an <strong style={{ color: '#fff' }}>agentic curator</strong> built to actively forge your potential.
+              The Shelf is a radical departure from the dopamine-driven engagement loops of modern algorithms. Instead of a passive feed designed to hijack attention, it is an <strong style={{ color: '#fff' }}>agentic curator</strong> built to actively forge your potential.
             </p>
             <p style={{ color: 'rgba(255,255,255,0.55)', lineHeight: 1.8, fontSize: '1.05rem', marginBottom: '40px' }}>
               It wraps a transparent, human-readable <strong style={{ color: '#fff' }}>Identity Ledger</strong> around your aspirations and habits. Every day, AI agents analyze this ledger to serve you what you actually need — or withhold everything if that is the correct call.
@@ -519,7 +519,7 @@ export default function Landing({ onEnterApp }) {
           
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', maxWidth: '320px' }}>
              <div style={{ fontWeight: 600, color: '#fff', fontSize: '1.4rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                ⚡ TheSmith
+                ⚡ The Shelf
              </div>
              <p style={{ margin: 0, lineHeight: 1.6 }}>An agentic curator that models who you are trying to become. Design for those who want to become a better version of themselves.</p>
           </div>
@@ -542,7 +542,7 @@ export default function Landing({ onEnterApp }) {
 
         {/* Sub-footer metadata */}
         <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0 48px', color: 'rgba(255,255,255,0.2)', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.05em', position: 'relative', zIndex: 2, marginBottom: '2vw' }}>
-          <div>© 2026 THESMITH STUDIO,<br/>ALL RIGHTS RESERVED</div>
+          <div>© 2026 The Shelf STUDIO,<br/>ALL RIGHTS RESERVED</div>
           <div style={{ textAlign: 'right' }}>TERMS<br/>PRIVACY POLICY</div>
         </div>
 

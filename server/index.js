@@ -23,7 +23,7 @@ const app = express();
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:3000',
-  process.env.CORS_ORIGIN, // e.g. https://thesmith.vercel.app
+  process.env.CORS_ORIGIN, // e.g. https://The Shelf.vercel.app
 ].filter(Boolean);
 
 app.use(cors({
@@ -314,7 +314,7 @@ if (process.env.NODE_ENV === 'production') {
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-  console.log(`🔥 TheSmith API running on port ${PORT}`);
+  console.log(`🔥 The Shelf API running on port ${PORT}`);
   console.log(`🤖 GROQ_API_KEY: ${process.env.GROQ_API_KEY ? 'LOADED ✓' : 'MISSING ✗ — AI fallbacks will be used'}`);
 
   // Auto-seed database on startup if it's empty

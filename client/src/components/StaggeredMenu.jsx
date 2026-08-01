@@ -381,7 +381,7 @@ export const StaggeredMenu = ({
             />
           ) : (
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontWeight: 700, fontSize: '1.1rem', letterSpacing: '-0.02em', color: '#fff' }}>
-              TheSmith
+              The Shelf
             </div>
           )}
         </div>

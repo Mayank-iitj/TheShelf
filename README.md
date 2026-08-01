@@ -19,7 +19,7 @@
 ---
 
 ## ✦ The Vision
-Most algorithms are designed to hijack your attention. **TheSmith** is an agentic curator designed to elevate your potential. It models your aspirations, habits, and evolving identity to deliver highly specific media, challenges, and interventions tailored to bridge the gap between who you are and who you want to become.
+Most algorithms are designed to hijack your attention. **The Shelf** is an agentic curator designed to elevate your potential. It models your aspirations, habits, and evolving identity to deliver highly specific media, challenges, and interventions tailored to bridge the gap between who you are and who you want to become.
 
 - **No infinite scrolling.** The daily shelf is capped at 3 items.
 - **Human-readable Identity Ledger.** Your model isn't a hidden black-box embedding; it's a transparent ledger of your explicit aspirations and proven competencies.
@@ -36,7 +36,7 @@ An auditable, living ledger of who you are trying to become. When you finish a b
 A continuous visual divergence chart comparing your "Potential Index" (what you've built, learned, and earned) against your "Attention Potential" (where the algorithm would have dragged you). 
 
 ### 🤖 Multi-Agent Ecosystem
-TheSmith relies on a suite of Groq-powered AI agents (using Llama 3 70B):
+The Shelf relies on a suite of Groq-powered AI agents (using Llama 3 70B):
 1. **Onboarding Agent:** Translates your initial interview into structured goals.
 2. **Daily Curator:** Selects from 7 distinct interventions (deliver, challenge, mentor intro, counterpoint, revisit, rest, withhold). It knows when to leave you alone.
 3. **Weekly Review Agent:** Wakes up every 7 days to analyze your actions, point out hypocrisies in your ledger, and propose course corrections.
@@ -84,8 +84,8 @@ graph TD
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/thesmith.git
-   cd thesmith
+   git clone https://github.com/your-username/The Shelf.git
+   cd The Shelf
    ```
 
 2. **Install Dependencies**
@@ -116,8 +116,8 @@ graph TD
 The application is pre-configured with a multi-stage Dockerfile for easy, secure deployment to platforms like Render, Railway, or Fly.io.
 
 ```bash
-docker build -t thesmith-app .
-docker run -p 3001:3001 -e GROQ_API_KEY=your_key_here thesmith-app
+docker build -t The Shelf-app .
+docker run -p 3001:3001 -e GROQ_API_KEY=your_key_here The Shelf-app
 ```
 
 ---
