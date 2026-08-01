@@ -172,7 +172,7 @@ export default function Profile({ day, potential, stage, setOnboarded }) {
             if (!confirm('Re-onboard? This will clear all current settings and start the interview questionnaire again.')) return;
             try {
               // Call API to wipe DB tables
-              await fetch('/api/reset', { method: 'POST' });
+              await fetch('/api/onboarding/reset', { method: 'POST' });
               // Direct state change to force onboarding screen
               setOnboarded(false);
               window.location.href = '/app';

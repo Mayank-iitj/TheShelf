@@ -241,6 +241,21 @@ app.post('/api/reset', (req, res) => {
   res.json({ success: true });
 });
 
+app.post('/api/onboarding/reset', (req, res) => {
+  db.prepare(`DELETE FROM ledger_rows`).run();
+  db.prepare(`DELETE FROM ledger_events`).run();
+  db.prepare(`DELETE FROM future_self`).run();
+  db.prepare(`DELETE FROM habits`).run();
+  db.prepare(`DELETE FROM deliveries`).run();
+  db.prepare(`DELETE FROM artifacts`).run();
+  db.prepare(`DELETE FROM agent_actions`).run();
+  db.prepare(`DELETE FROM reviews`).run();
+  db.prepare(`DELETE FROM regret_responses`).run();
+  db.prepare(`DELETE FROM proofs`).run();
+  db.prepare(`UPDATE app_state SET value = '1' WHERE key = 'current_day'`).run();
+  res.json({ success: true });
+});
+
 app.post('/api/onboarding', async (req, res, next) => {
   try {
     const { answers } = req.body;
