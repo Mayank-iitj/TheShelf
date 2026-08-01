@@ -1,6 +1,18 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { ArrowRight, ChevronDown, Zap, BookOpen, Activity, UserCircle, Brain, Shield, ExternalLink } from 'lucide-react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { ArrowRight, ChevronDown, Zap, BookOpen, Activity, UserCircle, Brain, Shield } from 'lucide-react';
+import FlowingMenu from '../components/FlowingMenu';
+import BorderGlow from '../components/BorderGlow';
+import CircularGallery from '../components/CircularGallery';
+import RotatingText from '../components/RotatingText';
+import ScrollVelocity from '../components/ScrollVelocity';
+import TrueFocus from '../components/TrueFocus';
+import PlasmaWave from '../components/PlasmaWave';
+import StaggeredMenu from '../components/StaggeredMenu';
+import Aurora from '../components/Aurora';
+import Beams from '../components/Beams';
+import LogoLoop from '../components/LogoLoop';
+import { SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiVite, SiNodedotjs, SiGraphql } from 'react-icons/si';
 
 /* ─── Live stats from backend ─── */
 async function fetchStats() {
@@ -8,71 +20,24 @@ async function fetchStats() {
     const res = await fetch('/api/potential?day=21');
     const data = await res.json();
     return data.index || 847;
-  } catch { return 847; }
+} catch { return 847; }
 }
 
-/* ─── Animated smoke canvas ─── */
-function SmokeCanvas() {
-  const canvasRef = useRef(null);
+const demoItems = [
+  { link: '#', text: 'Mojave', image: 'https://picsum.photos/600/400?random=1' },
+  { link: '#', text: 'Sonoma', image: 'https://picsum.photos/600/400?random=2' },
+  { link: '#', text: 'Monterey', image: 'https://picsum.photos/600/400?random=3' },
+  { link: '#', text: 'Sequoia', image: 'https://picsum.photos/600/400?random=4' }
+];
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    let w = canvas.width = window.innerWidth;
-    let h = canvas.height = window.innerHeight;
-    let t = 0;
-
-    const particles = Array.from({ length: 120 }, () => ({
-      x: Math.random() * w,
-      y: Math.random() * h,
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: (Math.random() - 0.5) * 0.15,
-      radius: 60 + Math.random() * 180,
-      alpha: 0.015 + Math.random() * 0.04,
-      phase: Math.random() * Math.PI * 2,
-    }));
-
-    const onResize = () => {
-      w = canvas.width = window.innerWidth;
-      h = canvas.height = window.innerHeight;
-    };
-    window.addEventListener('resize', onResize);
-
-    let raf;
-    const draw = () => {
-      ctx.clearRect(0, 0, w, h);
-      t += 0.003;
-      for (const p of particles) {
-        p.x += p.vx + Math.sin(t + p.phase) * 0.4;
-        p.y += p.vy + Math.cos(t * 0.7 + p.phase) * 0.25;
-        if (p.x < -p.radius) p.x = w + p.radius;
-        if (p.x > w + p.radius) p.x = -p.radius;
-        if (p.y < -p.radius) p.y = h + p.radius;
-        if (p.y > h + p.radius) p.y = -p.radius;
-
-        const grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius);
-        grd.addColorStop(0, `rgba(255,255,255,${p.alpha})`);
-        grd.addColorStop(0.5, `rgba(200,200,220,${p.alpha * 0.5})`);
-        grd.addColorStop(1, 'rgba(0,0,0,0)');
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = grd;
-        ctx.fill();
-      }
-      raf = requestAnimationFrame(draw);
-    };
-    draw();
-    return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', onResize); };
-  }, []);
-
-  return (
-    <canvas
-      ref={canvasRef}
-      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none' }}
-    />
-  );
-}
+const galleryItems = [
+  { image: 'https://picsum.photos/seed/11/800/600?grayscale', text: 'Daily Artifacts' },
+  { image: 'https://picsum.photos/seed/22/800/600?grayscale', text: 'Deep Reflections' },
+  { image: 'https://picsum.photos/seed/33/800/600?grayscale', text: 'Identity Fragments' },
+  { image: 'https://picsum.photos/seed/44/800/600?grayscale', text: 'Core Competencies' },
+  { image: 'https://picsum.photos/seed/55/800/600?grayscale', text: 'Attention Span' },
+  { image: 'https://picsum.photos/seed/66/800/600?grayscale', text: 'Weekly Review' }
+];
 
 /* ─── Counter animation ─── */
 function Counter({ target, suffix = '' }) {
@@ -92,12 +57,13 @@ function Counter({ target, suffix = '' }) {
 
 /* ─── Main Landing Component ─── */
 export default function Landing({ onEnterApp }) {
-  const [liveScore, setLiveScore] = useState(847);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [liveScore, setLiveScore] = useState(0);
   const heroRef = useRef(null);
   const { scrollYProgress } = useScroll({ target: heroRef });
   const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   const heroY = useTransform(scrollYProgress, [0, 0.5], [0, -80]);
+
+  const smoothTransition = { duration: 0.8, ease: [0.16, 1, 0.3, 1] };
 
   useEffect(() => {
     fetchStats().then(setLiveScore);
@@ -164,81 +130,65 @@ export default function Landing({ onEnterApp }) {
       desc: 'The Weekly Review Agent surfaces habit patterns, calls out contradictions, and proposes precise updates to your Ledger. You accept or reject each one.',
     },
   ];
-
-  const navLinks = ['Features', 'How It Works', 'The Philosophy', 'Enter App'];
-
   return (
     <div style={{ background: '#000', color: '#fff', fontFamily: "'Onest', 'Inter', sans-serif", overflowX: 'hidden' }}>
 
       {/* ─── NAVBAR ─── */}
-      <nav style={{
-        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '0 48px', height: '64px',
-        background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(16px)',
-        borderBottom: '1px solid rgba(255,255,255,0.06)',
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontWeight: 700, fontSize: '1.1rem', letterSpacing: '-0.02em' }}>
-          <div style={{ width: 28, height: 28, background: '#fff', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <span style={{ color: '#000', fontSize: '0.75rem', fontWeight: 900 }}>⚡</span>
-          </div>
-          TheSmith
-        </div>
-        <div style={{ display: 'flex', gap: '32px', alignItems: 'center' }}>
-          {['Features', 'How It Works', 'The Philosophy'].map(link => (
-            <a key={link} href={`#${link.toLowerCase().replace(/ /g, '-')}`}
-              style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none', fontSize: '0.9rem', transition: 'color 0.2s' }}
-              onMouseEnter={e => e.target.style.color = '#fff'}
-              onMouseLeave={e => e.target.style.color = 'rgba(255,255,255,0.6)'}
-            >{link}</a>
-          ))}
-        </div>
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.97 }}
-          onClick={onEnterApp}
-          style={{
-            background: '#fff', color: '#000', border: 'none',
-            padding: '10px 22px', borderRadius: '100px',
-            fontFamily: 'inherit', fontWeight: 600, fontSize: '0.9rem',
-            cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px',
-          }}
-        >
-          ✦ Enter The Shelf
-        </motion.button>
-      </nav>
+      <StaggeredMenu
+        isFixed={true}
+        items={[
+          { label: 'Enter The Shelf', onClick: onEnterApp },
+          { label: 'Features', link: '#features' },
+          { label: 'How It Works', link: '#how-it-works' },
+          { label: 'Philosophy', link: '#philosophy' }
+        ]}
+        displaySocials={false}
+        menuButtonColor="#fff"
+        openMenuButtonColor="#000"
+        colors={['#333333', '#111111']}
+        accentColor="#21d2ed"
+      />
 
       {/* ─── HERO ─── */}
       <section ref={heroRef} style={{ position: 'relative', height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-        <SmokeCanvas />
+        <div style={{ position: 'absolute', inset: 0, zIndex: 1 }}>
+          <Beams
+            beamWidth={2}
+            beamHeight={15}
+            beamNumber={12}
+            lightColor="#21d2ed"
+            speed={2}
+            noiseIntensity={1.75}
+            scale={0.2}
+            rotation={0}
+          />
+        </div>
 
         <motion.div style={{ opacity: heroOpacity, y: heroY, position: 'relative', zIndex: 2, textAlign: 'center', maxWidth: '860px', padding: '0 24px' }}>
-          {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-            style={{
-              display: 'inline-flex', alignItems: 'center', gap: '8px',
-              background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(8px)',
-              border: '1px solid rgba(255,255,255,0.15)',
-              borderRadius: '100px', padding: '6px 16px 6px 10px',
-              fontSize: '0.85rem', marginBottom: '40px',
-            }}
-          >
-            <span style={{ width: 8, height: 8, background: '#21d2ed', borderRadius: '50%', display: 'inline-block', boxShadow: '0 0 8px #21d2ed' }} />
-            AI-Powered Growth Curation · Not a Feed
-          </motion.div>
 
           {/* Headline */}
           <motion.h1
-            initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-            style={{ fontSize: 'clamp(3rem, 8vw, 6rem)', fontWeight: 700, lineHeight: 1.05, letterSpacing: '-0.04em', margin: '0 0 28px 0' }}
+            initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ ...smoothTransition, delay: 0.2 }}
+            style={{ fontSize: 'clamp(3rem, 8vw, 6rem)', fontWeight: 700, lineHeight: 1.05, letterSpacing: '-0.04em', margin: '0 0 28px 0', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
           >
-            Growth that you<br />actually deserve
+            <span>Growth that you</span>
+            <RotatingText
+              texts={['actually deserve', 'actively forge', 'deliberately build', 'truly want']}
+              style={{ color: '#21d2ed' }}
+              staggerFrom="last"
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "-120%" }}
+              staggerDuration={0.025}
+              splitLevelClassName="overflow-hidden pb-1"
+              transition={{ type: "spring", damping: 30, stiffness: 400 }}
+              rotationInterval={3000}
+            />
           </motion.h1>
 
           {/* Subheadline */}
           <motion.p
-            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ ...smoothTransition, delay: 0.3 }}
             style={{ fontSize: '1.15rem', color: 'rgba(255,255,255,0.55)', maxWidth: '520px', margin: '0 auto 48px', lineHeight: 1.6 }}
           >
             An agentic curator that models who you are trying to become and delivers exactly what you need to get there — or nothing at all.
@@ -246,7 +196,7 @@ export default function Landing({ onEnterApp }) {
 
           {/* CTAs */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ ...smoothTransition, delay: 0.4 }}
             style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}
           >
             <motion.button
@@ -280,7 +230,7 @@ export default function Landing({ onEnterApp }) {
 
         {/* Scroll indicator */}
         <motion.div
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ ...smoothTransition, delay: 1 }}
           style={{ position: 'absolute', bottom: '40px', left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', color: 'rgba(255,255,255,0.3)', fontSize: '0.75rem', zIndex: 2 }}
         >
           <span>Scroll down</span>
@@ -292,7 +242,7 @@ export default function Landing({ onEnterApp }) {
 
       {/* ─── LIVE STATS BAR ─── */}
       <motion.section
-        initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+        initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={smoothTransition}
         style={{ background: 'rgba(255,255,255,0.04)', borderTop: '1px solid rgba(255,255,255,0.08)', borderBottom: '1px solid rgba(255,255,255,0.08)', padding: '32px 48px' }}
       >
         <div style={{ display: 'flex', justifyContent: 'space-around', flexWrap: 'wrap', gap: '24px', maxWidth: '900px', margin: '0 auto' }}>
@@ -312,9 +262,47 @@ export default function Landing({ onEnterApp }) {
         </div>
       </motion.section>
 
+      {/* ─── SCROLL VELOCITY BANNER ─── */}
+      <div style={{ padding: '30px 0', borderBottom: '1px solid rgba(255,255,255,0.05)', background: 'rgba(255,255,255,0.01)' }}>
+        <ScrollVelocity
+          texts={['NO INFINITE SCROLL •', 'REGRET OPTIMIZED •', 'AGENTIC CURATION •']} 
+          velocity={50} 
+        />
+      </div>
+
+      {/* ─── TECH STACK LOOP ─── */}
+      <section style={{ padding: '60px 0', borderBottom: '1px solid rgba(255,255,255,0.05)', background: 'rgba(255,255,255,0.01)', overflow: 'hidden' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 48px', marginBottom: '32px' }}>
+          <h3 style={{ fontSize: '1rem', color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600 }}>
+            Powered By
+          </h3>
+        </div>
+        <div style={{ position: 'relative', width: '100%', color: 'rgba(255,255,255,0.4)' }}>
+          <LogoLoop
+            logos={[
+              { node: <SiReact />, title: "React", href: "https://react.dev" },
+              { node: <SiNextdotjs />, title: "Next.js", href: "https://nextjs.org" },
+              { node: <SiTypescript />, title: "TypeScript", href: "https://www.typescriptlang.org" },
+              { node: <SiTailwindcss />, title: "Tailwind CSS", href: "https://tailwindcss.com" },
+              { node: <SiVite />, title: "Vite", href: "https://vitejs.dev" },
+              { node: <SiNodedotjs />, title: "Node.js", href: "https://nodejs.org" },
+              { node: <SiGraphql />, title: "GraphQL", href: "https://graphql.org" },
+            ]}
+            speed={80}
+            direction="left"
+            logoHeight={48}
+            gap={64}
+            hoverSpeed={10}
+            scaleOnHover
+            fadeOut
+            fadeOutColor="#000000"
+          />
+        </div>
+      </section>
+
       {/* ─── FEATURES BENTO GRID ─── */}
       <section id="features" style={{ padding: '120px 48px', maxWidth: '1200px', margin: '0 auto' }}>
-        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={smoothTransition}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '100px', padding: '6px 16px', fontSize: '0.8rem', marginBottom: '24px' }}>
             ✦ Features
           </div>
@@ -331,37 +319,58 @@ export default function Landing({ onEnterApp }) {
             <motion.div
               key={f.label}
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }} transition={{ delay: i * 0.06 }}
-              whileHover={{ y: -4, borderColor: 'rgba(255,255,255,0.2)' }}
-              style={{
-                background: 'rgba(255,255,255,0.03)',
-                border: '1px solid rgba(255,255,255,0.08)',
-                borderRadius: '20px', padding: '36px',
-                transition: 'border-color 0.3s',
-                cursor: 'default',
-              }}
+              viewport={{ once: true }} transition={{ ...smoothTransition, delay: i * 0.06 }}
+              whileHover={{ y: -4, transition: { duration: 0.3 } }}
+              style={{ cursor: 'default' }}
             >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '20px' }}>
-                <div style={{ color: 'rgba(255,255,255,0.7)' }}>{f.icon}</div>
-                <span style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '100px', padding: '4px 10px', fontSize: '0.7rem', color: 'rgba(255,255,255,0.4)' }}>{f.tag}</span>
-              </div>
-              <h3 style={{ fontSize: '1.3rem', fontWeight: 600, letterSpacing: '-0.02em', margin: '0 0 12px' }}>{f.label}</h3>
-              <p style={{ color: 'rgba(255,255,255,0.45)', lineHeight: 1.6, margin: 0, fontSize: '0.95rem' }}>{f.desc}</p>
+              <BorderGlow
+                edgeSensitivity={30}
+                glowColor="40 80 80"
+                backgroundColor="#111113"
+                borderRadius={20}
+                glowRadius={20}
+                glowIntensity={0.8}
+                coneSpread={25}
+                animated={false}
+                colors={['#21d2ed', '#f97316', '#21d2ed']}
+              >
+                <div style={{ padding: '36px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '20px' }}>
+                    <div style={{ color: 'rgba(255,255,255,0.7)' }}>{f.icon}</div>
+                    <span style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '100px', padding: '4px 10px', fontSize: '0.7rem', color: 'rgba(255,255,255,0.4)' }}>{f.tag}</span>
+                  </div>
+                  <h3 style={{ fontSize: '1.3rem', fontWeight: 600, letterSpacing: '-0.02em', margin: '0 0 12px' }}>{f.label}</h3>
+                  <p style={{ color: 'rgba(255,255,255,0.45)', lineHeight: 1.6, margin: 0, fontSize: '0.95rem' }}>{f.desc}</p>
+                </div>
+              </BorderGlow>
             </motion.div>
           ))}
         </div>
       </section>
 
+      {/* ─── FLOWING MENU ─── */}
+      <section style={{ height: '600px', position: 'relative', width: '100%', borderTop: '1px solid rgba(255,255,255,0.05)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+        <FlowingMenu items={demoItems} bgColor="#000" />
+      </section>
+
       {/* ─── ABOUT / WHAT IS THESMITH ─── */}
       <section id="the-philosophy" style={{ padding: '120px 48px', background: 'rgba(255,255,255,0.02)', borderTop: '1px solid rgba(255,255,255,0.05)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'center' }}>
-          <motion.div initial={{ opacity: 0, x: -40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+          <motion.div initial={{ opacity: 0, x: -40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={smoothTransition}>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '100px', padding: '6px 16px', fontSize: '0.8rem', marginBottom: '24px' }}>
               ✦ The Philosophy
             </div>
-            <h2 style={{ fontSize: 'clamp(2.5rem, 4vw, 3.5rem)', fontWeight: 700, letterSpacing: '-0.04em', margin: '0 0 24px', lineHeight: 1.1 }}>
-              What is<br />TheSmith?
-            </h2>
+            <div style={{ marginBottom: '24px', display: 'flex', justifyContent: 'flex-start' }}>
+              <TrueFocus 
+                sentence="What is TheSmith?"
+                manualMode={false}
+                blurAmount={4}
+                borderColor="#21d2ed"
+                glowColor="rgba(33, 210, 237, 0.6)"
+                animationDuration={0.6}
+                pauseBetweenAnimations={0.2}
+              />
+            </div>
             <p style={{ color: 'rgba(255,255,255,0.55)', lineHeight: 1.8, fontSize: '1.05rem', marginBottom: '32px' }}>
               TheSmith is a radical departure from the dopamine-driven engagement loops of modern algorithms. Instead of a passive feed designed to hijack attention, it is an <strong style={{ color: '#fff' }}>agentic curator</strong> built to actively forge your potential.
             </p>
@@ -375,7 +384,7 @@ export default function Landing({ onEnterApp }) {
             </div>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, x: 40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+          <motion.div initial={{ opacity: 0, x: 40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={smoothTransition}>
             <div style={{ border: '1px solid rgba(255,255,255,0.08)', borderRadius: '24px', overflow: 'hidden', background: 'rgba(255,255,255,0.02)' }}>
               {/* Fake ledger preview */}
               <div style={{ padding: '24px', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -391,7 +400,7 @@ export default function Landing({ onEnterApp }) {
                 <motion.div
                   key={row.id}
                   initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }} transition={{ delay: i * 0.1 }}
+                  viewport={{ once: true }} transition={{ ...smoothTransition, delay: i * 0.1 }}
                   style={{ padding: '20px 24px', borderBottom: '1px solid rgba(255,255,255,0.04)' }}
                 >
                   <div style={{ display: 'flex', gap: '12px', marginBottom: '8px', fontSize: '0.75rem', color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
@@ -403,7 +412,7 @@ export default function Landing({ onEnterApp }) {
                   <div style={{ height: '3px', background: 'rgba(255,255,255,0.08)', borderRadius: '2px', overflow: 'hidden' }}>
                     <motion.div
                       initial={{ width: 0 }} whileInView={{ width: `${row.strength * 100}%` }}
-                      viewport={{ once: true }} transition={{ duration: 1, delay: 0.2 + i * 0.1 }}
+                      viewport={{ once: true }} transition={{ ...smoothTransition, duration: 1.2, delay: 0.2 + i * 0.1 }}
                       style={{ height: '100%', background: '#21d2ed', borderRadius: '2px', boxShadow: '0 0 6px #21d2ed' }}
                     />
                   </div>
@@ -415,22 +424,31 @@ export default function Landing({ onEnterApp }) {
       </section>
 
       {/* ─── HOW IT WORKS ─── */}
-      <section id="how-it-works" style={{ padding: '120px 48px', maxWidth: '1200px', margin: '0 auto' }}>
-        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ marginBottom: '80px' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '100px', padding: '6px 16px', fontSize: '0.8rem', marginBottom: '24px' }}>
-            ✦ How It Works
-          </div>
-          <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 700, letterSpacing: '-0.04em', margin: 0 }}>
-            The process of<br />becoming
-          </h2>
-        </motion.div>
+      <section id="how-it-works" style={{ position: 'relative', width: '100%', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', inset: 0, zIndex: 1, opacity: 0.5 }}>
+          <Aurora
+            colorStops={["#000000", "#111111", "#21d2ed"]}
+            blend={0.5}
+            amplitude={1.0}
+            speed={0.5}
+          />
+        </div>
+        <div style={{ position: 'relative', zIndex: 2, padding: '120px 48px', maxWidth: '1200px', margin: '0 auto' }}>
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={smoothTransition} style={{ marginBottom: '80px' }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '100px', padding: '6px 16px', fontSize: '0.8rem', marginBottom: '24px' }}>
+              ✦ How It Works
+            </div>
+            <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 700, letterSpacing: '-0.04em', margin: 0 }}>
+              The process of<br />becoming
+            </h2>
+          </motion.div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '2px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '2px' }}>
           {steps.map((s, i) => (
             <motion.div
               key={s.n}
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }} transition={{ delay: i * 0.1 }}
+              viewport={{ once: true }} transition={{ ...smoothTransition, delay: i * 0.1 }}
               style={{ padding: '48px 36px', border: '1px solid rgba(255,255,255,0.06)', background: 'rgba(255,255,255,0.02)' }}
             >
               <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.2)', fontFamily: 'monospace', marginBottom: '24px', letterSpacing: '0.1em' }}>{s.n}</div>
@@ -438,12 +456,35 @@ export default function Landing({ onEnterApp }) {
               <p style={{ color: 'rgba(255,255,255,0.4)', lineHeight: 1.7, margin: 0, fontSize: '0.9rem' }}>{s.desc}</p>
             </motion.div>
           ))}
+          </div>
         </div>
+      </section>
+
+      {/* ─── GALLERY ─── */}
+      <section style={{ height: '600px', position: 'relative', width: '100%', overflow: 'hidden' }}>
+        <CircularGallery
+          bend={3}
+          textColor="#ffffff"
+          borderRadius={0.05}
+          scrollEase={0.02}
+          items={galleryItems}
+        />
       </section>
 
       {/* ─── FINAL CTA ─── */}
       <section style={{ position: 'relative', padding: '160px 48px', textAlign: 'center', overflow: 'hidden', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-        <SmokeCanvas />
+        <div style={{ position: 'absolute', inset: 0, zIndex: 1, opacity: 0.8 }}>
+          <PlasmaWave
+            colors={["#000000", "#21d2ed"]}
+            speed1={0.05}
+            speed2={0.05}
+            focalLength={0.8}
+            bend1={1}
+            bend2={0.5}
+            dir2={1.0}
+            rotationDeg={0}
+          />
+        </div>
         <div style={{ position: 'relative', zIndex: 2 }}>
           <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}>
             <div style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.4)', marginBottom: '24px', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Ready to begin?</div>
@@ -470,13 +511,66 @@ export default function Landing({ onEnterApp }) {
         </div>
       </section>
 
+
+
       {/* ─── FOOTER ─── */}
-      <footer style={{ padding: '32px 48px', borderTop: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'rgba(255,255,255,0.25)', fontSize: '0.85rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontWeight: 600, color: 'rgba(255,255,255,0.5)' }}>
-          <span>⚡ TheSmith</span>
+      <footer style={{ position: 'relative', overflow: 'hidden', borderTop: '1px solid rgba(255,255,255,0.06)', display: 'flex', flexDirection: 'column', background: 'rgba(255,255,255,0.01)' }}>
+        <div style={{ padding: '80px 48px 60px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '40px', color: 'rgba(255,255,255,0.4)', fontSize: '0.9rem' }}>
+          
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', maxWidth: '320px' }}>
+             <div style={{ fontWeight: 600, color: '#fff', fontSize: '1.4rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                ⚡ TheSmith
+             </div>
+             <p style={{ margin: 0, lineHeight: 1.6 }}>An agentic curator that models who you are trying to become. Design for those who want to become a better version of themselves.</p>
+          </div>
+          
+          <div style={{ display: 'flex', gap: '80px', flexWrap: 'wrap' }}>
+             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+               <span style={{ fontWeight: 500, color: 'rgba(255,255,255,0.7)', marginBottom: '4px' }}>Explore</span>
+               <a href="#" style={{ color: 'inherit', textDecoration: 'none', transition: 'color 0.2s' }} onMouseOver={e => e.target.style.color = '#fff'} onMouseOut={e => e.target.style.color = 'rgba(255,255,255,0.4)'}>Home</a>
+               <a href="#how-it-works" style={{ color: 'inherit', textDecoration: 'none', transition: 'color 0.2s' }} onMouseOver={e => e.target.style.color = '#fff'} onMouseOut={e => e.target.style.color = 'rgba(255,255,255,0.4)'}>How we work</a>
+               <a href="#features" style={{ color: 'inherit', textDecoration: 'none', transition: 'color 0.2s' }} onMouseOver={e => e.target.style.color = '#fff'} onMouseOut={e => e.target.style.color = 'rgba(255,255,255,0.4)'}>Features</a>
+             </div>
+             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+               <span style={{ fontWeight: 500, color: 'rgba(255,255,255,0.7)', marginBottom: '4px' }}>Socials</span>
+               <a href="#" style={{ color: 'inherit', textDecoration: 'none', transition: 'color 0.2s' }} onMouseOver={e => e.target.style.color = '#fff'} onMouseOut={e => e.target.style.color = 'rgba(255,255,255,0.4)'}>GitHub</a>
+               <a href="#" style={{ color: 'inherit', textDecoration: 'none', transition: 'color 0.2s' }} onMouseOver={e => e.target.style.color = '#fff'} onMouseOut={e => e.target.style.color = 'rgba(255,255,255,0.4)'}>LinkedIn</a>
+               <a href="#" style={{ color: 'inherit', textDecoration: 'none', transition: 'color 0.2s' }} onMouseOver={e => e.target.style.color = '#fff'} onMouseOut={e => e.target.style.color = 'rgba(255,255,255,0.4)'}>X (Twitter)</a>
+             </div>
+          </div>
         </div>
-        <div>Built with Groq · Llama 3 70B · React · Node.js</div>
-        <div>An anvil, not a feed.</div>
+
+        {/* Sub-footer metadata */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0 48px', color: 'rgba(255,255,255,0.2)', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.05em', position: 'relative', zIndex: 2, marginBottom: '2vw' }}>
+          <div>© 2026 THESMITH STUDIO,<br/>ALL RIGHTS RESERVED</div>
+          <div style={{ textAlign: 'right' }}>TERMS<br/>PRIVACY POLICY</div>
+        </div>
+
+        {/* Giant Text */}
+        <div style={{ 
+          width: '100%', 
+          display: 'flex', 
+          justifyContent: 'center',
+          alignItems: 'flex-end',
+          overflow: 'hidden'
+        }}>
+          <h1 style={{
+            margin: 0,
+            fontSize: 'clamp(8rem, 24vw, 30rem)',
+            fontWeight: 800,
+            lineHeight: 0.75,
+            letterSpacing: '-0.04em',
+            textTransform: 'uppercase',
+            background: 'linear-gradient(180deg, rgba(33,210,237,0) 0%, rgba(33,210,237,1) 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            userSelect: 'none',
+            whiteSpace: 'nowrap',
+            transform: 'translateY(8%)'
+          }}>
+            THE SHELF
+          </h1>
+        </div>
       </footer>
     </div>
   );

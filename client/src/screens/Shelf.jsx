@@ -41,6 +41,31 @@ function Shelf({ day }) {
 
   const { items, action } = data;
 
+  const renderBreakdown = (jsonStr, score) => {
+    if (!jsonStr) return <div>Score: {Number(score).toFixed(2)}</div>;
+    try {
+      const breakdown = JSON.parse(jsonStr);
+      return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', borderBottom: '1px solid var(--border-rule)', paddingBottom: '4px' }}>
+            <strong style={{ color: 'var(--text-main)' }}>Total Score</strong>
+            <strong style={{ color: 'var(--accent-cyan)' }}>{Number(score).toFixed(2)}</strong>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'x 16px' }}>
+            {Object.entries(breakdown).map(([k, v]) => (
+              <div key={k} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+                <span style={{ textTransform: 'capitalize', color: 'var(--text-muted)' }}>{k.replace('_', ' ')}</span>
+                <span style={{ color: 'var(--text-main)' }}>{Number(v).toFixed(2)}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    } catch (e) {
+      return <div>Score: {Number(score).toFixed(2)}</div>;
+    }
+  };
+
   return (
     <div>
       <h1 style={{ marginBottom: '40px' }} className="text-gradient">Today's Shelf</h1>
@@ -134,10 +159,10 @@ function Shelf({ day }) {
                   <motion.div 
                     initial={{ opacity: 0, height: 0 }} 
                     animate={{ opacity: 1, height: 'auto' }} 
-                    style={{ marginTop: '16px', fontSize: '0.875rem', color: 'var(--text-muted)', background: 'var(--bg-main)', padding: '16px', borderRadius: 'var(--radius-sm)' }} 
+                    style={{ marginTop: '16px', fontSize: '0.875rem', background: 'var(--bg-main)', padding: '16px', borderRadius: 'var(--radius-sm)' }} 
                     className="mono"
                   >
-                    {item.score_breakdown ? item.score_breakdown : JSON.stringify({ score: item.score })}
+                    {renderBreakdown(item.score_breakdown, item.score)}
                   </motion.div>
                 )}
               </motion.div>

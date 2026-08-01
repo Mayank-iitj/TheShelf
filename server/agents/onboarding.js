@@ -6,7 +6,9 @@ Your task is to translate their answers into structured claims for their "Identi
 
 You will output exactly one JSON object with two top-level keys: "future_self" and "ledger_rows".
 
-1. "future_self" should contain a single key "portrait": a 1-2 sentence visceral, evocative description of the person they are trying to become.
+1. "future_self" should contain two keys:
+- "portrait": a 1-2 sentence visceral, evocative description of the person they are trying to become.
+- "markers": an array of 3-5 concrete, testable milestones (e.g. 'Deploy a fullstack app to production'). Each object in the array must have a "status" string set to "not_yet", and a "marker" string describing the milestone.
 
 2. "ledger_rows" should be an array of objects. Each object must have:
 - "kind": either "aspiration", "competence", or "preference"
@@ -27,7 +29,12 @@ async function runOnboardingAgent(answers) {
 
   const fallback = {
     future_self: {
-      portrait: "A backend engineer people ask for review. I understand my systems deeply enough to debug them without relying on guesswork."
+      portrait: "A backend engineer people ask for review. I understand my systems deeply enough to debug them without relying on guesswork.",
+      markers: [
+        { status: "not_yet", marker: "Write an HTTP server from scratch in Node.js" },
+        { status: "not_yet", marker: "Explain exactly what happens when a browser requests a page" },
+        { status: "not_yet", marker: "Ship a small product to real users" }
+      ]
     },
     ledger_rows: [
       {

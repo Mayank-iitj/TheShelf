@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { LayoutDashboard, Activity, BookOpen, UserCircle, CalendarClock } from 'lucide-react';
 import './styles.css';
-import { fetchClock, setClock, fetchPotential, fetchStage } from './lib/api';
+import { setClock, fetchPotential, fetchStage } from './lib/api';
 import Landing from './screens/Landing';
 import Shelf from './screens/Shelf';
 import Twin from './screens/Twin';

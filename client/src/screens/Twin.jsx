@@ -1,11 +1,26 @@
 import { useState, useEffect } from 'react';
 import { fetchShelf, fetchTwin } from '../lib/api';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { motion } from 'framer-motion';
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 24 } }
+};
 
 function Twin({ day }) {
   const [growthData, setGrowthData] = useState([]);
   const [attentionData, setAttentionData] = useState([]);
   const [series, setSeries] = useState([]);
+  const [minutesReclaimed, setMinutesReclaimed] = useState(0);
 
   useEffect(() => {
     loadTwinData(day);
@@ -21,47 +36,46 @@ function Twin({ day }) {
     setGrowthData(growth.items || []);
     setAttentionData(attention.items || []);
     setSeries(chart.series || []);
+    setMinutesReclaimed(chart.minutes_reclaimed || 0);
   }
 
   const artifactsReclaimed = series.length > 0 ? series[series.length - 1].artifacts : 0;
-  // Stub for reclaimed minutes calculation
-  const minutesReclaimed = 21 * 45; 
 
   return (
-    <div className="fade-enter-active">
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <h1 style={{ marginBottom: '40px' }} className="text-gradient">The Attention Twin</h1>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px', marginBottom: '60px' }}>
-        <div>
+        <motion.div variants={containerVariants} initial="hidden" animate="show">
           <h2 style={{ fontSize: '1.25rem', color: 'var(--accent-cyan)', marginBottom: '24px' }}>Growth Ranker</h2>
           {growthData.map(item => (
-            <div key={item.id} className="card" style={{ padding: '24px', marginBottom: '16px' }}>
+            <motion.div variants={itemVariants} key={item.id} className="card" style={{ padding: '24px', marginBottom: '16px' }} whileHover={{ y: -2 }}>
               <div className="card-title" style={{ fontSize: '1.125rem' }}>{item.title}</div>
               <div className="card-meta" style={{ marginBottom: 0 }}>
                 <span>{item.type}</span>
                 <span>{item.minutes}m</span>
                 <span className="mono" style={{color: 'var(--accent-cyan)'}}>{item.difficulty}●</span>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
         
-        <div>
+        <motion.div variants={containerVariants} initial="hidden" animate="show">
           <h2 style={{ fontSize: '1.25rem', color: 'var(--accent-orange)', marginBottom: '24px' }}>Attention Ranker</h2>
           {attentionData.map(item => (
-            <div key={item.id} className="card" style={{ padding: '24px', marginBottom: '16px', borderLeft: '3px solid var(--accent-orange)' }}>
+            <motion.div variants={itemVariants} key={item.id} className="card" style={{ padding: '24px', marginBottom: '16px', borderLeft: '3px solid var(--accent-orange)' }} whileHover={{ y: -2 }}>
               <div className="card-title" style={{ fontSize: '1.125rem' }}>{item.title}</div>
               <div className="card-meta" style={{ marginBottom: 0 }}>
                 <span style={{ color: 'var(--accent-orange)' }}>Heat: {item.thumbnail_heat}</span>
                 <span>{item.minutes}m</span>
                 <span className="mono" style={{color: 'var(--accent-cyan)'}}>{item.difficulty}●</span>
               </div>
-            </div>
+            </motion.div>
           ))}
-          <div style={{ textAlign: 'center', color: 'var(--text-muted)', fontStyle: 'italic', marginTop: '16px' }}>
+          <motion.div variants={itemVariants} style={{ textAlign: 'center', color: 'var(--text-muted)', fontStyle: 'italic', marginTop: '16px' }}>
             ... and 20 more items below the fold.
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
 
       <div style={{ borderTop: '1px solid var(--border-rule)', paddingTop: '40px' }}>
@@ -86,7 +100,7 @@ function Twin({ day }) {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

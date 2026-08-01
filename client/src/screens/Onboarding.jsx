@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { submitOnboarding } from '../lib/api';
+import Stepper, { Step } from '../components/Stepper';
 
 const QUESTIONS = [
   "What are you trying to become good at, and why that?",
@@ -12,28 +13,19 @@ const QUESTIONS = [
 ];
 
 function Onboarding({ onComplete }) {
-  const [step, setStep] = useState(0);
-  const [answer, setAnswer] = useState('');
-  const [answers, setAnswers] = useState([]);
+  const [answers, setAnswers] = useState(Array(QUESTIONS.length).fill(''));
   const [committing, setCommitting] = useState(false);
 
-  const handleNext = () => {
-    if (!answer.trim()) return;
-    const newAnswers = [...answers, answer];
+  const handleAnswerChange = (index, value) => {
+    const newAnswers = [...answers];
+    newAnswers[index] = value;
     setAnswers(newAnswers);
-    setAnswer('');
-    
-    if (step < QUESTIONS.length - 1) {
-      setStep(step + 1);
-    } else {
-      finishOnboarding(newAnswers);
-    }
   };
 
-  const finishOnboarding = async (finalAnswers) => {
+  const finishOnboarding = async () => {
     setCommitting(true);
     try {
-      await submitOnboarding(finalAnswers);
+      await submitOnboarding(answers);
     } catch (e) {
       console.error("Onboarding failed:", e);
     }
@@ -51,30 +43,29 @@ function Onboarding({ onComplete }) {
   }
 
   return (
-    <div className="fade-enter-active" style={{ maxWidth: '600px', margin: '100px auto' }}>
-      <div style={{ fontSize: '2.5rem', fontFamily: 'var(--font-display)', marginBottom: '40px', lineHeight: 1.4, fontWeight: 700 }}>
-        {QUESTIONS[step]}
-      </div>
-      
-      <textarea 
-        autoFocus
-        value={answer}
-        onChange={e => setAnswer(e.target.value)}
-        onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleNext(); } }}
-        style={{ 
-          width: '100%', height: '150px', padding: '24px', fontSize: '1.25rem', 
-          fontFamily: 'var(--font-body)', border: '1px solid var(--border-rule)', 
-          background: 'var(--bg-card)', color: 'var(--text-main)', resize: 'none',
-          marginBottom: '32px', borderRadius: 'var(--radius-md)', outline: 'none',
-          boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.2)'
-        }}
-        placeholder="Type your answer..."
-      />
-      
-      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <button className="btn" onClick={handleNext} style={{ fontSize: '1.125rem', padding: '12px 32px', background: 'var(--accent-cyan)', color: 'var(--bg-main)', border: 'none', borderRadius: 'var(--radius-sm)' }}>
-          {step === QUESTIONS.length - 1 ? 'Commit' : 'Next'}
-        </button>
+    <div className="fade-enter-active" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', padding: '24px' }}>
+      <div style={{ width: '100%', maxWidth: '800px' }}>
+        <Stepper
+          initialStep={1}
+          onFinalStepCompleted={finishOnboarding}
+          backButtonText="Previous"
+          nextButtonText="Next"
+        >
+          {QUESTIONS.map((question, index) => (
+            <Step key={index}>
+              <div style={{ fontSize: '2.5rem', fontFamily: 'var(--font-display)', marginBottom: '40px', lineHeight: 1.4, fontWeight: 700 }}>
+                {question}
+              </div>
+              <textarea 
+                autoFocus={index === 0}
+                value={answers[index]}
+                onChange={e => handleAnswerChange(index, e.target.value)}
+                className="onboarding-textarea"
+                placeholder="Type your answer..."
+              />
+            </Step>
+          ))}
+        </Stepper>
       </div>
     </div>
   );

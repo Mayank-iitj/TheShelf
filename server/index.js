@@ -143,7 +143,8 @@ app.get('/api/shelf', (req, res) => {
      items = rankGrowth(1, day).map(i => ({
        ...i, 
        why_now: 'Because it challenges your current understanding.',
-       cited_rows: JSON.stringify(["L05"])
+       cited_rows: JSON.stringify(["L05"]),
+       score_breakdown: JSON.stringify(i.breakdown)
      }));
   }
 
@@ -157,15 +158,29 @@ app.get('/api/twin', (req, res) => {
   const day = req.query.day ? parseInt(req.query.day, 10) : getDay();
   // Return divergence chart data up to day
   const series = [];
+  let attPot = getPotentialIndex(1, 1); // starts same as potential
+  
   for (let d = 1; d <= day; d++) {
+     const pot = getPotentialIndex(1, d);
+     if (d > 1) {
+       // Deterministic compounding decay: slightly drags behind potential, loses ~3 pts/day
+       attPot = attPot * 0.98 + (pot - attPot) * 0.1 - (Math.sin(d) * 2 + 3); 
+     } else {
+       attPot = pot;
+     }
+     
      series.push({
        day: d,
-       potential: getPotentialIndex(1, d),
-       attention_potential: getPotentialIndex(1, d) - Math.random() * 15, // Stub twin potential
+       potential: pot,
+       attention_potential: Math.max(0, Math.round(attPot)),
        artifacts: db.prepare(`SELECT COUNT(*) as c FROM artifacts WHERE day <= ?`).get(d).c
      });
   }
-  res.json({ series });
+  
+  const artifacts = series.length > 0 ? series[series.length - 1].artifacts : 0;
+  const minutes_reclaimed = Math.round(artifacts * 45 + day * 15);
+
+  res.json({ series, minutes_reclaimed });
 });
 
 app.get('/api/weights', (req, res) => {
@@ -215,7 +230,8 @@ app.post('/api/onboarding', async (req, res, next) => {
     db.prepare(`DELETE FROM ledger_rows`).run();
     db.prepare(`DELETE FROM future_self`).run();
     
-    db.prepare(`INSERT INTO future_self (user_id, portrait, markers_json) VALUES (1, ?, ?)`).run(result.future_self.portrait, '[]');
+    const markersJson = JSON.stringify(result.future_self.markers || []);
+    db.prepare(`INSERT INTO future_self (user_id, portrait, markers_json) VALUES (1, ?, ?)`).run(result.future_self.portrait, markersJson);
     
     const insertRow = db.prepare(`INSERT INTO ledger_rows (id, user_id, kind, claim, domain_tags_json, confidence, provenance, source, status, strength, created_day, updated_day) VALUES (?, 1, ?, ?, ?, 0.9, 'Onboarding interview', 'interview', 'active', ?, 1, 1)`);
     
@@ -253,11 +269,33 @@ app.get('/api/review', async (req, res, next) => {
 });
 
 app.post('/api/review/accept', (req, res) => {
-  const { rowIds } = req.body;
+  const { rowIds } = req.body; // now these are indices of the proposals
   const day = getDay();
   
-  // Here we would lookup the proposals for the current day and apply them to the ledger.
-  // For the sake of the demo, we'll just mock success.
+  const review = db.prepare(`SELECT * FROM reviews WHERE day = ?`).get(day);
+  if (!review) return res.status(404).json({ error: "No review found" });
+  
+  const proposals = JSON.parse(review.proposed_json || "[]");
+  
+  for (const idx of rowIds) {
+    const p = proposals[idx];
+    if (!p) continue;
+    
+    if (p.op === 'add') {
+      const id = 'L' + Math.floor(Math.random()*1000).toString().padStart(3, '0');
+      db.prepare(`INSERT INTO ledger_rows (id, user_id, kind, claim, domain_tags_json, confidence, provenance, source, status, strength, created_day, updated_day) VALUES (?, 1, ?, ?, '[]', 0.8, ?, 'review', 'active', 0.8, ?, ?)`).run(id, p.kind || 'aspiration', p.claim, p.evidence || 'Weekly Review', day, day);
+    } else if (p.op === 'modify' && p.row_id) {
+      db.prepare(`UPDATE ledger_rows SET claim = ?, updated_day = ? WHERE id = ?`).run(p.claim, day, p.row_id);
+    } else if (p.op === 'remove' && p.row_id) {
+      db.prepare(`UPDATE ledger_rows SET status = 'purged', updated_day = ? WHERE id = ?`).run(day, p.row_id);
+    }
+    
+    p.accepted = true;
+  }
+  
+  const remaining = proposals.filter(p => !p.accepted);
+  db.prepare(`UPDATE reviews SET proposed_json = ? WHERE day = ?`).run(JSON.stringify(remaining), day);
+  
   res.json({ success: true });
 });
 

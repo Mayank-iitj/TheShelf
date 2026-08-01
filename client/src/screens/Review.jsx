@@ -31,13 +31,15 @@ function Review({ day }) {
     setLoading(false);
   }
 
-  const handleAccept = async (rowId) => {
-    await acceptReview([rowId]);
-    alert(`Accepted proposed change for ${rowId}`);
+  const handleAccept = async (idx) => {
+    await acceptReview([idx]);
+    alert(`Accepted proposed change.`);
+    // Optionally remove from list here, but reloading data is better
+    loadReview(day);
   };
 
-  const handleReject = (rowId) => {
-    alert(`Rejected proposed change for ${rowId}`);
+  const handleReject = (idx) => {
+    alert(`Rejected proposed change.`);
   };
 
   if (loading) return <div style={{ color: 'var(--text-muted)' }}>Loading...</div>;
@@ -79,8 +81,8 @@ function Review({ day }) {
             </div>
 
             <div style={{ display: 'flex', gap: '12px' }}>
-              <button className="btn" style={{ borderColor: 'var(--accent-cyan)', color: 'var(--accent-cyan)', display: 'flex', alignItems: 'center', gap: '6px' }} onClick={() => handleAccept(prop.row_id || 'L09')}><Check size={16} /> Accept</button>
-              <button className="btn" style={{ borderColor: 'var(--accent-orange)', color: 'var(--accent-orange)', display: 'flex', alignItems: 'center', gap: '6px' }} onClick={() => handleReject(prop.row_id || 'L09')}><X size={16} /> Reject</button>
+              <button className="btn" style={{ borderColor: 'var(--accent-cyan)', color: 'var(--accent-cyan)', display: 'flex', alignItems: 'center', gap: '6px' }} onClick={() => handleAccept(idx)}><Check size={16} /> Accept</button>
+              <button className="btn" style={{ borderColor: 'var(--accent-orange)', color: 'var(--accent-orange)', display: 'flex', alignItems: 'center', gap: '6px' }} onClick={() => handleReject(idx)}><X size={16} /> Reject</button>
             </div>
           </motion.div>
         ))}
