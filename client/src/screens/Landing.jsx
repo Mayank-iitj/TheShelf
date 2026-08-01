@@ -151,7 +151,7 @@ export default function Landing({ onEnterApp }) {
       />
 
       {/* ─── HERO ─── */}
-      <section ref={heroRef} style={{ position: 'relative', height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+      <section ref={heroRef} style={{ position: 'relative', height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', paddingBottom: '90px' }}>
         <div style={{ position: 'absolute', inset: 0, zIndex: 1 }}>
           <Beams
             beamWidth={2}

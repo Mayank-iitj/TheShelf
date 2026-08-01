@@ -1,6 +1,6 @@
 <div align="center">
 
-# ⚡ TheShelf
+# 💠 TheShelf
 ### The Agentic Curator that Optimizes for Growth, Not Attention.
 
 [![React](https://img.shields.io/badge/React-18-blue.svg?style=for-the-badge&logo=react)](https://reactjs.org/)
