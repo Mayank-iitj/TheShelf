@@ -1,17 +1,20 @@
 {
   "name": "thesmith",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "The Shelf",
+  "main": "server/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "seed": "node server/seed/generateItems.js && node server/seed/seedContent.js && node server/seed/seedHistory.js",
+    "dev:server": "node server/index.js",
+    "dev:client": "cd client && npm run dev",
+    "dev": "npm install -g concurrently && concurrently \"npm run dev:server\" \"npm run dev:client\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "better-sqlite3": "^13.0.2",
-    "express": "^5.2.1"
+    "better-sqlite3": "^11.1.2",
+    "express": "^4.19.2"
   }
 }
