@@ -67,7 +67,7 @@ function MasterAgent({ day }) {
   const { master_verdict, alignment_score = 0, velocity_status, sub_agent_reports, master_synthesis, strategic_directive } = data || {};
 
   return (
-    <div style={{ maxWidth: '840px' }}>
+    <div>
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '32px', gap: '20px' }}>
         <div>
           <h1 className="screen-title" style={{ marginBottom: '8px' }}>Master Orchestrator</h1>
@@ -135,7 +135,7 @@ function MasterAgent({ day }) {
           <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--text-tertiary)', marginBottom: '10px' }}>
             Executive Synthesis
           </div>
-          <p style={{ fontSize: '1.0625rem', lineHeight: 1.7, color: 'var(--text-primary)', margin: 0 }}>
+          <p style={{ fontSize: '1.0625rem', lineHeight: 1.7, color: 'var(--text-primary)', margin: 0, maxWidth: '68ch' }}>
             {master_synthesis}
           </p>
         </motion.div>
