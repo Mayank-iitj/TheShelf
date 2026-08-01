@@ -25,11 +25,11 @@
   margin-right: auto;
   width: 100%;
   max-width: 48rem;
-  border-radius: 1.5rem;
-  box-shadow:
-    0 20px 25px -5px rgba(0, 0, 0, 0.1),
-    0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-hairline-strong);
+  box-shadow: var(--shadow-lg);
+  background: rgba(19, 19, 23, 0.68);
+  backdrop-filter: blur(20px);
 }
 
 .step-indicator-row {

@@ -114,44 +114,73 @@ app.post('/api/ledger/:rowId/purge', (req, res) => {
   res.json({ success: true });
 });
 
-app.get('/api/shelf', (req, res) => {
-  const day = req.query.day ? parseInt(req.query.day, 10) : getDay();
-  const ranker = req.query.ranker || 'growth';
-  
-  // Check agent action first
-  const action = db.prepare(`SELECT * FROM agent_actions WHERE day = ?`).get(day);
-  if (action && action.intervention === 'withhold') {
-    return res.json({
-      action: {
-        intervention: action.intervention,
-        rationale: action.rationale,
-        considered: JSON.parse(action.considered_json || '[]')
-      },
-      items: []
+app.get('/api/shelf', async (req, res, next) => {
+  try {
+    const day = req.query.day ? parseInt(req.query.day, 10) : getDay();
+    const ranker = req.query.ranker || 'growth';
+
+    // Run the daily agent once per day and persist its decision, so revisiting
+    // the same day is stable but each day/user gets a decision grounded in
+    // their own real ledger + habits rather than a fixed canned response.
+    let action = db.prepare(`SELECT * FROM agent_actions WHERE user_id = 1 AND day = ?`).get(day);
+    if (!action) {
+      await runDailyAgent(1, day);
+      action = db.prepare(`SELECT * FROM agent_actions WHERE user_id = 1 AND day = ?`).get(day);
+    }
+
+    if (action && (action.intervention === 'withhold' || action.intervention === 'rest')) {
+      return res.json({
+        action: {
+          intervention: action.intervention,
+          rationale: action.rationale,
+          considered: JSON.parse(action.considered_json || '[]')
+        },
+        items: []
+      });
+    }
+
+    // Pre-computed deliveries for this day/ranker, if already persisted.
+    let items = db.prepare(`
+      SELECT c.*, d.why_now, d.cited_rows, d.score_breakdown
+      FROM deliveries d
+      JOIN content_items c ON d.item_id = c.id
+      WHERE d.day = ? AND d.ranker = ? AND d.user_id = 1
+    `).all(day, ranker);
+
+    if (items.length === 0 && ranker === 'growth') {
+      const ledgerRows = db.prepare(`SELECT * FROM ledger_rows WHERE user_id = 1 AND status != 'purged'`).all();
+      const ranked = rankGrowth(1, day);
+
+      const insertDelivery = db.prepare(`
+        INSERT INTO deliveries (user_id, day, item_id, ranker, slot, why_now, cited_rows, score, score_breakdown, opened, completed, dwell_minutes)
+        VALUES (1, ?, ?, 'growth', ?, ?, ?, ?, ?, 0, 0, 0)
+      `);
+
+      items = ranked.map((i, slot) => {
+        const itemTags = JSON.parse(i.tags);
+        const matchingRow = ledgerRows
+          .filter(r => r.status !== 'purged')
+          .find(r => JSON.parse(r.domain_tags).some(t => itemTags.includes(t)));
+
+        const why_now = matchingRow
+          ? `Because you said: "${matchingRow.claim}" (${matchingRow.id}).`
+          : 'Because it challenges your current understanding.';
+        const cited_rows = JSON.stringify(matchingRow ? [matchingRow.id] : []);
+        const score_breakdown = JSON.stringify(i.breakdown);
+
+        insertDelivery.run(day, i.id, slot, why_now, cited_rows, i.score, score_breakdown);
+
+        return { ...i, why_now, cited_rows, score_breakdown };
+      });
+    }
+
+    res.json({
+      action: action ? { intervention: action.intervention, rationale: action.rationale, considered: JSON.parse(action.considered_json || '[]') } : null,
+      items
     });
+  } catch (err) {
+    next(err);
   }
-
-  // Pre-seeded deliveries logic
-  let items = db.prepare(`
-    SELECT c.*, d.why_now, d.cited_rows, d.score_breakdown
-    FROM deliveries d
-    JOIN content_items c ON d.item_id = c.id
-    WHERE d.day = ? AND d.ranker = ?
-  `).all(day, ranker);
-  
-  if (items.length === 0 && ranker === 'growth') {
-     items = rankGrowth(1, day).map(i => ({
-       ...i, 
-       why_now: 'Because it challenges your current understanding.',
-       cited_rows: JSON.stringify(["L05"]),
-       score_breakdown: JSON.stringify(i.breakdown)
-     }));
-  }
-
-  res.json({
-    action: action ? { intervention: action.intervention, rationale: action.rationale, considered: JSON.parse(action.considered_json || '[]') } : null,
-    items
-  });
 });
 
 app.get('/api/twin', (req, res) => {
@@ -225,15 +254,25 @@ app.post('/api/onboarding', async (req, res, next) => {
   try {
     const { answers } = req.body;
     const result = await runOnboardingAgent(answers);
-    
-    // Clear old seeded ledger to start fresh
+
+    // Full reset: wipe every trace of the previous user's (or the demo seed's)
+    // simulated history, not just the ledger, so the dashboard reflects THIS
+    // onboarding's answers instead of stale canned data left over from before.
     db.prepare(`DELETE FROM ledger_rows`).run();
+    db.prepare(`DELETE FROM ledger_events`).run();
     db.prepare(`DELETE FROM future_self`).run();
-    
+    db.prepare(`DELETE FROM habits`).run();
+    db.prepare(`DELETE FROM deliveries`).run();
+    db.prepare(`DELETE FROM artifacts`).run();
+    db.prepare(`DELETE FROM agent_actions`).run();
+    db.prepare(`DELETE FROM reviews`).run();
+    db.prepare(`DELETE FROM regret_responses`).run();
+    db.prepare(`UPDATE app_state SET value = '1' WHERE key = 'current_day'`).run();
+
     const markersJson = JSON.stringify(result.future_self.markers || []);
     db.prepare(`INSERT INTO future_self (user_id, portrait, markers_json) VALUES (1, ?, ?)`).run(result.future_self.portrait, markersJson);
     
-    const insertRow = db.prepare(`INSERT INTO ledger_rows (id, user_id, kind, claim, domain_tags_json, confidence, provenance, source, status, strength, created_day, updated_day) VALUES (?, 1, ?, ?, ?, 0.9, 'Onboarding interview', 'interview', 'active', ?, 1, 1)`);
+    const insertRow = db.prepare(`INSERT INTO ledger_rows (id, user_id, kind, claim, domain_tags, confidence, provenance, source, status, strength, created_day, updated_day) VALUES (?, 1, ?, ?, ?, 0.9, 'Onboarding interview', 'interview', 'active', ?, 1, 1)`);
     
     result.ledger_rows.forEach((row, i) => {
       insertRow.run(`L0${i+1}`, row.kind, row.claim, JSON.stringify(row.domain_tags || []), row.strength || 0.8);

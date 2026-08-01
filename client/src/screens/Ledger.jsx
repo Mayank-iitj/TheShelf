@@ -12,9 +12,22 @@ const containerVariants = {
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, x: -20 },
-  show: { opacity: 1, x: 0, transition: { type: 'spring', stiffness: 300, damping: 24 } }
+  hidden: { opacity: 0, x: -16 },
+  show: { opacity: 1, x: 0, transition: { type: 'spring', stiffness: 320, damping: 26 } }
 };
+
+const METER_SEGMENTS = 20;
+
+function StrengthMeter({ strength, dormant }) {
+  const filledCount = Math.round(strength * METER_SEGMENTS);
+  return (
+    <div className="meter">
+      {Array.from({ length: METER_SEGMENTS }).map((_, i) => (
+        <div key={i} className={`meter-seg ${i < filledCount ? `filled ${dormant ? 'dormant' : ''}` : ''}`} />
+      ))}
+    </div>
+  );
+}
 
 function Ledger({ day }) {
   const [rows, setRows] = useState([]);
@@ -58,29 +71,32 @@ function Ledger({ day }) {
 
   return (
     <div>
-      <h1 style={{ marginBottom: '40px' }} className="text-gradient">Identity Ledger</h1>
+      <h1 className="screen-title">Identity Ledger</h1>
 
       {tensions.length > 0 && (
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          style={{ marginBottom: '48px', padding: '32px', background: 'rgba(249, 115, 22, 0.1)', border: '1px solid var(--accent-orange)', borderRadius: 'var(--radius-md)' }}
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="card card--flagged"
+          style={{ marginBottom: '32px', padding: '28px' }}
         >
-          <h2 style={{ fontSize: '1.25rem', marginBottom: '16px', color: 'var(--accent-orange)', display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <AlertCircle size={20} /> Tensions
+          <h2 style={{ fontSize: '1.0625rem', marginBottom: '18px', color: 'var(--attention)', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <AlertCircle size={18} /> Tensions
           </h2>
-          {tensions.map(t => {
+          {tensions.map((t, idx) => {
             const row = rows.find(r => r.id === t.contradicts_row);
             if (!row) return null;
             return (
-              <div key={t.id} style={{ marginBottom: '16px', borderLeft: '3px solid var(--accent-orange)', paddingLeft: '16px' }}>
-                <div style={{ marginBottom: '8px' }}>
-                  <strong style={{ color: 'var(--accent-orange)' }}>You said:</strong> {row.claim} <span className="mono text-muted">({row.id})</span>
+              <div key={t.id} style={{ padding: '16px 0', borderTop: idx > 0 ? '1px solid var(--border-hairline)' : 'none' }}>
+                <div style={{ marginBottom: '8px', fontSize: '0.9375rem' }}>
+                  <span style={{ color: 'var(--text-tertiary)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em', marginRight: '8px' }}>You said</span>
+                  {row.claim} <span className="mono" style={{ color: 'var(--text-tertiary)', fontSize: '0.75rem' }}>({row.id})</span>
                 </div>
-                <div style={{ marginBottom: '16px' }}>
-                  <strong style={{ color: 'var(--accent-orange)' }}>You did:</strong> {t.pattern} <span className="mono text-muted">({t.id})</span>
+                <div style={{ marginBottom: '14px', fontSize: '0.9375rem' }}>
+                  <span style={{ color: 'var(--attention)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em', marginRight: '8px' }}>You did</span>
+                  {t.pattern} <span className="mono" style={{ color: 'var(--text-tertiary)', fontSize: '0.75rem' }}>({t.id})</span>
                 </div>
-                <button className="btn" style={{ borderColor: 'var(--accent-orange)', color: 'var(--accent-orange)' }}>Which one is true?</button>
+                <button className="btn" style={{ borderColor: 'var(--attention-line)', color: 'var(--attention)' }}>Which one is true?</button>
               </div>
             );
           })}
@@ -93,50 +109,48 @@ function Ledger({ day }) {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
               <div style={{ flex: 1, marginRight: '24px' }}>
                 <div className="card-meta">
-                  <span className="mono" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><Fingerprint size={14} /> {row.id}</span>
-                  <span style={{ textTransform: 'uppercase' }}>{row.kind}</span>
+                  <span className="mono"><Fingerprint size={13} /> {row.id}</span>
+                  <span>{row.kind}</span>
                   <span>Strength: {(row.strength * 100).toFixed(0)}%</span>
                   <span>Day {row.updated_day}</span>
                 </div>
-                
+
                 {editingId === row.id ? (
-                  <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
-                    <input 
-                      value={editClaim} 
-                      onChange={e => setEditClaim(e.target.value)} 
-                      style={{ flex: 1, padding: '12px', fontSize: '1.125rem', fontFamily: 'var(--font-body)', background: 'var(--bg-main)', border: '1px solid var(--border-rule)', color: 'var(--text-main)', borderRadius: 'var(--radius-sm)' }}
+                  <div style={{ display: 'flex', gap: '8px', marginBottom: '4px' }}>
+                    <input
+                      value={editClaim}
+                      onChange={e => setEditClaim(e.target.value)}
+                      autoFocus
+                      style={{ flex: 1, padding: '10px 12px', fontSize: '1.0625rem', fontFamily: 'var(--font-body)', background: 'var(--bg-surface-sunken)', border: '1px solid var(--growth)', color: 'var(--text-primary)', borderRadius: 'var(--radius-sm)', outline: 'none' }}
                     />
-                    <button className="btn" onClick={() => saveEdit(row.id)} title="Save"><Check size={16} /></button>
+                    <button className="btn btn-primary" onClick={() => saveEdit(row.id)} title="Save"><Check size={16} /></button>
                     <button className="btn" onClick={() => setEditingId(null)} title="Cancel"><X size={16} /></button>
                   </div>
                 ) : (
-                  <div style={{ fontSize: '1.25rem', marginBottom: '8px', cursor: 'pointer', transition: 'color 0.2s', display: 'flex', alignItems: 'center', gap: '8px' }} onClick={() => startEdit(row)}>
-                    {row.claim} <Edit2 size={16} style={{ color: 'var(--text-muted)' }} />
+                  <div
+                    className="card-title"
+                    style={{ marginBottom: '4px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}
+                    onClick={() => startEdit(row)}
+                  >
+                    {row.claim} <Edit2 size={14} style={{ color: 'var(--text-tertiary)', flexShrink: 0 }} />
                   </div>
                 )}
-                
-                <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>
+
+                <div style={{ fontSize: '0.8125rem', color: 'var(--text-tertiary)' }}>
                   {row.provenance}
                 </div>
               </div>
-              
-              <button 
-                className="btn" 
-                style={{ fontSize: '0.875rem', borderColor: 'var(--accent-orange)', color: 'var(--accent-orange)', display: 'flex', alignItems: 'center', gap: '8px' }}
+
+              <button
+                className="btn btn-danger"
+                style={{ fontSize: '0.8125rem', display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}
                 onClick={() => handlePurge(row.id)}
               >
-                <Trash2 size={16} /> I'm not that person anymore
+                <Trash2 size={14} /> I'm not that person anymore
               </button>
             </div>
-            
-            <div style={{ marginTop: '24px', height: '6px', background: 'var(--bg-main)', borderRadius: '3px', overflow: 'hidden', border: '1px solid var(--border-rule)' }}>
-              <motion.div 
-                initial={{ width: 0 }}
-                animate={{ width: `${row.strength * 100}%` }}
-                transition={{ duration: 1, ease: 'easeOut' }}
-                style={{ height: '100%', background: row.status === 'dormant' ? 'var(--text-muted)' : 'var(--accent-cyan)', boxShadow: row.status === 'dormant' ? 'none' : '0 0 8px var(--accent-cyan)' }}
-              ></motion.div>
-            </div>
+
+            <StrengthMeter strength={row.strength} dormant={row.status === 'dormant'} />
           </motion.div>
         ))}
       </motion.div>

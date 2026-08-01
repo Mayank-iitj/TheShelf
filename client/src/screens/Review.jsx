@@ -1,19 +1,19 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Check, X, Info } from 'lucide-react';
+import { Check, X, CalendarClock } from 'lucide-react';
 import { fetchReview, acceptReview } from '../lib/api';
 
 const containerVariants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: { staggerChildren: 0.1 }
+    transition: { staggerChildren: 0.08 }
   }
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 24 } }
+  hidden: { opacity: 0, y: 16 },
+  show: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 320, damping: 26 } }
 };
 
 function Review({ day }) {
@@ -34,7 +34,6 @@ function Review({ day }) {
   const handleAccept = async (idx) => {
     await acceptReview([idx]);
     alert(`Accepted proposed change.`);
-    // Optionally remove from list here, but reloading data is better
     loadReview(day);
   };
 
@@ -42,14 +41,25 @@ function Review({ day }) {
     alert(`Rejected proposed change.`);
   };
 
-  if (loading) return <div style={{ color: 'var(--text-muted)' }}>Loading...</div>;
+  if (loading) {
+    return (
+      <div>
+        <h1 className="screen-title">Weekly Review</h1>
+        <div className="skeleton" style={{ height: '140px' }} />
+      </div>
+    );
+  }
 
   if (!data || !data.proposed_json) {
     return (
       <div>
-        <h1 style={{ marginBottom: '40px' }} className="text-gradient">Weekly Review</h1>
-        <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} style={{ color: 'var(--text-muted)', fontStyle: 'italic', fontSize: '1.125rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <Info size={18} /> No review is due today. The next review occurs on day 14.
+        <h1 className="screen-title">Weekly Review</h1>
+        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="empty-state">
+          <CalendarClock size={22} />
+          <div>
+            <div className="empty-state-title">No review is due today</div>
+            <div className="empty-state-body">The next review occurs on day 14.</div>
+          </div>
         </motion.div>
       </div>
     );
@@ -59,30 +69,30 @@ function Review({ day }) {
 
   return (
     <div>
-      <h1 style={{ marginBottom: '40px' }} className="text-gradient">Weekly Review</h1>
-      <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ fontSize: '1.125rem', marginBottom: '40px', color: 'var(--text-muted)' }}>
+      <h1 className="screen-title">Weekly Review</h1>
+      <p className="screen-sub" style={{ marginTop: 0 }}>
         Based on your actions over the last 7 days, I propose the following updates to your Identity Ledger.
-      </motion.p>
+      </p>
 
       <motion.div variants={containerVariants} initial="hidden" animate="show">
         {proposals.map((prop, idx) => (
-          <motion.div key={idx} variants={itemVariants} whileHover={{ scale: 1.01 }} className="card" style={{ borderLeft: '3px solid var(--accent-cyan)' }}>
+          <motion.div key={idx} variants={itemVariants} whileHover={{ y: -2 }} className="card card--proposed">
             <div className="card-meta">
-              <span className="mono" style={{ fontWeight: 600, color: 'var(--accent-cyan)' }}>{prop.op}</span>
-              <span style={{ textTransform: 'uppercase' }}>{prop.kind}</span>
-            </div>
-            
-            <div style={{ fontSize: '1.25rem', marginBottom: '16px', background: 'var(--bg-main)', padding: '16px', borderLeft: '2px solid var(--accent-cyan)', borderRadius: '0 var(--radius-sm) var(--radius-sm) 0' }}>
-              {prop.claim}
-            </div>
-            
-            <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)', marginBottom: '24px' }}>
-              <strong style={{ color: 'var(--text-main)' }}>Evidence:</strong> {prop.evidence}
+              <span className="mono" style={{ fontWeight: 600, color: 'var(--growth)' }}>{prop.op}</span>
+              <span>{prop.kind}</span>
             </div>
 
-            <div style={{ display: 'flex', gap: '12px' }}>
-              <button className="btn" style={{ borderColor: 'var(--accent-cyan)', color: 'var(--accent-cyan)', display: 'flex', alignItems: 'center', gap: '6px' }} onClick={() => handleAccept(idx)}><Check size={16} /> Accept</button>
-              <button className="btn" style={{ borderColor: 'var(--accent-orange)', color: 'var(--accent-orange)', display: 'flex', alignItems: 'center', gap: '6px' }} onClick={() => handleReject(idx)}><X size={16} /> Reject</button>
+            <div style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '14px', color: 'var(--text-primary)' }}>
+              {prop.claim}
+            </div>
+
+            <div style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '22px', background: 'var(--bg-surface-sunken)', border: '1px solid var(--border-hairline)', borderRadius: 'var(--radius-sm)', padding: '12px 14px' }}>
+              <strong style={{ color: 'var(--text-primary)' }}>Evidence: </strong>{prop.evidence}
+            </div>
+
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <button className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '6px' }} onClick={() => handleAccept(idx)}><Check size={15} /> Accept</button>
+              <button className="btn btn-danger" style={{ display: 'flex', alignItems: 'center', gap: '6px' }} onClick={() => handleReject(idx)}><X size={15} /> Reject</button>
             </div>
           </motion.div>
         ))}

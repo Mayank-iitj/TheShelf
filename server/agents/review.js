@@ -18,6 +18,50 @@ Each object must have:
 Return ONLY valid JSON.
 `;
 
+// Deterministic, ledger/habit-derived fallback used whenever the LLM is unavailable or errors.
+// References whichever real ledger row and habit actually apply — never a fixed row id.
+function buildFallback(ledger, habits, recentActions) {
+  const active = (ledger || []).filter(r => r.status === 'active');
+  const contradicting = (habits || []).find(h => h.contradicts_row);
+
+  if (contradicting) {
+    const row = active.find(r => r.id === contradicting.contradicts_row);
+    if (row) {
+      return {
+        proposals: [
+          {
+            op: 'modify',
+            kind: row.kind,
+            row_id: row.id,
+            claim: `${row.claim} — but adjust: ${contradicting.pattern}`,
+            evidence: `Observed pattern (${contradicting.id}): ${contradicting.pattern}.`
+          }
+        ]
+      };
+    }
+  }
+
+  const deliveredCount = (recentActions || []).filter(a => a.intervention === 'deliver').length;
+  const withheldCount = (recentActions || []).filter(a => a.intervention === 'withhold' || a.intervention === 'rest').length;
+
+  if (active.length > 0) {
+    const weakest = [...active].sort((a, b) => a.strength - b.strength)[0];
+    return {
+      proposals: [
+        {
+          op: 'modify',
+          kind: weakest.kind,
+          row_id: weakest.id,
+          claim: weakest.claim,
+          evidence: `${deliveredCount} deliveries and ${withheldCount} rest/withhold days in the last week — not enough evidence yet to raise or lower this row's strength further.`
+        }
+      ]
+    };
+  }
+
+  return { proposals: [] };
+}
+
 async function runReviewAgent(ledger, habits, recentActions) {
   const userPrompt = `
     Current Ledger:
@@ -30,19 +74,21 @@ async function runReviewAgent(ledger, habits, recentActions) {
     ${JSON.stringify(recentActions, null, 2)}
   `;
 
-  const fallback = {
-    proposals: [
-      {
-        op: "modify",
-        kind: "preference",
-        row_id: "L09",
-        claim: "I learn by building, not by reading — deliver me challenges before essays",
-        evidence: "You completed 3 challenges but skipped or stalled on 2 reading assignments."
-      }
-    ]
-  };
+  const fallback = buildFallback(ledger, habits, recentActions);
 
-  return await callLLM(REVIEW_SYSTEM_PROMPT, userPrompt, fallback);
+  const result = await callLLM(REVIEW_SYSTEM_PROMPT, userPrompt, fallback);
+  return stripMarkdown(result);
+}
+
+// LLM output is rendered as plain text in the UI, not parsed as markdown —
+// strip any emphasis markers it adds so proposals don't show literal asterisks.
+function stripMarkdown(result) {
+  const clean = (s) => typeof s === 'string' ? s.replace(/\*\*/g, '').replace(/(^|\s)\*(\S)/g, '$1$2').replace(/(\S)\*(\s|$)/g, '$1$2') : s;
+  (result.proposals || []).forEach(p => {
+    p.claim = clean(p.claim);
+    p.evidence = clean(p.evidence);
+  });
+  return result;
 }
 
 module.exports = { runReviewAgent };
