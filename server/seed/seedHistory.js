@@ -285,7 +285,7 @@ function simulateHistoryForUser(userId, result) {
     ];
     const insertHabit = db.prepare(`
       INSERT INTO habits (id, user_id, pattern, metric, value_json, evidence_days, confidence, contradicts_row, first_day, updated_day)
-      VALUES (@id, ?, @pattern, @metric, @value_json, @evidence_days, @confidence, @contradicts_row, @first_day, @updated_day)
+      VALUES (@id, @user_id, @pattern, @metric, @value_json, @evidence_days, @confidence, @contradicts_row, @first_day, @updated_day)
     `);
     habits.forEach(h => insertHabit.run({ ...h, user_id: userId }));
 
@@ -305,17 +305,18 @@ function simulateHistoryForUser(userId, result) {
 
     const insertDelivery = db.prepare(`
       INSERT INTO deliveries (user_id, day, item_id, ranker, slot, why_now, cited_rows, score, score_breakdown, opened, completed, dwell_minutes)
-      VALUES (?, @day, @item_id, @ranker, @slot, @why_now, @cited_rows, @score, @score_breakdown, @opened, @completed, @dwell_minutes)
+      VALUES (@user_id, @day, @item_id, @ranker, @slot, @why_now, @cited_rows, @score, @score_breakdown, @opened, @completed, @dwell_minutes)
     `);
     const insertAction = db.prepare(`
       INSERT INTO agent_actions (user_id, day, intervention, rationale, considered_json)
-      VALUES (?, @day, @intervention, @rationale, @considered_json)
+      VALUES (@user_id, @day, @intervention, @rationale, @considered_json)
     `);
 
     for (let d = 1; d <= 21; d++) {
       // Create a curator action for the day
       const intervention = d === 7 ? 'challenge' : d === 14 ? 'rest' : 'deliver';
-      insertAction.run(userId, {
+      insertAction.run({
+        user_id: userId,
         day: d,
         intervention,
         rationale: `Curating daily focus for Day ${d} targeting ${userTags[0]}.`,
@@ -326,7 +327,8 @@ function simulateHistoryForUser(userId, result) {
       for (let slot = 0; slot < 3; slot++) {
         const item = contentPool[Math.floor(Math.random() * contentPool.length)];
         const completed = Math.random() > 0.4 ? 1 : 0;
-        insertDelivery.run(userId, {
+        insertDelivery.run({
+          user_id: userId,
           day: d,
           item_id: item.id,
           ranker: 'growth',
@@ -344,7 +346,8 @@ function simulateHistoryForUser(userId, result) {
       // Attention deliveries (3 items)
       for (let slot = 0; slot < 3; slot++) {
         const item = allItems[Math.floor(Math.random() * allItems.length)];
-        insertDelivery.run(userId, {
+        insertDelivery.run({
+          user_id: userId,
           day: d,
           item_id: item.id,
           ranker: 'attention',
@@ -366,24 +369,26 @@ function simulateHistoryForUser(userId, result) {
     
     const insertArtifact = db.prepare(`
       INSERT INTO artifacts (user_id, day, body, linked_item_id, kind)
-      VALUES (?, @day, @body, @linked_item_id, @kind)
+      VALUES (@user_id, @day, @body, @linked_item_id, @kind)
     `);
     const insertProof = db.prepare(`
       INSERT INTO proofs (user_id, delivery_id, day, proof_type, proof_content, verified, created_at)
-      VALUES (?, @delivery_id, @day, @proof_type, @proof_content, @verified, @created_at)
+      VALUES (@user_id, @delivery_id, @day, @proof_type, @proof_content, @verified, @created_at)
     `);
 
     for (let i = 1; i <= 10; i++) {
       const day = 2 + i * 1.8;
       const artifactBody = `Completed practice task on ${userTags[0] || 'engineering'} focus: Verified API schema and handled error states.`;
-      insertArtifact.run(userId, {
+      insertArtifact.run({
+        user_id: userId,
         day: Math.floor(day),
         body: artifactBody,
         linked_item_id: `C0${i.toString().padStart(2, '0')}`,
         kind: 'practice'
       });
 
-      insertProof.run(userId, {
+      insertProof.run({
+        user_id: userId,
         delivery_id: i.toString(),
         day: Math.floor(day),
         proof_type: 'text',
@@ -410,7 +415,7 @@ function simulateHistoryForUser(userId, result) {
       JSON.stringify(['L09'])
     );
 
-  });
+  })();
   console.log('Dynamic history simulation successfully complete.');
 }
 
