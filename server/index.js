@@ -322,7 +322,7 @@ app.post('/api/review/accept', (req, res) => {
     
     if (p.op === 'add') {
       const id = 'L' + Math.floor(Math.random()*1000).toString().padStart(3, '0');
-      db.prepare(`INSERT INTO ledger_rows (id, user_id, kind, claim, domain_tags_json, confidence, provenance, source, status, strength, created_day, updated_day) VALUES (?, 1, ?, ?, '[]', 0.8, ?, 'review', 'active', 0.8, ?, ?)`).run(id, p.kind || 'aspiration', p.claim, p.evidence || 'Weekly Review', day, day);
+      db.prepare(`INSERT INTO ledger_rows (id, user_id, kind, claim, domain_tags, confidence, provenance, source, status, strength, created_day, updated_day) VALUES (?, 1, ?, ?, '[]', 0.8, ?, 'review', 'active', 0.8, ?, ?)`).run(id, p.kind || 'aspiration', p.claim, p.evidence || 'Weekly Review', day, day);
     } else if (p.op === 'modify' && p.row_id) {
       db.prepare(`UPDATE ledger_rows SET claim = ?, updated_day = ? WHERE id = ?`).run(p.claim, day, p.row_id);
     } else if (p.op === 'remove' && p.row_id) {
@@ -405,7 +405,7 @@ app.get('/api/passport', (req, res) => {
       claim: r.claim,
       strength: r.strength,
       confidence: r.confidence,
-      domain_tags: r.domain_tags_json ? JSON.parse(r.domain_tags_json) : [],
+      domain_tags: r.domain_tags ? JSON.parse(r.domain_tags) : [],
     })),
     system_prompt_hint: `You are assisting a user whose goals and identity are described below. Use this to personalize your responses.\n\nFuture Vision: ${futureSelf?.portrait || 'Not yet defined'}\n\nCore Claims:\n${ledger.map(r => `- [${r.kind}] ${r.claim}`).join('\n')}`,
   };

@@ -95,6 +95,17 @@ function seedHistory() {
       insertArtifact.run(a);
     }
 
+    // 6b. Proofs of Action (Sample demo proofs)
+    const proofs = [
+      { delivery_id: '1', day: 9, proof_type: 'url', proof_content: 'https://github.com/Mayank-iitj/TheShelf/pull/12', verified: 1, created_at: new Date().toISOString() },
+      { delivery_id: '3', day: 13, proof_type: 'text', proof_content: 'Built a sliding window rate limiter in Express with unit tests covering 100 req/min edge cases.', verified: 1, created_at: new Date().toISOString() },
+      { delivery_id: '5', day: 19, proof_type: 'url', proof_content: 'https://github.com/Mayank-iitj/TheShelf/pull/44', verified: 1, created_at: new Date().toISOString() }
+    ];
+    const insertProof = db.prepare(`INSERT INTO proofs (user_id, delivery_id, day, proof_type, proof_content, verified, created_at) VALUES (1, @delivery_id, @day, @proof_type, @proof_content, @verified, @created_at)`);
+    for (const p of proofs) {
+      try { insertProof.run(p); } catch(e){}
+    }
+
     // 7. Deliveries (21 days, both rankers)
     const insertDelivery = db.prepare(`INSERT INTO deliveries (user_id, day, item_id, ranker, slot, why_now, cited_rows, score, score_breakdown, opened, completed, dwell_minutes) VALUES (1, @day, @item_id, @ranker, @slot, @why_now, @cited_rows, @score, @score_breakdown, @opened, @completed, @dwell_minutes)`);
     

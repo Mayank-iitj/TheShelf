@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, ChevronRight, Tag, Zap, Coffee, TerminalSquare, ShieldAlert, CheckCircle2, Upload, Lock, Sparkles, Send, Moon } from 'lucide-react';
+import { ChevronDown, ChevronRight, Tag, Zap, Coffee, TerminalSquare, ShieldAlert, CheckCircle2, CircleCheck, Upload, Lock, Sparkles, Send, Moon } from 'lucide-react';
 import { fetchShelf, submitProof } from '../lib/api';
 
 const containerVariants = {
