@@ -76,6 +76,15 @@ un-cached Groq call happening in front of them. Point at the Alignment Score and
 sub-agent status cards. Say: *"This is the supervisor synthesizing what all three agents
 know into one verdict, live, right now."*
 
+### 10b. Future Self — Ask Your Future Self chat (20-30s, great Q&A hook)
+Click **Future Self** in the sidebar, scroll to the chat panel at the bottom. Click one of the
+starter prompts ("Am I on track?") or — better — **let a judge type their own question live**.
+The reply is a real, uncached Groq call, roleplaying as the user's future self, grounded in
+their actual portrait, markers, and current ledger — it will cite real marker/ledger IDs, not
+generic motivational text. Say: *"This is the 'become the self they imagine' part of the brief,
+made literal — you can talk to them."* This is the single best live-interrogation moment for
+Q&A: hand the keyboard to a judge and let them ask it something themselves.
+
 ### 11. Profile → Identity Passport (10s, closing beat)
 Click **Profile**, then **Export Agentic Passport**. Say: *"Your identity model isn't locked
 in here — you can take it with you and seed any other AI assistant with your real context."*
