@@ -15,7 +15,9 @@ const { detectHabits } = require('./engine/habits');
 const { runDailyAgent } = require('./agents/daily');
 const { runCuratorAgent } = require('./agents/curator');
 const { runOnboardingAgent } = require('./agents/onboarding');
+const { runMasterplanAgent } = require('./agents/masterplan');
 const { saveOnboardingAnswers } = require('./lib/profile');
+const { saveMasterplan, getMasterplan, setStageDone } = require('./lib/masterplan');
 const { runReviewAgent } = require('./agents/review');
 const { runMasterAgent } = require('./agents/master');
 const { runFutureSelfChat } = require('./agents/futureSelfChat');
@@ -293,6 +295,8 @@ app.post('/api/onboarding/reset', (req, res) => {
   db.prepare(`DELETE FROM content_items WHERE source = 'Curated for you'`).run();
   db.prepare(`DELETE FROM app_state WHERE key LIKE 'onboarding_answers_%'`).run();
   db.prepare(`UPDATE app_state SET value = '1' WHERE key = 'current_day'`).run();
+  db.prepare(`DELETE FROM masterplan_stages`).run();
+  db.prepare(`DELETE FROM masterplans`).run();
   res.json({ success: true });
 });
 
@@ -304,15 +308,35 @@ app.post('/api/onboarding', async (req, res, next) => {
     // own words, which the derived ledger rows only summarize.
     saveOnboardingAnswers(1, answers);
 
-    const result = await runOnboardingAgent(answers);
+    // Runs alongside the Groq-backed identity agent: both read the same
+    // answers, but the masterplan is Gemini-backed so it can ground its
+    // resources in a live Google Search instead of training-data recall.
+    const [result, masterplanResult] = await Promise.all([
+      runOnboardingAgent(answers),
+      runMasterplanAgent(answers)
+    ]);
 
     // Dynamic 21-day timeline simulation using the new onboarding answers
     simulateHistoryForUser(1, result);
 
-    res.json({ success: true, result });
+    const day = getDay();
+    saveMasterplan(1, day, masterplanResult.goal, process.env.GEMINI_API_KEY ? 'gemini' : 'fallback', masterplanResult.stages);
+
+    res.json({ success: true, result, masterplan: masterplanResult });
   } catch (err) {
     next(err);
   }
+});
+
+app.get('/api/masterplan', (req, res) => {
+  res.json(getMasterplan(1) || { goal: null, stages: [] });
+});
+
+app.patch('/api/masterplan/stages/:stageId', (req, res) => {
+  const { stageId } = req.params;
+  const { done } = req.body;
+  setStageDone(1, stageId, !!done, getDay());
+  res.json({ success: true });
 });
 
 app.get('/api/review', async (req, res, next) => {

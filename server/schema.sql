@@ -123,3 +123,30 @@ CREATE TABLE proofs (               -- Proof of Action submissions
   verified INTEGER DEFAULT 1,       -- auto-verified for now
   created_at TEXT
 );
+
+-- The Masterplan. One header row per user: the roadmap's framing.
+-- Stages are lifted into their own table (below) rather than a JSON blob
+-- here, because each stage needs an independent id to PATCH its "done"
+-- state without rewriting the whole plan.
+CREATE TABLE masterplans (
+  id INTEGER PRIMARY KEY,
+  user_id INTEGER,
+  goal TEXT,                         -- verbatim goal text the plan was built for
+  source TEXT,                       -- 'gemini' | 'fallback'
+  created_day INTEGER,
+  updated_day INTEGER
+);
+
+-- Staged checklist items belonging to a masterplan, ordered by stage_order.
+CREATE TABLE masterplan_stages (
+  id TEXT PRIMARY KEY,               -- 'MP01', 'MP02' ... shown in the UI
+  masterplan_id INTEGER,
+  user_id INTEGER,
+  stage_order INTEGER,               -- 0-based ordering
+  title TEXT,                        -- "Foundations"
+  description TEXT,                  -- one short sentence, no narrative
+  resources_json TEXT,               -- JSON array of {"label","url"}
+  done INTEGER DEFAULT 0,            -- checkbox state
+  created_day INTEGER,
+  updated_day INTEGER
+);

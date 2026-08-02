@@ -136,3 +136,15 @@ export async function chatWithFutureSelf(message, history) {
     body: JSON.stringify({ message, history })
   });
 }
+
+export async function fetchMasterplan() {
+  return api('/api/masterplan');
+}
+
+export async function toggleMasterplanStage(stageId, done) {
+  return api(`/api/masterplan/stages/${stageId}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ done })
+  });
+}

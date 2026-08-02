@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { LayoutDashboard, Activity, BookOpen, UserCircle, CalendarClock, User, ShieldCheck, Cpu } from 'lucide-react';
+import { LayoutDashboard, Activity, BookOpen, UserCircle, CalendarClock, User, ShieldCheck, Cpu, Map } from 'lucide-react';
 import './styles.css';
 import { setClock, fetchPotential, fetchStage, fetchFutureSelf } from './lib/api';
 import Landing from './screens/Landing';
@@ -13,6 +13,7 @@ import Onboarding from './screens/Onboarding';
 import SignInPage from './screens/SignInPage';
 import Profile from './screens/Profile';
 import MasterAgent from './screens/MasterAgent';
+import Masterplan from './screens/Masterplan';
 import { useAuth, UserButton } from '@clerk/clerk-react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
@@ -110,6 +111,9 @@ function DashboardFlow({ day, handleScrubberChange, potential, stage, currentScr
                 <a href="#review" className={currentScreen === 'review' ? 'active' : ''} onClick={(e) => { e.preventDefault(); setCurrentScreen('review'); }}>
                   <CalendarClock size={20} /> Weekly Review
                 </a>
+                <a href="#masterplan" className={currentScreen === 'masterplan' ? 'active' : ''} onClick={(e) => { e.preventDefault(); setCurrentScreen('masterplan'); }}>
+                  <Map size={20} /> Masterplan
+                </a>
 
                 <div style={{ height: '1px', background: 'var(--border-rule)', margin: '16px 0' }} />
 
@@ -135,6 +139,7 @@ function DashboardFlow({ day, handleScrubberChange, potential, stage, currentScr
                   {currentScreen === 'ledger' && <Ledger day={day} />}
                   {currentScreen === 'futureself' && <FutureSelf day={day} />}
                   {currentScreen === 'review' && <Review day={day} />}
+                  {currentScreen === 'masterplan' && <Masterplan />}
                   {currentScreen === 'profile' && <Profile day={day} potential={potential} stage={stage} setOnboarded={setOnboarded} />}
                 </motion.div>
               </AnimatePresence>
